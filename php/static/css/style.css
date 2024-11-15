@@ -1,0 +1,196 @@
+.container {
+    max-width: 700px;
+    margin: auto;
+}
+
+.shard-chart {
+    margin-top: 20px;
+}
+
+.shard-chart table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: center;
+}
+
+/* Header and star background color */
+.shard-chart th, .star-container .fa-star {
+    background-color: rgb(47, 85, 150); /* Dark blue */
+    color: white; /* White text for better contrast */
+    font-weight: bold;
+    padding: 8px;
+}
+
+/* General styling for table cells */
+.shard-chart th, .shard-chart td {
+    padding: 8px;
+    border: 1px solid #000000;
+    font-weight: bold;
+    position: relative;
+}
+
+/* Styling for Level and Star columns */
+.level-cell, .star-cell {
+    background-color: rgb(47, 85, 150); /* Dark blue */
+    color: white; /* White text for contrast */
+    cursor: pointer; /* Indicate that the cell is clickable */
+    position: relative; /* Position to support overlay */
+    overflow-x: hidden; /* Hide overflow text */
+}
+
+/* Background colors for "Shard per Step," "Per Star," and "Overall" columns based on group */
+
+/* Group 1 styling */
+.group-1 .fa-star {
+    color: #FFD700; /* Gold */
+}
+.group-1 .shards-per-step, .group-1 .per-star, .group-1 .overall {
+    background-color: rgb(255, 241, 204); /* Light yellow */
+}
+
+/* Group 2 styling */
+.group-2 .fa-star {
+    color: #B7410E; /* Rust */
+}
+.group-2 .shards-per-step, .group-2 .per-star, .group-2 .overall {
+    background-color: rgb(252, 228, 216); /* Light coral */
+}
+
+/* Group 3 styling */
+.group-3 .fa-star {
+    color: #C0C0C0; /* Silver */
+}
+.group-3 .shards-per-step, .group-3 .per-star, .group-3 .overall {
+    background-color: rgb(217, 217, 217); /* Light gray */
+}
+
+/* Styling for total rows */
+.total-row {
+    background-color: #f0f0f0;
+    font-weight: bold;
+}
+
+.mt-3 {
+    font-size: larger;
+}
+
+/* Star container adjustments */
+.star-container {
+    display: flex; /* Aligns stars horizontally */
+    justify-content: center;
+    align-items: center;
+    gap: 5px; /* Space between stars */
+    position: relative;
+    z-index: 1; /* Stars behind overlay */
+}
+/* Progress overlay for full cell */
+.progress-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 0%; /* Initial width for overlay */
+    background-color: rgba(255, 255, 255, 0.65); /* Semi-transparent white */
+    z-index: 2; /* Overlay above stars */
+    transition: width 0.3s ease; /* Smooth width transition */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    color: rgb(47, 85, 150); /* Text color for shard progress */
+    font-size: 24px;
+    border-radius: 4px; /* Optional: Rounded corners */
+    /* Disable text selection */
+    user-select: none;
+}
+
+/* Star styling */
+.fa-star {
+    color: #FFD700; /* Gold color for stars */
+    font-size: 24px;
+}
+
+/* Active star style */
+.fa-star.active {
+    border: 2px solid #FFD700;
+    border-radius: 50%;
+}
+
+/* For step number overlay */
+.star-step {
+    position: absolute;
+    top: 2px;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    font-size: 18px;
+    font-weight: bold;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    pointer-events: none;
+    color: black;
+}
+
+/* Hiding 0 in star-step initially */
+.star-step:empty::before {
+    content: '';
+}
+
+/* Mobile-specific styles */
+@media (max-width: 768px) {
+    .container {
+        max-width: 100%;
+        padding: 0 15px;
+    }
+
+    .shard-chart table {
+        border: none;
+        flex-direction: column; /* Stack cells vertically */
+    }
+
+    .shard-chart th,
+    .shard-chart td {
+        border: none;
+        font-size: 14px;
+    }
+
+    /* Show only level and star columns */
+    .shard-chart th:not(.level-cell):not(.star-cell),
+    .shard-chart td:not(.level-cell):not(.star-cell) {
+        display: none; /* Hide all except level and star columns */
+    }
+
+    /* Add borders between stacked cells in mobile */
+    .shard-chart td {
+        border-top: 1px solid #ddd; /* Light gray line between cells */
+        border-bottom: 1px solid #ddd;
+    }
+
+    .progress-overlay {
+        font-size: 16px;
+    }
+
+    .fa-star {
+        font-size: 18px;
+    }
+
+    .mt-3 {
+        font-size: medium;
+    }
+}
+
+/* Extra small screens */
+@media (max-width: 480px) {
+    .progress-overlay {
+        font-size: 14px;
+    }
+
+    .fa-star {
+        font-size: 16px;
+    }
+
+    .star-container {
+        gap: 2px;
+    }
+}
