@@ -7,7 +7,6 @@ Top Heroes Calculator is a web-based application for calculating hero shard requ
 - Interactive star chart for hero progression
 - Dynamic shard calculations based on hero type and level
 - Responsive design with mobile and desktop support
-- SSL support via Nginx Proxy Manager
 - Lightweight and containerized using Docker
 
 ## Tech Stack
@@ -41,7 +40,6 @@ Top Heroes Calculator is a web-based application for calculating hero shard requ
 
 - Docker and Docker Compose installed on your system.
 - A domain name configured to point to your server.
-- (Optional) Nginx Proxy Manager for SSL termination.
 
 ### Steps to Run
 
@@ -60,10 +58,6 @@ Top Heroes Calculator is a web-based application for calculating hero shard requ
    - If running locally: [http://localhost](http://localhost)
    - If deployed: Use your configured domain, e.g., `https://topheroes.net-freaks.com`.
 
-4. **Setup Nginx Proxy Manager for SSL (Optional):**
-   - Point the domain `topheroes.net-freaks.com` to your server.
-   - Configure a proxy host in Nginx Proxy Manager to forward requests to `http://192.168.x.x:8258`.
-   - Enable SSL using Let’s Encrypt.
 
 ## Docker Configuration
 
