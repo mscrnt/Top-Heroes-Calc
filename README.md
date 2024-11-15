@@ -1,6 +1,3 @@
-Here's a sample `README.md` for your app:
-
-```markdown
 # Top Heroes Calculator
 
 Top Heroes Calculator is a web-based application for calculating hero shard requirements for various hero levels and types. The app provides an interactive interface to track progress and calculate remaining shards needed.
