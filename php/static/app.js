@@ -2,19 +2,38 @@ let selectedLevel = null;
 let lastSelectedKey = null;
 let fillCounts = {}; // Tracks filled sections for each cell
 
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener("DOMContentLoaded", () => {
     resetForm();
-
     toggleChart();
 
-    document.getElementById('heroType').addEventListener('change', handleChartSwitch);
-    document.getElementById('calculateButton').addEventListener('click', () => {
+    // Load and apply theme from localStorage
+    const savedTheme = localStorage.getItem("theme");
+    const body = document.body;
+    const themeToggleButton = document.getElementById("themeToggleIcon");
+
+    if (savedTheme === "dark") {
+        body.classList.add("dark-mode");
+        body.classList.remove("light-mode");
+        themeToggleButton.classList.add("fa-moon");
+        themeToggleButton.classList.remove("fa-sun");
+    } else {
+        body.classList.add("light-mode");
+        body.classList.remove("dark-mode");
+        themeToggleButton.classList.add("fa-sun");
+        themeToggleButton.classList.remove("fa-moon");
+    }
+
+    // Add event listener for theme toggle
+    themeToggleButton.addEventListener("click", toggleTheme);
+
+    document.getElementById("heroType").addEventListener("change", handleChartSwitch);
+    document.getElementById("calculateButton").addEventListener("click", () => {
         clearProgressAndCalculateShards();
     });
-    document.getElementById('resetButton').addEventListener('click', resetForm);
+    document.getElementById("resetButton").addEventListener("click", resetForm);
 
-    document.getElementById('currentLevel').addEventListener('keypress', (event) => {
-        if (event.key === 'Enter') {
+    document.getElementById("currentLevel").addEventListener("keypress", (event) => {
+        if (event.key === "Enter") {
             event.preventDefault();
             clearProgressAndCalculateShards();
         }
@@ -23,23 +42,42 @@ document.addEventListener('DOMContentLoaded', () => {
     addCellEventListeners();
 });
 
+function toggleTheme() {
+    const themeToggleButton = document.getElementById("themeToggleIcon");
+    const body = document.body;
+
+    if (body.classList.contains("dark-mode")) {
+        body.classList.remove("dark-mode");
+        body.classList.add("light-mode");
+        themeToggleButton.classList.remove("fa-moon");
+        themeToggleButton.classList.add("fa-sun");
+        localStorage.setItem("theme", "light"); // Save preference to localStorage
+    } else {
+        body.classList.remove("light-mode");
+        body.classList.add("dark-mode");
+        themeToggleButton.classList.remove("fa-sun");
+        themeToggleButton.classList.add("fa-moon");
+        localStorage.setItem("theme", "dark"); // Save preference to localStorage
+    }
+}
+
 function addCellEventListeners() {
-    const heroType = document.getElementById('heroType').value;
-    document.querySelectorAll(`#${heroType}Chart .star-cell`).forEach(cell => {
-        cell.removeEventListener('click', handleStarCellClick);
-        cell.addEventListener('click', handleStarCellClick);
+    const heroType = document.getElementById("heroType").value;
+    document.querySelectorAll(`#${heroType}Chart .star-cell`).forEach((cell) => {
+        cell.removeEventListener("click", handleStarCellClick);
+        cell.addEventListener("click", handleStarCellClick);
     });
 }
 
 function handleStarCellClick(event) {
     const cell = event.currentTarget;
-    const level = parseInt(cell.getAttribute('data-level'));
-    const shardPerStep = parseInt(cell.getAttribute('data-shards'));
+    const level = parseInt(cell.getAttribute("data-level"));
+    const shardPerStep = parseInt(cell.getAttribute("data-shards"));
     incrementProgressBar(level, cell, shardPerStep);
 }
 
 function incrementProgressBar(level, cell, shardPerStep) {
-    const heroType = document.getElementById('heroType').value;
+    const heroType = document.getElementById("heroType").value;
     const currentKey = `${heroType}-progress-${level}`;
 
     fillCounts[currentKey] = (fillCounts[currentKey] || 0) + 1;
@@ -48,25 +86,25 @@ function incrementProgressBar(level, cell, shardPerStep) {
     }
 
     updateProgressOverlay(cell, fillCounts[currentKey], shardPerStep);
-    document.getElementById('currentLevel').value = `${level}.${fillCounts[currentKey]}`;
-    
+    document.getElementById("currentLevel").value = `${level}.${fillCounts[currentKey]}`;
+
     lastSelectedKey = cell;
 
     calculateShards();
 }
 
 function updateProgressOverlay(cell, progress, shardPerStep) {
-    let overlay = cell.querySelector('.progress-overlay');
+    let overlay = cell.querySelector(".progress-overlay");
     if (!overlay) {
-        overlay = document.createElement('div');
-        overlay.classList.add('progress-overlay');
+        overlay = document.createElement("div");
+        overlay.classList.add("progress-overlay");
         cell.appendChild(overlay);
     }
     const totalShards = shardPerStep * 5;
     const currentShards = progress * shardPerStep;
     overlay.style.width = `${(progress / 5) * 100}%`;
 
-    overlay.textContent = progress > 0 ? `${currentShards}/${totalShards}` : '';
+    overlay.textContent = progress > 0 ? `${currentShards}/${totalShards}` : "";
 }
 
 function calculateShards() {
@@ -77,23 +115,32 @@ function calculateShards() {
     const maxShardsLegendary = 500;
     const maxShardsMythic = 1000;
 
-    const heroType = document.getElementById('heroType').value;
-    const currentLevelInput = document.getElementById('currentLevel').value.trim();
-    const parts = currentLevelInput.split('.');
+    const heroType = document.getElementById("heroType").value;
+    const currentLevelInput = document.getElementById("currentLevel").value.trim();
+    const parts = currentLevelInput.split(".");
     const currentLevel = parseInt(parts[0]);
     const currentSection = parseInt(parts[1]);
 
-    clearProgress(); 
+    clearProgress();
 
     if (currentLevel && currentSection) {
-        const currentCell = document.querySelector(`#${heroType}Chart .star-cell[data-level='${currentLevel}']`);
-        const shardPerStep = (heroType === 'legendary') ? shardsPerLevelLegendary[currentLevel - 1] : shardsPerLevelMythic[currentLevel - 1];
+        const currentCell = document.querySelector(
+            `#${heroType}Chart .star-cell[data-level='${currentLevel}']`
+        );
+        const shardPerStep =
+            heroType === "legendary"
+                ? shardsPerLevelLegendary[currentLevel - 1]
+                : shardsPerLevelMythic[currentLevel - 1];
         fillCounts[`${heroType}-progress-${currentLevel}`] = currentSection;
         updateProgressOverlay(currentCell, currentSection, shardPerStep);
     }
 
-    const perStarValues = (heroType === 'legendary') ? perStarLegendary : perStarMythic;
-    const shardsPerStepValues = (heroType === 'legendary') ? shardsPerLevelLegendary : shardsPerLevelMythic;
+    const perStarValues =
+        heroType === "legendary" ? perStarLegendary : perStarMythic;
+    const shardsPerStepValues =
+        heroType === "legendary"
+            ? shardsPerLevelLegendary
+            : shardsPerLevelMythic;
 
     let accumulatedShards = 0;
 
@@ -104,19 +151,19 @@ function calculateShards() {
     const shardPerStep = shardsPerStepValues[currentLevel - 1];
     accumulatedShards += currentSection * shardPerStep;
 
-    const maxShards = (heroType === 'legendary') ? maxShardsLegendary : maxShardsMythic;
+    const maxShards = heroType === "legendary" ? maxShardsLegendary : maxShardsMythic;
     const shardsNeeded = maxShards - accumulatedShards;
-    document.getElementById('result').innerText = shardsNeeded.toFixed(0);
+    document.getElementById("result").innerText = shardsNeeded.toFixed(0);
 }
 
 function clearProgress() {
     selectedLevel = null;
     lastSelectedKey = null;
-    fillCounts = {}; 
+    fillCounts = {};
 
-    document.querySelectorAll('.progress-overlay').forEach(overlay => {
-        overlay.style.width = '0%';
-        overlay.textContent = '';
+    document.querySelectorAll(".progress-overlay").forEach((overlay) => {
+        overlay.style.width = "0%";
+        overlay.textContent = "";
     });
 }
 
@@ -126,8 +173,8 @@ function clearProgressAndCalculateShards() {
 }
 
 function resetForm() {
-    document.getElementById('currentLevel').value = '';
-    document.getElementById('result').innerText = '';
+    document.getElementById("currentLevel").value = "";
+    document.getElementById("result").innerText = "";
     clearProgress();
 }
 
@@ -138,12 +185,12 @@ function handleChartSwitch() {
 }
 
 function toggleChart() {
-    const heroType = document.getElementById('heroType').value;
-    const legendaryChart = document.getElementById('legendaryChart');
-    const mythicChart = document.getElementById('mythicChart');
-    
+    const heroType = document.getElementById("heroType").value;
+    const legendaryChart = document.getElementById("legendaryChart");
+    const mythicChart = document.getElementById("mythicChart");
+
     if (legendaryChart && mythicChart) {
-        legendaryChart.style.display = heroType === 'legendary' ? 'block' : 'none';
-        mythicChart.style.display = heroType === 'legendary' ? 'none' : 'block';
+        legendaryChart.style.display = heroType === "legendary" ? "block" : "none";
+        mythicChart.style.display = heroType === "legendary" ? "none" : "block";
     }
 }
