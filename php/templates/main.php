@@ -7,6 +7,9 @@
     <!-- External CSS -->
     <link rel="stylesheet" href="/../static/css/all.min.css">
     <link rel="stylesheet" href="/../static/css/style.css">
+    <!-- favicon -->
+    <link rel="icon" href="/favicon.png" sizes="16x16" type="image/png">
+
     <style>
         /* Layout for ads */
         .page-layout {
@@ -52,6 +55,8 @@
     <!-- Google AdSense -->
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2935877088039976"
         crossorigin="anonymous"></script>
+    <script src="https://cdn.lrkt-in.com/LogRocket.min.js" crossorigin="anonymous"></script>
+    <script>window.LogRocket && window.LogRocket.init('8mpvuw/top-heroes');</script>
 </head>
 <body>
     <div class="page-layout">
