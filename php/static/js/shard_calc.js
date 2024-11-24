@@ -1,3 +1,5 @@
+// static/js/shard_calc.js
+
 let selectedLevel = null;
 let lastSelectedKey = null;
 let fillCounts = {}; // Tracks filled sections for each cell
@@ -5,26 +7,6 @@ let fillCounts = {}; // Tracks filled sections for each cell
 document.addEventListener("DOMContentLoaded", () => {
     resetForm();
     toggleChart();
-
-    // Load and apply theme from localStorage
-    const savedTheme = localStorage.getItem("theme");
-    const body = document.body;
-    const themeToggleButton = document.getElementById("themeToggleIcon");
-
-    if (savedTheme === "dark") {
-        body.classList.add("dark-mode");
-        body.classList.remove("light-mode");
-        themeToggleButton.classList.add("fa-moon");
-        themeToggleButton.classList.remove("fa-sun");
-    } else {
-        body.classList.add("light-mode");
-        body.classList.remove("dark-mode");
-        themeToggleButton.classList.add("fa-sun");
-        themeToggleButton.classList.remove("fa-moon");
-    }
-
-    // Add event listener for theme toggle
-    themeToggleButton.addEventListener("click", toggleTheme);
 
     document.getElementById("heroType").addEventListener("change", handleChartSwitch);
     document.getElementById("calculateButton").addEventListener("click", () => {
@@ -41,25 +23,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     addCellEventListeners();
 });
-
-function toggleTheme() {
-    const themeToggleButton = document.getElementById("themeToggleIcon");
-    const body = document.body;
-
-    if (body.classList.contains("dark-mode")) {
-        body.classList.remove("dark-mode");
-        body.classList.add("light-mode");
-        themeToggleButton.classList.remove("fa-moon");
-        themeToggleButton.classList.add("fa-sun");
-        localStorage.setItem("theme", "light"); // Save preference to localStorage
-    } else {
-        body.classList.remove("light-mode");
-        body.classList.add("dark-mode");
-        themeToggleButton.classList.remove("fa-sun");
-        themeToggleButton.classList.add("fa-moon");
-        localStorage.setItem("theme", "dark"); // Save preference to localStorage
-    }
-}
 
 function addCellEventListeners() {
     const heroType = document.getElementById("heroType").value;
