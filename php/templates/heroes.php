@@ -32,9 +32,8 @@ $heroes = [
     <title>Heroes</title>
 </head>
 <body>
-    <h2>Select Faction</h2>
-
     <h2 id="factionTitle">Nature Heroes</h2>
+    <h2>Select Faction</h2>
     <form class="dropdown-form">
         <select name="faction" id="factionDropdown">
             <option value="nature_heroes">Nature</option>

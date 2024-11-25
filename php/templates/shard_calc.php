@@ -29,7 +29,7 @@
 
 <div class="floating-shard-display">
     <p>
-        <img src="static/images/shard.webp" alt="Shard Icon" style="width: 64px; height: 64px; vertical-align: middle;">
+        <img src="static/images/resources/shard.webp" alt="Shard Icon" style="width: 64px; height: 64px; vertical-align: middle;">
     </p>
     <p>
         <strong><span id="result"></span><br>REQUIRED</strong>

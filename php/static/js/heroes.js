@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // Update faction title
         factionTitle.textContent = faction
             .replace('_', ' ')
-            .replace(/\b\w/g, (char) => char.toUpperCase()) + ' Heroes';
+            .replace(/\b\w/g, (char) => char.toUpperCase());
 
         // Clear existing heroes
         heroContainer.innerHTML = '';

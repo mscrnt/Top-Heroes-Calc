@@ -9,6 +9,9 @@
     max-width: 700px;
     margin: auto;
     background-color: rgb(230, 230, 230);
+    background-image: url('/static/images/wood_texture.jpg'); /* Path to your texture image */
+    background-repeat: repeat; /* Repeats the texture across the container */
+    background-size: cover; /* Ensures the texture covers the entire container */
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
     border-radius: 10px;
     padding: 20px;
@@ -32,7 +35,21 @@ h3 {
     color: rgb(248, 121, 64);
 }
 
-body.dark-mode p {
+h2, h3 {
+    text-align: center;
+    font-weight: bold;
+    position: relative;
+    top: 0; /* Removes any additional raising effect */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    z-index: 1;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+    margin: 0; /* Removes any margin for precise centering */
+}
+
+
+p {
     color: #fefefc;
 }
 
@@ -75,11 +92,12 @@ body.dark-mode .container {
     display: flex;
     align-items: center;
     cursor: pointer;
+    z-index: 5;
 }
 
 .hamburger-menu i {
     font-size: 1.5rem;
-    color: #6274a0;
+    color: #b5cfff;
     transition: color 0.3s ease;
 }
 
@@ -199,8 +217,9 @@ button.btn-secondary:hover {
     align-items: center;
     gap: 5px;
     font-size: 24px;
-    color: #6274a0;
+    color: #b5cfff;
     float: right;
+    z-index: 5;
 }
 
 body.dark-mode .theme-toggle {
@@ -222,6 +241,10 @@ body.dark-mode .theme-toggle {
 
     .container {
         min-width: 90%;
+    }
+
+    .controls-bar {
+        margin-top: 15px;
     }
     
     .light-mode {
