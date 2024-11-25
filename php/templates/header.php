@@ -13,7 +13,7 @@
     <link rel="stylesheet" href="/static/css/style.css">
 
     <!-- Favicon -->
-    <link rel="icon" href="/favicon.png" sizes="16x16" type="image/png">
+    <link rel="icon" href="/favicon-32x32.png" sizes="16x16" type="image/png">
 
     <!-- External JS -->
     <script src="/static/js/app.js" defer></script>

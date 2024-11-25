@@ -6,7 +6,7 @@
 
 <h2>Hero Shard Calculator</h2>
 <center>
-    <p>Welcome to the Hero Shard Calculator! This handy little tool helps you figure out exactly how many shards you’ll need to max out your legendary and mythic heroes in <strong>Top Heroes</strong>.</p>
+    <p>Welcome to the Hero Shard Calculator! This handy little tool helps you figure out exactly how many shards you’ll need to max out your legendary and mythic heroes in <strong>Top Heroes</strong>. Click on a star level or enter your hero level to calculate the shards.</p>
 </center>    
 <form>
     <div class="form-row">
@@ -18,17 +18,23 @@
             </select>
         </div>
         <div class="form-group">
-            <label for="currentLevel">Enter Current Hero Level (e.g., 1.3):</label>
-            <input type="text" class="form-control" id="currentLevel" placeholder="Enter level (e.g., 1.3)">
-            <small class="form-text">Format: Level.Step (e.g., 1.3 for level 1, step 3).</small>
+            <label for="currentLevel">Enter Current Hero Level:</label>
+            <input type="text" class="form-control" id="currentLevel" placeholder="Example: 1.3">
+            <small class="form-text">Format: Level.Step (Use '1.3' for level 1, step 3).</small>
         </div>
     </div>
     <button type="button" class="btn btn-primary" id="calculateButton">Calculate</button>
     <button type="button" class="btn btn-secondary" id="resetButton">Reset</button>
 </form>
 
-<div class="mt-3">
-    <p>Total Shards Needed: <span id="result"></span></p>
+<div class="floating-shard-display">
+    <p>
+        <img src="static/images/shard.webp" alt="Shard Icon" style="width: 64px; height: 64px; vertical-align: middle;">
+    </p>
+    <p>
+        <strong><span id="result"></span><br>REQUIRED</strong>
+    </p>
+
 </div>
 
 <!-- PHP Logic to Generate Charts -->
