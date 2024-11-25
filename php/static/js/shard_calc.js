@@ -189,7 +189,7 @@ function toggleChart() {
 function handleFloatingShardDisplay() {
     const floatingShard = document.querySelector('.floating-shard-display');
     const desktopInitialTop = 220; // 220px for desktop
-    const mobileInitialTop = 255; // 270px for mobile
+    const mobileInitialTop = 270; // 270px for mobile
     const fixedTopDistance = 10; // 10px from the top when pinned
 
     let initialTopPixels = desktopInitialTop; // Default for desktop

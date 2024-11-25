@@ -4,6 +4,51 @@
     justify-content: space-between;
 }
 
+/* General container styling */
+.container {
+    max-width: 700px;
+    margin: auto;
+    background-color: rgb(230, 230, 230);
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    padding: 20px;
+    font-family: 'Arial', sans-serif;
+    position: relative; /* To position floating elements inside */
+    min-width: 50vw;
+    top: 10px;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+h2 {
+    color: rgb(234, 85, 60);
+}
+
+h3 {
+    color: rgb(248, 121, 64);
+}
+
+body.dark-mode p {
+    color: #fefefc;
+}
+
+/* Dark mode adjustments */
+body.dark-mode .container {
+    background-color: #56423d;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.4);
+}
+
+.light-mode {
+    background-image: url('/static/images/wooden-surface.png'); /* Path to the image */
+    background-repeat: repeat-x; /* Repeat horizontally */
+    background-position: top; /* Align the texture at the top */
+    background-size: 100% auto; /* Maintain the original size of the image */
+}
+
 .ad-container {
     width: 160px;
     display: none; /* Default hidden */
@@ -34,12 +79,16 @@
 
 .hamburger-menu i {
     font-size: 1.5rem;
-    color: #2f5596;
+    color: #6274a0;
     transition: color 0.3s ease;
 }
 
 .hamburger-menu i:hover {
-    color: #1f3e6f;
+    color: #2f5596;
+}
+
+body.dark-mode .hamburger-menu i {
+    color: #b5cfff;
 }
 
 .menu-dropdown {
@@ -106,8 +155,11 @@
 
 /* Dark Mode Additions */
 body.dark-mode {
-    background-color: #121212;
-    color: #e0e0e0;
+    background-image: url('/static/images/wooden-surface.png'), linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)); /* Overlay dark gradient */
+    background-repeat: repeat-x, no-repeat; /* Repeat the texture only */
+    background-position: top, center; /* Position the texture and gradient */
+    background-size: 100% auto, cover; /* Stretch texture horizontally, gradient covers */
+    background-blend-mode: overlay; /* Blend the gradient with the texture */
 }
 
 /* Buttons */
@@ -147,8 +199,12 @@ button.btn-secondary:hover {
     align-items: center;
     gap: 5px;
     font-size: 24px;
-    color: #2f5596;
+    color: #6274a0;
     float: right;
+}
+
+body.dark-mode .theme-toggle {
+    color: #b5cfff;
 }
 
 /* Responsive Styles */
@@ -163,6 +219,25 @@ button.btn-secondary:hover {
         max-width: 100%;
         padding: 0 15px;
     }
+
+    .container {
+        min-width: 90%;
+    }
+    
+    .light-mode {
+        background-image: url('/static/images/wooden-surface.png'); /* Path to the image */
+        background-repeat: repeat-y; /* Repeat vertically */
+        background-position: left top; /* Align the texture to the top-left */
+        background-size: auto 100%; /* Maintain the original height of the image */
+    }
+    
+    body.dark-mode {
+        background-image: url('/static/images/wooden-surface.png'), linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)); /* Overlay dark gradient */
+        background-repeat: repeat-y; /* Repeat the texture vertically */
+        background-position: left top, center; /* Position the texture and gradient */
+        background-size: auto 100%, cover; /* Stretch texture vertically, gradient covers */
+        background-blend-mode: overlay; /* Blend the gradient with the texture */
+    }
 }
 
 @media (min-width: 769px) {
@@ -171,4 +246,5 @@ button.btn-secondary:hover {
         margin: 20px auto;
         text-align: center;
     }
+
 }

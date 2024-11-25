@@ -1,21 +1,4 @@
-body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #f4f4f9;
-}
-
-.container {
-    max-width: 800px;
-    margin: 20px auto;
-    background: #fff;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-}
-
 h2, h3 {
-    color: #2f5596;
     text-align: center;
 }
 
@@ -41,8 +24,8 @@ select {
 .hero-card {
     text-align: center;
     width: 150px;
-    padding: 10px;
-    background: #f9f9f9;
+    /* padding: 10px;
+    background: #f9f9f9; */
     border-radius: 8px;
     box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
     transition: transform 0.2s;

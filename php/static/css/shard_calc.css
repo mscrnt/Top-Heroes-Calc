@@ -1,19 +1,6 @@
-/* General container styling */
-.container {
-    max-width: 700px;
-    margin: auto;
-    background-color: #ffffff;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-    border-radius: 10px;
-    padding: 20px;
-    font-family: 'Arial', sans-serif;
-    position: relative; /* To position floating elements inside */
-}
-
 /* Section header styling */
 h2, h3 {
     text-align: center;
-    color: #2f5596;
     font-weight: bold;
 }
 
@@ -265,9 +252,6 @@ select:focus {
         font-size: 18px;
     }
 
-    label {
-        color: #cccccc;
-    }
 }
 
 @media (max-width: 480px) {
@@ -288,13 +272,9 @@ select:focus {
         font-size: 18px;
     }
 
-    label {
-        color: #cccccc;
-    }
 }
 
 /* Dark mode adjustments */
-body.dark-mode .container,
 body.dark-mode .progress-overlay {
     background-color: #1e1e1e;
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.4);
@@ -318,4 +298,8 @@ body.dark-mode .total-row {
 body.dark-mode .progress-overlay {
     background-color: rgba(224, 224, 224, 0.8);
     color: #1e1e1e;
+}
+
+body.dark-mode label {
+    color: #cccccc;
 }
