@@ -27,7 +27,7 @@
 /* Hamburger Menu Styling */
 .hamburger-menu {
     position: relative;
-    display: flex; /* Default flex */
+    display: flex;
     align-items: center;
     cursor: pointer;
 }
@@ -35,43 +35,61 @@
 .hamburger-menu i {
     font-size: 1.5rem;
     color: #2f5596;
+    transition: color 0.3s ease;
+}
+
+.hamburger-menu i:hover {
+    color: #1f3e6f;
 }
 
 .menu-dropdown {
-    display: none;
+    display: none; /* Hidden by default */
     position: absolute;
-    top: 100%;
+    top: 100%; /* Below the hamburger icon */
     left: 0;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    background-color: #ffffff; /* White background */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Soft shadow */
     border-radius: 5px;
-    padding: 10px 0;
-    z-index: 100;
+    padding: 5px 0;
+    z-index: 1000;
     min-width: 150px;
+    overflow: hidden;
+    transition: all 0.3s ease;
 }
 
 .menu-dropdown a {
     display: block;
     padding: 10px 15px;
     text-decoration: none;
-    color: #333;
+    color: #333333;
     font-size: 14px;
     transition: background-color 0.2s ease, color 0.2s ease;
+    white-space: nowrap; /* Prevent text wrapping */
 }
 
 .menu-dropdown a:hover {
     background-color: #2f5596;
-    color: white;
+    color: #ffffff;
 }
 
 .menu-dropdown a.active {
     background-color: #2f5596;
-    color: white;
+    color: #ffffff;
 }
 
 /* Show menu when active */
 .menu-dropdown.show {
-    display: block;
+    display: block; /* Make it visible */
+    opacity: 1;
+    transform: translateY(0); /* Smooth transition */
 }
+
+.menu-dropdown.hidden {
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: all 0.3s ease-in-out;
+}
+
 
 /* Ensure the controls-bar does not extend past the container */
 .controls-bar {
