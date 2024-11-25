@@ -1,33 +1,23 @@
+// static/js/shard_calc.js
+
 let selectedLevel = null;
 let lastSelectedKey = null;
 let fillCounts = {}; // Tracks filled sections for each cell
 
+// Default shard values for each hero type
+const defaultShards = {
+    legendary: 500,
+    mythic: 1000,
+};
+
 document.addEventListener("DOMContentLoaded", () => {
     resetForm();
     toggleChart();
-
-    // Load and apply theme from localStorage
-    const savedTheme = localStorage.getItem("theme");
-    const body = document.body;
-    const themeToggleButton = document.getElementById("themeToggleIcon");
-
-    if (savedTheme === "dark") {
-        body.classList.add("dark-mode");
-        body.classList.remove("light-mode");
-        themeToggleButton.classList.add("fa-moon");
-        themeToggleButton.classList.remove("fa-sun");
-    } else {
-        body.classList.add("light-mode");
-        body.classList.remove("dark-mode");
-        themeToggleButton.classList.add("fa-sun");
-        themeToggleButton.classList.remove("fa-moon");
-    }
-
-    // Add event listener for theme toggle
-    themeToggleButton.addEventListener("click", toggleTheme);
+    handleFloatingShardDisplay();
 
     document.getElementById("heroType").addEventListener("change", handleChartSwitch);
     document.getElementById("calculateButton").addEventListener("click", () => {
+        normalizeInput();
         clearProgressAndCalculateShards();
     });
     document.getElementById("resetButton").addEventListener("click", resetForm);
@@ -35,6 +25,7 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("currentLevel").addEventListener("keypress", (event) => {
         if (event.key === "Enter") {
             event.preventDefault();
+            normalizeInput();
             clearProgressAndCalculateShards();
         }
     });
@@ -42,22 +33,14 @@ document.addEventListener("DOMContentLoaded", () => {
     addCellEventListeners();
 });
 
-function toggleTheme() {
-    const themeToggleButton = document.getElementById("themeToggleIcon");
-    const body = document.body;
+function normalizeInput() {
+    const currentLevelInput = document.getElementById("currentLevel");
+    let inputValue = currentLevelInput.value.trim();
 
-    if (body.classList.contains("dark-mode")) {
-        body.classList.remove("dark-mode");
-        body.classList.add("light-mode");
-        themeToggleButton.classList.remove("fa-moon");
-        themeToggleButton.classList.add("fa-sun");
-        localStorage.setItem("theme", "light"); // Save preference to localStorage
-    } else {
-        body.classList.remove("light-mode");
-        body.classList.add("dark-mode");
-        themeToggleButton.classList.remove("fa-sun");
-        themeToggleButton.classList.add("fa-moon");
-        localStorage.setItem("theme", "dark"); // Save preference to localStorage
+    // If the input is a whole number, convert it to a float format
+    if (/^\d+$/.test(inputValue)) {
+        inputValue = `${inputValue}.0`;
+        currentLevelInput.value = inputValue;
     }
 }
 
@@ -117,9 +100,16 @@ function calculateShards() {
 
     const heroType = document.getElementById("heroType").value;
     const currentLevelInput = document.getElementById("currentLevel").value.trim();
+
+    if (!currentLevelInput) {
+        // If no level input, display the default shards
+        document.getElementById("result").innerText = defaultShards[heroType];
+        return;
+    }
+
     const parts = currentLevelInput.split(".");
     const currentLevel = parseInt(parts[0]);
-    const currentSection = parseInt(parts[1]);
+    const currentSection = parseInt(parts[1] || 0);
 
     clearProgress();
 
@@ -173,8 +163,9 @@ function clearProgressAndCalculateShards() {
 }
 
 function resetForm() {
+    const heroType = document.getElementById("heroType").value;
     document.getElementById("currentLevel").value = "";
-    document.getElementById("result").innerText = "";
+    document.getElementById("result").innerText = defaultShards[heroType];
     clearProgress();
 }
 
@@ -194,3 +185,51 @@ function toggleChart() {
         mythicChart.style.display = heroType === "legendary" ? "none" : "block";
     }
 }
+
+function handleFloatingShardDisplay() {
+    const floatingShard = document.querySelector('.floating-shard-display');
+    const desktopInitialTop = 220; // 220px for desktop
+    const mobileInitialTop = 255; // 270px for mobile
+    const fixedTopDistance = 10; // 10px from the top when pinned
+
+    let initialTopPixels = desktopInitialTop; // Default for desktop
+    let isPinned = false; // Tracks whether the shard is pinned to the top
+
+    function initializePosition() {
+        // Adjust the initial top based on viewport width
+        if (window.innerWidth <= 768) {
+            initialTopPixels = mobileInitialTop;
+        } else {
+            initialTopPixels = desktopInitialTop;
+        }
+        // Set the initial position
+        floatingShard.style.top = `${initialTopPixels}px`;
+        floatingShard.style.position = 'absolute'; // Move naturally with the page
+    }
+
+    function updateFloatingPosition() {
+        const scrollTop = window.scrollY;
+
+        if (scrollTop > initialTopPixels - fixedTopDistance && !isPinned) {
+            // Pin the shard to 10px from the top
+            floatingShard.style.position = 'fixed';
+            floatingShard.style.top = `${fixedTopDistance}px`;
+            isPinned = true;
+        } else if (scrollTop <= initialTopPixels - fixedTopDistance && isPinned) {
+            // Transition smoothly back to the original position
+            floatingShard.style.position = 'absolute';
+            floatingShard.style.top = `${initialTopPixels}px`;
+            isPinned = false;
+        }
+    }
+
+    // Set the initial position on load
+    initializePosition();
+
+    // Listen for scroll events to update position
+    window.addEventListener('scroll', updateFloatingPosition);
+
+    // Recalculate the initial offset if the window is resized
+    window.addEventListener('resize', initializePosition);
+}
+

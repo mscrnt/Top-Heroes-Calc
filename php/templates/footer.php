@@ -1,4 +1,6 @@
-<!DOCTYPE html>
+<?php
+// templates/footer.php
+?>
 <div id="footer-banner">
     <div class="footer-content">
         <p>
@@ -80,3 +82,5 @@
         }
     });
 </script>
+</body>
+</html>
