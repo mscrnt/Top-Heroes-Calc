@@ -1,13 +1,22 @@
 <?php
 // index.php
-include 'templates/header.php'; // Includes <head>
 
-// Handle page switching
+// Define page titles
+$pageTitles = [
+    'shard_calc' => 'Shard Calculator',
+    'heroes' => 'Hero Info',
+];
+
+// Determine the current page and its title
 $page = isset($_GET['page']) ? $_GET['page'] : 'shard_calc';
-$allowed_pages = ['shard_calc', 'heroes']; // Add the new 'heroes' page here
+$allowed_pages = ['shard_calc', 'heroes']; // Add the allowed pages here
 if (!in_array($page, $allowed_pages)) {
     $page = 'shard_calc'; // Fallback to default page
 }
+$pageTitle = isset($pageTitles[$page]) ? $pageTitles[$page] : 'Top Heroes'; // Fallback title
+
+// Include header with the dynamically set title
+include 'templates/header.php'; 
 ?>
 
 <div class="page-layout">
