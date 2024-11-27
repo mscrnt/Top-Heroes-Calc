@@ -11,16 +11,6 @@ if (!in_array($page, $allowed_pages)) {
 ?>
 
 <div class="page-layout">
-    <!-- Left Ad -->
-    <div class="ad-container left-ad">
-        <ins class="adsbygoogle"
-             style="display:block"
-             data-ad-client="ca-pub-2935877088039976"
-             data-ad-slot="6749841878"
-             data-ad-format="auto"
-             data-full-width-responsive="true"></ins>
-    </div>
-
     <!-- Content Wrapper -->
     <div class="container content-wrapper">
         <!-- Controls Bar -->
@@ -51,15 +41,6 @@ if (!in_array($page, $allowed_pages)) {
         </div>
     </div>
 
-    <!-- Right Ad -->
-    <div class="ad-container right-ad">
-        <ins class="adsbygoogle"
-             style="display:block"
-             data-ad-client="ca-pub-2935877088039976"
-             data-ad-slot="6749841878"
-             data-ad-format="auto"
-             data-full-width-responsive="true"></ins>
-    </div>
 </div>
 
 <?php

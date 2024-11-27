@@ -75,11 +75,6 @@ body.dark-mode .container {
 }
 
 
-.ad-container {
-    width: 160px;
-    display: none; /* Default hidden */
-}
-
 .main-container {
     flex: 1;
     margin: 0 auto;
@@ -88,12 +83,8 @@ body.dark-mode .container {
 
 /* Show ads in desktop mode */
 @media (min-width: 1024px) {
-    .ad-container {
-        display: block;
-        position: sticky;
-        top: 0;
-    }
 }
+
 
 /* Hamburger Menu Styling */
 .hamburger-menu {
@@ -240,12 +231,6 @@ body.dark-mode .theme-toggle {
 
 /* Responsive Styles */
 @media (max-width: 768px) {
-    .ad-container {
-        display: block;
-        margin: 10px auto;
-        text-align: center;
-    }
-
     .main-container {
         max-width: 100%;
     }
@@ -278,10 +263,5 @@ body.dark-mode .theme-toggle {
 }
 
 @media (min-width: 769px) {
-    .ad-container {
-        display: block;
-        margin: 20px auto;
-        text-align: center;
-    }
 
 }

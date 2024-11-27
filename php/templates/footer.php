@@ -5,7 +5,6 @@
     <div class="footer-content">
         <p>
             This website uses cookies to enhance your experience. By continuing to browse, you agree to the use of cookies. 
-            This site also uses Google AdSense to serve ads based on user preferences.
         </p>
         <button id="close-footer-banner">&times;</button>
     </div>
