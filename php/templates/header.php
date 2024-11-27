@@ -6,7 +6,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hero Shard Calculator</title>
+    <title><?= htmlspecialchars($pageTitle) ?></title> 
 
     <!-- External CSS -->
     <link rel="stylesheet" href="/static/css/all.min.css">
