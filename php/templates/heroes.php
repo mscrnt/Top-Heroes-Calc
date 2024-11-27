@@ -29,7 +29,6 @@ $heroes = [
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/static/css/heroes.css">
-    <title>Heroes</title>
     <style>
         /* Style for dropdown options with images */
         #factionDropdown option {
