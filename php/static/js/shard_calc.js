@@ -46,18 +46,32 @@ function normalizeInput() {
 
 function addCellEventListeners() {
     const heroType = document.getElementById("heroType").value;
+
+    // Add event listeners to level-cell elements
+    document.querySelectorAll(`#${heroType}Chart .level-cell`).forEach((cell) => {
+        cell.removeEventListener("click", handleCellClick);
+        cell.addEventListener("click", handleCellClick);
+    });
+
+    // Add event listeners to star-cell elements
     document.querySelectorAll(`#${heroType}Chart .star-cell`).forEach((cell) => {
-        cell.removeEventListener("click", handleStarCellClick);
-        cell.addEventListener("click", handleStarCellClick);
+        cell.removeEventListener("click", handleCellClick);
+        cell.addEventListener("click", handleCellClick);
     });
 }
 
-function handleStarCellClick(event) {
+function handleCellClick(event) {
     const cell = event.currentTarget;
-    const level = parseInt(cell.getAttribute("data-level"));
-    const shardPerStep = parseInt(cell.getAttribute("data-shards"));
-    incrementProgressBar(level, cell, shardPerStep);
+    const level = parseInt(cell.getAttribute("data-level") || cell.closest('tr').querySelector('.star-cell')?.getAttribute('data-level'));
+    const shardPerStep = parseInt(cell.getAttribute("data-shards") || cell.closest('tr').querySelector('.star-cell')?.getAttribute('data-shards'));
+    
+    if (!isNaN(level) && !isNaN(shardPerStep)) {
+        incrementProgressBar(level, cell, shardPerStep);
+    } else {
+        console.warn(`[ShardCalc] Invalid data-level or data-shards for the clicked cell.`);
+    }
 }
+
 
 function incrementProgressBar(level, cell, shardPerStep) {
     const heroType = document.getElementById("heroType").value;
@@ -188,38 +202,50 @@ function toggleChart() {
 
 function handleFloatingShardDisplay() {
     const floatingShard = document.querySelector('.floating-shard-display');
-    const desktopInitialTop = 220; // 220px for desktop
-    const mobileInitialTop = 270; // 270px for mobile
-    const fixedTopDistance = 10; // 10px from the top when pinned
+    const container = document.querySelector('.container.content-wrapper');
+    const desktopInitialTop = 220; // Default top for desktop
+    const mobileInitialTop = 290; // Default top for mobile
+    const fixedTopDistance = 10; // Distance from top when pinned
 
     let initialTopPixels = desktopInitialTop; // Default for desktop
     let isPinned = false; // Tracks whether the shard is pinned to the top
 
-    function initializePosition() {
-        // Adjust the initial top based on viewport width
+    // Function to calculate the initial position dynamically
+    function calculateInitialTop() {
         if (window.innerWidth <= 768) {
             initialTopPixels = mobileInitialTop;
+            console.log(`[ShardDisplay] Mobile view detected, using mobileInitialTop: ${mobileInitialTop}px`);
         } else {
             initialTopPixels = desktopInitialTop;
+            console.log(`[ShardDisplay] Desktop view detected, using desktopInitialTop: ${desktopInitialTop}px`);
         }
-        // Set the initial position
+        return initialTopPixels;
+    }
+
+    function initializePosition() {
+        initialTopPixels = calculateInitialTop(); // Recalculate the initial position dynamically
         floatingShard.style.top = `${initialTopPixels}px`;
-        floatingShard.style.position = 'absolute'; // Move naturally with the page
+        floatingShard.style.position = 'absolute'; // Default to absolute
+        console.log(`[ShardDisplay] Initialized position: top=${initialTopPixels}px, position=absolute`);
     }
 
     function updateFloatingPosition() {
-        const scrollTop = window.scrollY;
+        const scrollTop = container.scrollTop;
+
+        console.log(`[ShardDisplay] scrollTop: ${scrollTop}, threshold: ${initialTopPixels - fixedTopDistance}`);
 
         if (scrollTop > initialTopPixels - fixedTopDistance && !isPinned) {
-            // Pin the shard to 10px from the top
+            // Pin the shard to the top
             floatingShard.style.position = 'fixed';
             floatingShard.style.top = `${fixedTopDistance}px`;
             isPinned = true;
+            console.log(`[ShardDisplay] Pinned to top. Position=fixed, top=${fixedTopDistance}px`);
         } else if (scrollTop <= initialTopPixels - fixedTopDistance && isPinned) {
-            // Transition smoothly back to the original position
+            // Unpin the shard
             floatingShard.style.position = 'absolute';
             floatingShard.style.top = `${initialTopPixels}px`;
             isPinned = false;
+            console.log(`[ShardDisplay] Unpinned from top. Position=absolute, top=${initialTopPixels}px`);
         }
     }
 
@@ -227,9 +253,11 @@ function handleFloatingShardDisplay() {
     initializePosition();
 
     // Listen for scroll events to update position
-    window.addEventListener('scroll', updateFloatingPosition);
+    container.addEventListener('scroll', updateFloatingPosition);
 
     // Recalculate the initial offset if the window is resized
-    window.addEventListener('resize', initializePosition);
+    window.addEventListener('resize', () => {
+        initializePosition();
+        console.log(`[ShardDisplay] Reinitialized position on resize.`);
+    });
 }
-

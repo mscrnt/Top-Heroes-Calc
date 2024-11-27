@@ -8,6 +8,10 @@ h3 {
     margin-top: 50px;
 }
 
+.container{
+    max-height: 96vh;
+}
+
 /* Form styling */
 form {
     margin-bottom: 20px;
@@ -44,7 +48,7 @@ select:focus {
 
 .form-text {
     font-size: 12px;
-    color: #777777;
+    color: #f7f7f7;
     margin-top: 5px;
 }
 
@@ -214,7 +218,6 @@ select:focus {
 @media (max-width: 768px) {
     .container {
         max-width: 100%;
-        padding: 0 15px;
     }
 
     .shard-chart table {

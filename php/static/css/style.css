@@ -12,19 +12,25 @@
     background-image: url('/static/images/wood_texture.jpg'); /* Path to your texture image */
     background-repeat: repeat; /* Repeats the texture across the container */
     background-size: cover; /* Ensures the texture covers the entire container */
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-    border-radius: 10px;
-    padding: 20px;
+    box-shadow: 
+        0px 2px 20px 20px rgba(0, 0, 0, 0.1), 
+        -1px 0px 20px 20px rgba(0, 0, 0, 0.15), 
+        1px 0px 40px 20px rgba(0, 0, 0, 0.2);
+    border-radius: 10px; /* Rounded corners */
+    padding: 20px; /* Internal padding */
     font-family: 'Arial', sans-serif;
     position: relative; /* To position floating elements inside */
     min-width: 50vw;
-    top: 10px;
+    overflow-y: auto; /* Enables scrolling if content overflows */
+    max-height: 95vh; /* Limits container height */
+    transition: box-shadow 0.3s ease, transform 0.3s ease; /* Smooth hover effects */
 }
 
 body {
     font-family: Arial, sans-serif;
     margin: 0;
-    padding: 0;
+    padding: 15px;
+    overflow: hidden;
 }
 
 h2 {
@@ -60,11 +66,14 @@ body.dark-mode .container {
 }
 
 .light-mode {
-    background-image: url('/static/images/wooden-surface.png'); /* Path to the image */
-    background-repeat: repeat-x; /* Repeat horizontally */
-    background-position: top; /* Align the texture at the top */
-    background-size: 100% auto; /* Maintain the original size of the image */
+    background-image: url('/static/images/village.webp'); /* Path to the image */
+    background-repeat: no-repeat; /* No repeat */
+    background-position: center top; /* Center horizontally and align at the top */
+    background-size: 100% 100%; /* Cover the entire screen */
+    min-height: 102vh; /* Ensure the body spans the full viewport height */
+
 }
+
 
 .ad-container {
     width: 160px;
@@ -173,11 +182,14 @@ body.dark-mode .hamburger-menu i {
 
 /* Dark Mode Additions */
 body.dark-mode {
-    background-image: url('/static/images/wooden-surface.png'), linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)); /* Overlay dark gradient */
-    background-repeat: repeat-x, no-repeat; /* Repeat the texture only */
-    background-position: top, center; /* Position the texture and gradient */
-    background-size: 100% auto, cover; /* Stretch texture horizontally, gradient covers */
-    background-blend-mode: overlay; 
+    background-image: url('/static/images/night-village.webp'); /* Path to the image */
+    background-repeat: no-repeat; /* No repeat */
+    background-position: center top; /* Center horizontally and align at the top */
+    background-size: 100% 100%; /* Cover the entire screen */
+    background-blend-mode: overlay; /* Blend the gradient with the texture */
+    min-height: 102vh; /* Ensure the body spans the full viewport height */
+    background-color: #000000d6;
+
 }
 
 /* Buttons */
@@ -236,7 +248,6 @@ body.dark-mode .theme-toggle {
 
     .main-container {
         max-width: 100%;
-        padding: 0 15px;
     }
 
     .container {
@@ -248,18 +259,21 @@ body.dark-mode .theme-toggle {
     }
     
     .light-mode {
-        background-image: url('/static/images/wooden-surface.png'); /* Path to the image */
-        background-repeat: repeat-y; /* Repeat vertically */
-        background-position: left top; /* Align the texture to the top-left */
-        background-size: auto 100%; /* Maintain the original height of the image */
+        background-image: url('/static/images/village.webp'); /* Path to the image */
+        background-repeat: no-repeat; /* No repeat */
+        background-position: center top; /* Center horizontally and align at the top */
+        background-size: cover; /* Cover the screen while maintaining aspect ratio */
+        min-height: 102vh; /* Ensure the container spans the full viewport height */
     }
-    
+
     body.dark-mode {
-        background-image: url('/static/images/wooden-surface.png'), linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)); /* Overlay dark gradient */
-        background-repeat: repeat-y; /* Repeat the texture vertically */
-        background-position: left top, center; /* Position the texture and gradient */
-        background-size: auto 100%, cover; /* Stretch texture vertically, gradient covers */
+        background-image: url('/static/images/night-village.webp'); /* Path to the image */
+        background-repeat: no-repeat; /* No repeat */
+        background-position: center top; /* Center horizontally and align at the top */
+        background-size: cover; /* Cover the screen while maintaining aspect ratio */
+        min-height: 102vh; /* Ensure the container spans the full viewport height */
         background-blend-mode: overlay; /* Blend the gradient with the texture */
+        background-color: #000000d6;
     }
 }
 
