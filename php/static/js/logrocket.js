@@ -9,7 +9,7 @@
     script.onload = function () {
         if (window.LogRocket) {
             window.LogRocket.init('8mpvuw/top-heroes');
-            console.log('[LogRocket] Initialized successfully.');
+            //console.log('[LogRocket] Initialized successfully.');
         } else {
             console.error('[LogRocket] Initialization failed. LogRocket is not available.');
         }

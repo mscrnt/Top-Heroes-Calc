@@ -84,7 +84,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 heroGroup.appendChild(heroCard);
 
-                console.log(`Mapping hero: ${hero} to index: ${currentIndex}`);
+                //console.log(`Mapping hero: ${hero} to index: ${currentIndex}`);
                 currentIndex++; // Increment index after each mapping
             });
 
@@ -173,9 +173,9 @@ document.addEventListener('DOMContentLoaded', () => {
     
 
     function openHeroModal(index, faction) {
-        console.log(`Attempting to open modal for index: ${index}`);
-        console.log(`Current mode: ${currentMode}`);
-        console.log(`Current faction heroes:`, currentFactionHeroes);
+        //console.log(`Attempting to open modal for index: ${index}`);
+        //console.log(`Current mode: ${currentMode}`);
+        //console.log(`Current faction heroes:`, currentFactionHeroes);
     
         if (currentMode !== 'tile') {
             console.warn(`Modal attempted to open in non-tile mode. Aborting.`);
@@ -185,10 +185,10 @@ document.addEventListener('DOMContentLoaded', () => {
         selectedHeroIndex = index;
         const selectedHero = currentFactionHeroes[selectedHeroIndex];
     
-        console.log(`Selected hero index: ${selectedHeroIndex}`);
-        console.log(`Selected hero: ${selectedHero}`);
-        console.log(`Faction: ${faction}`);
-        console.log(`Hero array length: ${currentFactionHeroes.length}`);
+        //console.log(`Selected hero index: ${selectedHeroIndex}`);
+        //console.log(`Selected hero: ${selectedHero}`);
+        //console.log(`Faction: ${faction}`);
+        //console.log(`Hero array length: ${currentFactionHeroes.length}`);
     
         if (!selectedHero) {
             console.error(
@@ -217,7 +217,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function navigateHero(direction, faction) {
         selectedHeroIndex = (selectedHeroIndex + direction + currentFactionHeroes.length) % currentFactionHeroes.length;
         const selectedHero = currentFactionHeroes[selectedHeroIndex];
-        console.log(`Navigating to index: ${selectedHeroIndex}, Hero: ${selectedHero}`);
+        //console.log(`Navigating to index: ${selectedHeroIndex}, Hero: ${selectedHero}`);
         fetchHeroPage(selectedHero, faction);
     }
 
@@ -233,15 +233,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
         switch (event.key) {
             case 'Escape': // Close modal on Escape key
-                console.log('Escape key pressed. Closing modal.');
+                //console.log('Escape key pressed. Closing modal.');
                 closeHeroModal();
                 break;
             case 'ArrowLeft': // Navigate to previous hero on Left arrow key
-                console.log('Left arrow key pressed. Navigating to previous hero.');
+                //console.log('Left arrow key pressed. Navigating to previous hero.');
                 navigateHero(-1, factionDropdown.value); // Use current faction
                 break;
             case 'ArrowRight': // Navigate to next hero on Right arrow key
-                console.log('Right arrow key pressed. Navigating to next hero.');
+                //console.log('Right arrow key pressed. Navigating to next hero.');
                 navigateHero(1, factionDropdown.value); // Use current faction
                 break;
             default:
@@ -262,7 +262,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const heroSlug = hero.toLowerCase();
         const fetchURL = `/templates/hero_page.php?hero=${heroSlug}&faction=${faction.toLowerCase()}&page=gear`;
 
-        console.log(`Fetching hero page: ${fetchURL}`);
+        //console.log(`Fetching hero page: ${fetchURL}`);
 
         fetch(fetchURL)
             .then((response) => {

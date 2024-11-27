@@ -214,10 +214,10 @@ function handleFloatingShardDisplay() {
     function calculateInitialTop() {
         if (window.innerWidth <= 768) {
             initialTopPixels = mobileInitialTop;
-            console.log(`[ShardDisplay] Mobile view detected, using mobileInitialTop: ${mobileInitialTop}px`);
+            //console.log(`[ShardDisplay] Mobile view detected, using mobileInitialTop: ${mobileInitialTop}px`);
         } else {
             initialTopPixels = desktopInitialTop;
-            console.log(`[ShardDisplay] Desktop view detected, using desktopInitialTop: ${desktopInitialTop}px`);
+            //console.log(`[ShardDisplay] Desktop view detected, using desktopInitialTop: ${desktopInitialTop}px`);
         }
         return initialTopPixels;
     }
@@ -226,26 +226,26 @@ function handleFloatingShardDisplay() {
         initialTopPixels = calculateInitialTop(); // Recalculate the initial position dynamically
         floatingShard.style.top = `${initialTopPixels}px`;
         floatingShard.style.position = 'absolute'; // Default to absolute
-        console.log(`[ShardDisplay] Initialized position: top=${initialTopPixels}px, position=absolute`);
+        //console.log(`[ShardDisplay] Initialized position: top=${initialTopPixels}px, position=absolute`);
     }
 
     function updateFloatingPosition() {
         const scrollTop = container.scrollTop;
 
-        console.log(`[ShardDisplay] scrollTop: ${scrollTop}, threshold: ${initialTopPixels - fixedTopDistance}`);
+        //console.log(`[ShardDisplay] scrollTop: ${scrollTop}, threshold: ${initialTopPixels - fixedTopDistance}`);
 
         if (scrollTop > initialTopPixels - fixedTopDistance && !isPinned) {
             // Pin the shard to the top
             floatingShard.style.position = 'fixed';
             floatingShard.style.top = `${fixedTopDistance}px`;
             isPinned = true;
-            console.log(`[ShardDisplay] Pinned to top. Position=fixed, top=${fixedTopDistance}px`);
+            //console.log(`[ShardDisplay] Pinned to top. Position=fixed, top=${fixedTopDistance}px`);
         } else if (scrollTop <= initialTopPixels - fixedTopDistance && isPinned) {
             // Unpin the shard
             floatingShard.style.position = 'absolute';
             floatingShard.style.top = `${initialTopPixels}px`;
             isPinned = false;
-            console.log(`[ShardDisplay] Unpinned from top. Position=absolute, top=${initialTopPixels}px`);
+            //console.log(`[ShardDisplay] Unpinned from top. Position=absolute, top=${initialTopPixels}px`);
         }
     }
 
@@ -258,6 +258,6 @@ function handleFloatingShardDisplay() {
     // Recalculate the initial offset if the window is resized
     window.addEventListener('resize', () => {
         initializePosition();
-        console.log(`[ShardDisplay] Reinitialized position on resize.`);
+        //console.log(`[ShardDisplay] Reinitialized position on resize.`);
     });
 }
