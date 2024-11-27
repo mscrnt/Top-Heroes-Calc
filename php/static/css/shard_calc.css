@@ -1,0 +1,308 @@
+/* Section header styling */
+h2 {
+    margin-bottom: 20px;
+    top: 15px;
+}
+
+h3 {
+    margin-top: 50px;
+}
+
+.container{
+    max-height: 96vh;
+}
+
+/* Form styling */
+form {
+    margin-bottom: 20px;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+label {
+    font-weight: bold;
+    color: #cccccc;
+    margin-bottom: 5px;
+    display: block;
+}
+
+input[type="text"],
+select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #cccccc;
+    border-radius: 5px;
+    font-size: 14px;
+    color: #333333;
+    box-sizing: border-box;
+}
+
+input[type="text"]:focus,
+select:focus {
+    border-color: #2f5596;
+    outline: none;
+    box-shadow: 0px 0px 4px rgba(47, 85, 150, 0.5);
+}
+
+.form-text {
+    font-size: 12px;
+    color: #f7f7f7;
+    margin-top: 5px;
+}
+
+.form-row {
+    display: flex;
+    gap: 15px; /* Adds spacing between the two fields */
+}
+
+.form-row .form-group {
+    flex: 1; /* Ensures both fields take up equal width */
+    min-width: 150px; /* Prevents fields from shrinking too much */
+}
+
+.form-row .form-text {
+    margin-top: 5px;
+}
+
+/* Button styling */
+#calculateButton,
+#resetButton {
+    float: right;
+    margin-left: 10px;
+}
+
+/* Chart styling */
+.shard-chart {
+    margin-top: 20px;
+}
+
+.shard-chart table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: center;
+}
+
+.shard-chart th,
+.star-container .fa-star {
+    background-color: rgb(47, 85, 150); /* Dark blue */
+    color: white;
+    font-weight: bold;
+    padding: 8px;
+}
+
+.shard-chart th,
+.shard-chart td {
+    padding: 8px;
+    border: 1px solid #000000;
+    position: relative;
+    font-weight: bold;
+}
+
+/* Level and star cell styling */
+.level-cell,
+.star-cell {
+    background-color: rgb(47, 85, 150);
+    color: white;
+    cursor: pointer;
+    position: relative;
+    overflow-x: hidden;
+}
+
+.star-cell:hover {
+    background-color: #596a91; /* A darker shade for hover */
+    color: #ffffff;
+    border-color: #FFD700; /* Gold border on hover */
+    transition: all 0.3s ease;
+}
+
+.star-cell:hover .fa-star {
+    transform: scale(1.2); /* Slightly enlarge the stars */
+    transition: transform 0.3s ease, color 0.3s ease;
+}
+
+.star-cell:hover .progress-overlay {
+    background-color: rgba(255, 255, 255, 0.3); /* Subtle gold tint */
+}
+
+/* Star container styling */
+.star-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5px; /* Space between stars */
+    position: relative;
+    z-index: 1; /* Stars behind overlay */
+}
+
+.fa-star {
+    color: #FFD700; /* Gold */
+    font-size: 24px;
+    background-color: #ffffff00 !important;
+}
+
+.fa-star.active {
+    border: 2px solid #FFD700;
+    border-radius: 50%;
+}
+
+/* Progress overlay styling */
+.progress-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 0%; /* Initial width */
+    background-color: rgba(255, 255, 255, 0.65); /* Semi-transparent white */
+    z-index: 2; /* Above stars */
+    transition: width 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    color: rgb(47, 85, 150);
+    font-size: 24px;
+    border-radius: 4px;
+    user-select: none;
+}
+
+/* Group-specific styling */
+.group-1 .fa-star { color: #FFD700; } /* Gold */
+.group-1 .shards-per-step,
+.group-1 .per-star,
+.group-1 .overall { background-color: rgb(255, 241, 204); } /* Light yellow */
+
+.group-2 .fa-star { color: #B7410E; } /* Rust */
+.group-2 .shards-per-step,
+.group-2 .per-star,
+.group-2 .overall { background-color: rgb(252, 228, 216); } /* Light coral */
+
+.group-3 .fa-star { color: #C0C0C0; } /* Silver */
+.group-3 .shards-per-step,
+.group-3 .per-star,
+.group-3 .overall { background-color: rgb(217, 217, 217); } /* Light gray */
+
+.total-row {
+    background-color: #f0f0f0;
+    font-weight: bold;
+}
+
+/* Floating Shard Display */
+.floating-shard-display {
+    position: fixed;
+    border-radius: 8px; /* Rounded corners */
+    padding: 10px;
+    z-index: 1000; /* Ensure it stays above other elements */
+    text-align: center; /* Center align the text */
+    font-family: 'Arial', sans-serif; /* Match the font */
+    transition: top 0s ease; /* Smooth transition for position changes */
+}
+
+/* Adjust image and text in the display */
+.floating-shard-display img {
+    width: 64px;
+    height: 64px;
+}
+
+.floating-shard-display p {
+    margin: 5px 0;
+    font-size: 18px;
+    font-weight: bolder;
+    color: rgb(236, 200, 137);
+    -webkit-text-stroke: 1px rgb(0 0 0 / 53%);
+}
+
+
+/* Mobile-specific styles */
+@media (max-width: 768px) {
+    .container {
+        max-width: 100%;
+    }
+
+    .shard-chart table {
+        border: none;
+        flex-direction: column; /* Stack cells vertically */
+    }
+
+    .shard-chart th:not(.level-cell):not(.star-cell),
+    .shard-chart td:not(.level-cell):not(.star-cell) {
+        display: none; /* Hide all except level and star columns */
+    }
+
+    .shard-chart td {
+        border-top: 1px solid #ddd;
+        border-bottom: 1px solid #ddd;
+    }
+
+    .progress-overlay { font-size: 16px; }
+    .fa-star { font-size: 18px; }
+
+    .floating-shard-display {
+        width: 120px;
+    }
+
+    .floating-shard-display img {
+        width: 48px;
+        height: 48px;
+    }
+
+    .floating-shard-display p {
+        font-size: 18px;
+    }
+
+    h2 {
+        top: 25px;
+    }
+
+}
+
+@media (max-width: 480px) {
+    .progress-overlay { font-size: 14px; }
+    .fa-star { font-size: 16px; }
+    .star-container { gap: 2px; }
+
+    .floating-shard-display {
+        width: 120px;
+    }
+
+    .floating-shard-display img {
+        width: 48px;
+        height: 48px;
+    }
+
+    .floating-shard-display p {
+        font-size: 18px;
+    }
+
+}
+
+/* Dark mode adjustments */
+body.dark-mode .progress-overlay {
+    background-color: #1e1e1e;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.4);
+}
+
+body.dark-mode .form-text {
+    color: #9e9e9e;
+}
+
+body.dark-mode .shard-chart th,
+body.dark-mode .shard-chart td {
+    background-color: #333333;
+    color: #e0e0e0;
+    border-color: #555555;
+}
+
+body.dark-mode .total-row {
+    background-color: #424242;
+}
+
+body.dark-mode .progress-overlay {
+    background-color: rgba(224, 224, 224, 0.8);
+    color: #1e1e1e;
+}
+
+body.dark-mode label {
+    color: #cccccc;
+}
