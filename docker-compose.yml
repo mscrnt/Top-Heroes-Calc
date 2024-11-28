@@ -1,4 +1,4 @@
-version: '3'
+version: '3.8'
 
 services:
   app:
@@ -11,6 +11,32 @@ services:
       - "80:80"
     networks:
       - app-network
+    depends_on:
+      - mysql
+    environment:
+      MYSQL_HOST: mysql
+      MYSQL_DATABASE: top_heroes
+      MYSQL_USER: top_heroes
+      MYSQL_PASSWORD: top_heroes
+
+  mysql:
+    image: mariadb:10.5
+    container_name: mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: SuperSecretPasswordOneTwoThree!
+      MYSQL_DATABASE: top_heroes
+      MYSQL_USER: top_heroes
+      MYSQL_PASSWORD: top_heroes
+    volumes:
+      - mysql_data:/var/lib/mysql
+    ports:
+      - "3306:3306"
+    networks:
+      - app-network
+
+volumes:
+  mysql_data:
 
 networks:
   app-network:

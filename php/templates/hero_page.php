@@ -1,6 +1,8 @@
 <?php
 // templates/hero_page.php
 
+include_once __DIR__ . '/../includes/db_functions.php';
+
 // Import CSS
 echo '<link rel="stylesheet" href="/static/css/hero_page.css">';
 
@@ -8,78 +10,102 @@ echo '<link rel="stylesheet" href="/static/css/hero_page.css">';
 $hero = $_GET['hero'] ?? null;
 $page = $_GET['page'] ?? 'gear';
 
-// Sanitize inputs to prevent path traversal
-$hero = preg_replace('/[^a-zA-Z0-9_-]/', '', $hero);
+// Allow alphanumeric, spaces, underscores, and hyphens
+$hero = preg_replace('/[^a-zA-Z0-9 _-]/', '', $hero);
 $page = preg_replace('/[^a-zA-Z0-9_-]/', '', $page);
 
-// Define the hero's directory path
+
+// Fetch hero data from the database
+$heroData = getHeroByName($hero);
+
+if (!$heroData) {
+    if (isset($_GET['ajax']) && $_GET['ajax'] === 'true') {
+        echo "<div class='hero-content'><h2>No content available.</h2></div>";
+        exit;
+    }
+    echo "<h2>No content available.</h2>";
+    exit;
+}
+
+// Fetch roles associated with the hero from the database
+$roleDetails = getHeroRoles($heroData['id']); // New function to fetch role details
+
+// Scan the directory for PHP files for valid hero pages
 $heroDir = dirname(__DIR__) . "/pages/heroes/{$hero}";
-
-// Check if the hero directory exists
-if (!$hero || !is_dir($heroDir)) {
-    if (isset($_GET['ajax']) && $_GET['ajax'] === 'true') {
-        echo "<div class='hero-content'><h2>No content available.</h2></div>";
-        exit;
-    }
-    echo "<h2>No content available.</h2>";
-    exit;
+$validPages = [];
+if (is_dir($heroDir)) {
+    $validPages = array_map(function ($filePath) {
+        return basename($filePath, '.php'); // Get the file name without extension
+    }, glob("{$heroDir}/*.php"));
 }
 
-// Scan the directory for PHP files
-$validPages = array_map(function ($filePath) {
-    return basename($filePath, '.php'); // Get the file name without extension
-}, glob("{$heroDir}/*.php"));
-
-// Ensure the requested page exists in the hero's folder
-if (!in_array($page, $validPages)) {
-    if (isset($_GET['ajax']) && $_GET['ajax'] === 'true') {
-        echo "<div class='hero-content'><h2>No content available.</h2></div>";
-        exit;
-    }
-    echo "<h2>No content available.</h2>";
-    exit;
-}
-
-// Resolve the full path to the requested page
-$heroPath = "{$heroDir}/{$page}.php";
-
-// Determine the hero icon path
-$heroIconPath = "/static/images/hero_icons/{$hero}.webp";
-if (!file_exists(dirname(__DIR__) . $heroIconPath)) {
-    // Fall back to .png if .webp doesn't exist
-    $heroIconPath = "/static/images/hero_icons/{$hero}.png";
+// Only resolve the full path to the requested page if valid pages exist
+$heroPath = null;
+if (!empty($validPages) && in_array($page, $validPages)) {
+    $heroPath = "{$heroDir}/{$page}.php";
 }
 
 // Handle AJAX requests
 if (isset($_GET['ajax']) && $_GET['ajax'] === 'true') {
-    if (!file_exists($heroPath)) {
-        echo "<div class='hero-content'><h2>No content available.</h2></div>";
-    } else {
+    if ($heroPath && file_exists($heroPath)) {
         include $heroPath;
+    } else {
+        echo "<div class='hero-content'><h2>No content available.</h2></div>";
     }
     exit;
 }
 ?>
 
-<div class="hero-navigation">
-    <h2><?= ucfirst(str_replace('_', ' ', $hero)) ?></h2>
-    <?php if (file_exists(dirname(__DIR__) . $heroIconPath)): ?>
-        <img src="<?= $heroIconPath ?>" alt="<?= ucfirst(str_replace('_', ' ', $hero)) ?> Icon" class="hero-icon">
+<div class="hero-header">
+    <h2><?= htmlspecialchars($heroData['name']) ?></h2>
+    <?php if (!empty($heroData['icon']) && $heroData['icon'] !== 'null'): ?>
+        <img src="<?= htmlspecialchars($heroData['icon']) ?>" 
+             alt="<?= htmlspecialchars($heroData['name']) ?> Icon" 
+             class="hero-icon">
     <?php endif; ?>
+    <div class="hero-roles">
+        <?php if (!empty($roleDetails)): ?>
+            <table class="roles-table">
+                <?php foreach ($roleDetails as $role): ?>
+                    <tr>
+                        <td class="role-icon-cell">
+                            <?php if (!empty($role['icon'])): ?>
+                                <img src="<?= htmlspecialchars($role['icon']) ?>" 
+                                     alt="<?= htmlspecialchars($role['name']) ?> Icon" 
+                                     class="role-icon">
+                            <?php endif; ?>
+                        </td>
+                        <td class="role-description-cell">
+                            <?= htmlspecialchars($role['description'] ?? $role['name']) ?>
+                        </td>
+                    </tr>
+                <?php endforeach; ?>
+            </table>
+        <?php else: ?>
+            <p>No roles assigned.</p>
+        <?php endif; ?>
+    </div>
+</div>
+
+<?php if (!empty($validPages)): ?>
     <div class="hero-tabs">
         <?php foreach ($validPages as $validPage): ?>
             <a href="javascript:void(0);" 
-               data-hero="<?= $hero ?>" 
-               data-page="<?= $validPage ?>" 
+               data-hero="<?= htmlspecialchars($hero) ?>" 
+               data-page="<?= htmlspecialchars($validPage) ?>" 
                class="<?= $page === $validPage ? 'active' : '' ?>">
                 <?= ucfirst(str_replace('_', ' ', $validPage)) ?>
             </a>
         <?php endforeach; ?>
     </div>
-</div>
+<?php endif; ?>
 
 <div class="hero-content">
-    <?php include $heroPath; ?>
+    <?php if ($heroPath && file_exists($heroPath)): ?>
+        <?php include $heroPath; ?>
+    <?php else: ?>
+        <p>No additional content available for this hero.</p>
+    <?php endif; ?>
 </div>
 
 <script>

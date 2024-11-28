@@ -1,24 +1,66 @@
-/* Static CSS file: hero_page.css */
-.hero-navigation {
+.hero-header {
     text-align: center;
     margin-bottom: 20px;
 }
 
-.hero-navigation h2 {
+.hero-header h2 {
     font-size: 24px;
     margin-bottom: 10px;
 }
 
-.hero-navigation .hero-icon {
+.hero-header .hero-icon {
     width: 100px;
     height: auto;
     margin-bottom: 15px;
+}
+
+.hero-header .hero-roles {
+    margin: 0 auto;
+    display: inline-block;
+    text-align: left;
+}
+
+.hero-header .hero-roles h3 {
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+
+.roles-table {
+    width: -webkit-fill-available;
+    border-spacing: 10px;
+    margin: 0 auto;
+    text-align: left;
+}
+
+.role-icon-cell {
+    width: 50px;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.role-description-cell {
+    vertical-align: middle;
+    position: relative; 
+    color: black;
+    text-align-last: center;
+    font-family: cursive;
+}
+
+body.dark-mode .role-description-cell {
+    color: white;
+}
+
+
+.role-icon {
+    width: 32px;
+    height: auto;
 }
 
 .hero-tabs {
     display: flex;
     justify-content: center;
     gap: 15px;
+    margin-top: 20px;
 }
 
 .hero-tabs a {

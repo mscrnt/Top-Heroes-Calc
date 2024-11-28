@@ -1,7 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
     const factionDropdown = document.getElementById('factionDropdown');
     const heroContainer = document.getElementById('heroContainer');
-    const factionTitle = document.getElementById('factionTitle');
     const previewContent = document.getElementById('previewContent');
     const modeToggleIcon = document.getElementById('modeToggleIcon');
     const heroDetailsSection = document.getElementById('heroDetails');
@@ -11,10 +10,13 @@ document.addEventListener('DOMContentLoaded', () => {
     let selectedHeroIndex = 0; // Track selected hero's position
     let currentFactionHeroes = []; // Store heroes of the current faction
 
+    // Define the rarity order
+    const rarityOrder = ['Mythic Heroes', 'Legendary Heroes', 'Epic Heroes', 'Rare Heroes'];
+
     // Create modal element for tile mode
     heroModal.id = 'heroModal';
     heroModal.className = 'hidden';
-        heroModal.innerHTML = `
+    heroModal.innerHTML = `
         <button class="modal-close">
             <i class="fa-regular fa-circle-xmark"></i>
         </button>
@@ -49,85 +51,117 @@ document.addEventListener('DOMContentLoaded', () => {
         currentFactionHeroes = Object.entries(factionHeroes).flatMap(([rarity, heroes]) => heroes);
 
         if (currentMode === 'tile') {
-            renderTileMode(factionHeroes, faction);
+            renderTileMode(factionHeroes);
         } else {
-            renderPreviewMode(factionHeroes, faction);
+            renderPreviewMode(factionHeroes);
         }
     }
 
-    function renderTileMode(factionHeroes, faction) {
+    function renderTileMode(factionHeroes) {
         heroContainer.innerHTML = '';
         heroContainer.classList.remove('hidden');
         previewContent.classList.add('hidden');
         heroDetailsSection.classList.add('hidden');
     
-        let currentIndex = 0; // Reset index for mapping
-
-        Object.entries(factionHeroes).forEach(([rarity, heroes]) => {
+        let currentIndex = 0;
+    
+        // Create a sorted array of rarities based on rarityOrder
+        const sortedRarities = rarityOrder
+            .map((rarity) => {
+                // Match rarity from rarityOrder with keys in factionHeroes
+                const matchingKey = Object.keys(factionHeroes).find((key) => key.toLowerCase().includes(rarity.toLowerCase().split(' ')[0]));
+                return matchingKey ? [matchingKey, factionHeroes[matchingKey]] : null;
+            })
+            .filter(Boolean); // Remove null values if no match is found
+    
+        // Flatten sorted heroes into currentFactionHeroes for proper navigation order
+        currentFactionHeroes = [];
+    
+        // Render the heroes in sorted order
+        sortedRarities.forEach(([rarity, heroes]) => {
+            if (!heroes || heroes.length === 0) return; // Skip if no heroes exist for this rarity
+    
             const rarityTitle = document.createElement('h3');
-            rarityTitle.textContent = `${rarity} Heroes`;
+            rarityTitle.textContent = rarity; // Use the matched key as the title
             heroContainer.appendChild(rarityTitle);
-
+    
             const heroGroup = document.createElement('div');
             heroGroup.className = 'hero-group';
-
+    
             heroes.forEach((hero) => {
                 const heroCard = document.createElement('div');
                 heroCard.className = 'hero-card';
-                heroCard.innerHTML = `<img src="/static/images/${faction}/${rarity}/${hero}.webp" alt="${hero}" data-index="${currentIndex}">`;
-
-                // Attach the correct index to the event listener
-                heroCard.addEventListener('click', (e) => {
-                    const index = parseInt(e.target.dataset.index, 10); // Safely parse data-index
-                    openHeroModal(index, faction);
-                });
-
+                heroCard.innerHTML = `
+                    <img src="${hero.card}" alt="${hero.name}" data-index="${currentIndex}">
+                `;
+    
+                heroCard.addEventListener('click', () => openHeroModal(currentIndex, hero));
+    
                 heroGroup.appendChild(heroCard);
-
-                //console.log(`Mapping hero: ${hero} to index: ${currentIndex}`);
-                currentIndex++; // Increment index after each mapping
+                currentFactionHeroes.push(hero); // Update currentFactionHeroes in sorted order
+                currentIndex++;
             });
-
+    
             heroContainer.appendChild(heroGroup);
         });
     }
+    
 
-    function renderPreviewMode(factionHeroes, faction) {
+    function renderPreviewMode(factionHeroes) {
         previewContent.innerHTML = '';
         heroContainer.classList.add('hidden');
         previewContent.classList.remove('hidden');
         heroDetailsSection.classList.add('hidden'); // Initially hide details section
-
+    
         const previewContainer = document.createElement('div');
         previewContainer.className = 'preview-container';
-
-        Object.entries(factionHeroes).forEach(([rarity, heroes]) => {
+    
+        // Sort based on rarityOrder
+        const sortedRarities = rarityOrder
+            .map((rarity) => {
+                const matchingKey = Object.keys(factionHeroes).find((key) => key.toLowerCase().includes(rarity.toLowerCase().split(' ')[0]));
+                return matchingKey ? [matchingKey, factionHeroes[matchingKey]] : null;
+            })
+            .filter(Boolean); // Remove null values
+    
+        // Flatten sorted heroes into currentFactionHeroes for proper navigation order
+        currentFactionHeroes = [];
+    
+        sortedRarities.forEach(([rarity, heroes]) => {
+            if (!heroes || heroes.length === 0) return; // Skip if no heroes exist for this rarity
+    
             heroes.forEach((hero) => {
                 const previewCard = document.createElement('div');
                 previewCard.className = 'preview-card';
-                previewCard.innerHTML = `<img src="/static/images/${faction}/${rarity}/${hero}.webp" alt="${hero}" data-hero="${hero}" data-rarity="${rarity}">`;
-                previewCard.addEventListener('click', () => selectHero(hero, faction, rarity));
+                previewCard.innerHTML = `
+                    <img src="${hero.card}" alt="${hero.name}" data-hero="${hero.name}">
+                `;
+                previewCard.addEventListener('click', () => selectHero(hero));
                 previewContainer.appendChild(previewCard);
+                currentFactionHeroes.push(hero); // Update currentFactionHeroes in sorted order
             });
         });
-
+    
         previewContent.appendChild(previewContainer);
-
+    
         // Auto-select the first hero in preview mode
-        const firstHero = Object.entries(factionHeroes)[0]?.[1]?.[0];
+        const firstHero = currentFactionHeroes[0];
         if (firstHero) {
-            selectHero(firstHero, faction, Object.keys(factionHeroes)[0]);
+            selectHero(firstHero);
         }
     }
+    
+    
 
-    function selectHero(hero, faction, rarity) {
+    function selectHero(hero) {
         const heroDetails = document.getElementById('heroDetails');
         heroDetails.classList.remove('hidden');
         heroDetails.innerHTML = '<p>Loading...</p>';
-    
+        
+        // Find the selected card in preview mode
         const previewCards = Array.from(previewContent.querySelectorAll('.preview-card'));
         const heroIndex = previewCards.findIndex(
-            (card) => card.querySelector('img').alt === hero
+            (card) => card.querySelector('img').alt === hero.name
         );
         selectedHeroIndex = heroIndex;
     
@@ -147,13 +181,20 @@ document.addEventListener('DOMContentLoaded', () => {
                 behavior: 'smooth',
             });
     
-            // Highlight selected hero
+            // Highlight selected hero by adding an outline
             previewCards.forEach((card) => card.classList.remove('selected'));
             selectedCard.classList.add('selected');
         }
     
-        // Fetch and display hero details
-        const heroSlug = hero.toLowerCase();
+        // Display hero details in the sidebar
+        heroDetails.innerHTML = `
+            <img src="${hero.icon}" alt="${hero.name}">
+            <h2>${hero.name}</h2>
+            <p>Rarity: ${hero.rarity}</p>
+        `;
+    
+        // Fetch and update additional details asynchronously, if needed
+        const heroSlug = hero.name.toLowerCase();
         const fetchURL = `/templates/hero_page.php?hero=${heroSlug}&page=gear`;
     
         fetch(fetchURL)
@@ -171,54 +212,34 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     
     
+    
 
-    function openHeroModal(index, faction) {
-        //console.log(`Attempting to open modal for index: ${index}`);
-        //console.log(`Current mode: ${currentMode}`);
-        //console.log(`Current faction heroes:`, currentFactionHeroes);
-    
-        if (currentMode !== 'tile') {
-            console.warn(`Modal attempted to open in non-tile mode. Aborting.`);
-            return; // Ensure modal only in tile mode
-        }
-    
+    function openHeroModal(index, hero) {
         selectedHeroIndex = index;
-        const selectedHero = currentFactionHeroes[selectedHeroIndex];
-    
-        //console.log(`Selected hero index: ${selectedHeroIndex}`);
-        //console.log(`Selected hero: ${selectedHero}`);
-        //console.log(`Faction: ${faction}`);
-        //console.log(`Hero array length: ${currentFactionHeroes.length}`);
-    
-        if (!selectedHero) {
-            console.error(
-                `Undefined hero at index ${selectedHeroIndex}. Possible out-of-bounds access or mapping issue.`
-            );
-            return;
-        }
-    
+
         heroModal.style.display = 'flex'; // Show modal
-        fetchHeroPage(selectedHero, faction);
-    
-        // Attach modal controls
+        document.body.classList.add('modal-open'); // Prevent scrolling behind modal
+
+        fetchHeroPage(hero);
+
         heroModal.querySelector('.modal-close').onclick = closeHeroModal;
-        heroModal.querySelector('.modal-prev').onclick = () => navigateHero(-1, faction);
-        heroModal.querySelector('.modal-next').onclick = () => navigateHero(1, faction);
-    
-        // Add keydown listener for modal navigation and close
-        document.addEventListener('keydown', handleModalKeyEvents);
+        heroModal.querySelector('.modal-prev').onclick = () => navigateHero(-1);
+        heroModal.querySelector('.modal-next').onclick = () => navigateHero(1);
+
+        document.addEventListener('keydown', handleModalKeyEvents); // Attach keydown listener
     }
     
 
     function closeHeroModal() {
         heroModal.style.display = 'none';
+        document.body.classList.remove('modal-open'); // Restore scrolling
+        document.removeEventListener('keydown', handleModalKeyEvents); // Detach keydown listener
     }
 
-    function navigateHero(direction, faction) {
+    function navigateHero(direction) {
         selectedHeroIndex = (selectedHeroIndex + direction + currentFactionHeroes.length) % currentFactionHeroes.length;
         const selectedHero = currentFactionHeroes[selectedHeroIndex];
-        //console.log(`Navigating to index: ${selectedHeroIndex}, Hero: ${selectedHero}`);
-        fetchHeroPage(selectedHero, faction);
+        fetchHeroPage(selectedHero);
     }
 
     function closeHeroModal() {
@@ -229,40 +250,33 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Handle keydown events for modal
     function handleModalKeyEvents(event) {
-        if (heroModal.style.display !== 'flex') return; // Ensure modal is open
+        if (heroModal.style.display !== 'flex') return;
 
         switch (event.key) {
             case 'Escape': // Close modal on Escape key
-                //console.log('Escape key pressed. Closing modal.');
                 closeHeroModal();
                 break;
-            case 'ArrowLeft': // Navigate to previous hero on Left arrow key
-                //console.log('Left arrow key pressed. Navigating to previous hero.');
-                navigateHero(-1, factionDropdown.value); // Use current faction
+            case 'ArrowLeft': // Navigate to previous hero
+                navigateHero(-1);
                 break;
-            case 'ArrowRight': // Navigate to next hero on Right arrow key
-                //console.log('Right arrow key pressed. Navigating to next hero.');
-                navigateHero(1, factionDropdown.value); // Use current faction
-                break;
-            default:
+            case 'ArrowRight': // Navigate to next hero
+                navigateHero(1);
                 break;
         }
-}
+    }
 
-    function fetchHeroPage(hero, faction) {
+    function fetchHeroPage(hero) {
         const modalHeroDetails = document.getElementById('modalHeroDetails');
         modalHeroDetails.innerHTML = '<p>Loading...</p>';
 
         if (!hero) {
-            console.error(`Undefined hero at index ${selectedHeroIndex}`);
-            modalHeroDetails.innerHTML = `<p>Error: Undefined hero.</p>`;
+            console.error('Undefined hero.');
+            modalHeroDetails.innerHTML = '<p>Error: Undefined hero.</p>';
             return;
         }
 
-        const heroSlug = hero.toLowerCase();
-        const fetchURL = `/templates/hero_page.php?hero=${heroSlug}&faction=${faction.toLowerCase()}&page=gear`;
-
-        //console.log(`Fetching hero page: ${fetchURL}`);
+        const heroSlug = hero.name.toLowerCase();
+        const fetchURL = `/templates/hero_page.php?hero=${heroSlug}`;
 
         fetch(fetchURL)
             .then((response) => {
@@ -274,9 +288,7 @@ document.addEventListener('DOMContentLoaded', () => {
             })
             .catch((error) => {
                 console.error(error);
-                modalHeroDetails.innerHTML = `
-                    <p>Error loading details for <strong>${heroSlug}</strong>.</p>
-                    <p>Check if the file exists and the fetch URL is correct.</p>`;
+                modalHeroDetails.innerHTML = `<p>Error loading details for ${heroSlug}.</p>`;
             });
     }
 
@@ -292,21 +304,17 @@ document.addEventListener('DOMContentLoaded', () => {
             if (event.key === 'ArrowRight') {
                 selectedHeroIndex = (selectedHeroIndex + 1) % currentFactionHeroes.length;
                 const nextHero = currentFactionHeroes[selectedHeroIndex];
-                selectHero(nextHero, factionDropdown.value);
+                selectHero(nextHero);
             } else if (event.key === 'ArrowLeft') {
-                selectedHeroIndex =
-                    (selectedHeroIndex - 1 + currentFactionHeroes.length) %
-                    currentFactionHeroes.length;
+                selectedHeroIndex = (selectedHeroIndex - 1 + currentFactionHeroes.length) % currentFactionHeroes.length;
                 const prevHero = currentFactionHeroes[selectedHeroIndex];
-                selectHero(prevHero, factionDropdown.value);
+                selectHero(prevHero);
             }
         }
     });
-    
 
     modeToggleIcon.addEventListener('click', toggleMode);
-
-    renderHeroes('nature_heroes');
-
     factionDropdown.addEventListener('change', () => renderHeroes(factionDropdown.value));
+
+    renderHeroes('nature_heroes'); // Default faction
 });
