@@ -10,12 +10,13 @@ echo '<link rel="stylesheet" href="/static/css/hero_page.css">';
 $hero = $_GET['hero'] ?? null;
 $page = $_GET['page'] ?? 'gear';
 
-// Sanitize inputs to prevent path traversal
-$hero = preg_replace('/[^a-zA-Z0-9_-]/', '', $hero);
+// Allow alphanumeric, spaces, underscores, and hyphens
+$hero = preg_replace('/[^a-zA-Z0-9 _-]/', '', $hero);
 $page = preg_replace('/[^a-zA-Z0-9_-]/', '', $page);
 
+
 // Fetch hero data from the database
-$heroData = getHeroByName($hero); // Ensure getHeroByName($hero) fetches hero data as an associative array
+$heroData = getHeroByName($hero);
 
 if (!$heroData) {
     if (isset($_GET['ajax']) && $_GET['ajax'] === 'true') {
@@ -26,57 +27,8 @@ if (!$heroData) {
     exit;
 }
 
-// Role definitions with icons and descriptions
-$roleDefinitions = [
-    'Damage Dealer' => [
-        'icon' => '/static/images/role_icons/DPS.png',
-        'description' => 'Damage Dealer: Excels at dealing damage, increasing final damage by 3%.',
-    ],
-    'Burst Damage' => [
-        'icon' => '/static/images/role_icons/Burst.png',
-        'description' => 'Burst Striker: Specialises in delivering high burst damage in a short period through skills.',
-    ],
-    'Multi-Target' => [
-        'icon' => '/static/images/role_icons/Multi_Target.png',
-        'description' => 'Area Damage Dealer: Excels at dealing Area of Effect (AOE) damage to multiple enemies.',
-    ],
-    'Tank' => [
-        'icon' => '/static/images/role_icons/Tank.png',
-        'description' => 'Guardian: Positioned in the front row to absorb damage, reducing damage taken by 5%.',
-    ],
-    'Control' => [
-        'icon' => '/static/images/role_icons/Controller.png',
-        'description' => 'Controller: Capable of controlling enemies through crowd-control effects.',
-    ],
-    'Sustained' => [
-        'icon' => '/static/images/role_icons/Sustain.png',
-        'description' => 'Sustainer: Inflicts special effects and engages in prolonged combat.',
-    ],
-    'Buff' => [
-        'icon' => '/static/images/role_icons/Buff.png',
-        'description' => 'Buffer: Provides beneficial buffs to enhance teammates’ performance.',
-    ],
-    'Healer' => [
-        'icon' => '/static/images/role_icons/Healer.png',
-        'description' => 'Healer: Specialises in healing, enhancing healing effects by 5%.',
-    ],
-    'Single Target' => [
-        'icon' => '/static/images/role_icons/Single_target.png',
-        'description' => 'Precision Striker: Focuses on dealing high damage to a single enemy.',
-    ],
-    'Support' => [
-        'icon' => '/static/images/role_icons/Support.png',
-        'description' => 'Supporter: Offers strategic support by increasing teammates’ maximum health by 5%.',
-    ],
-    'Debuff' => [
-        'icon' => '/static/images/role_icons/Debuff.png',
-        'description' => 'Debuffer: Specialises in weakening enemies by applying debuffs.',
-    ],
-    'Summoner' => [
-        'icon' => '/static/images/role_icons/Summoner.png',
-        'description' => 'Summoner: Capable of summoning additional units to assist in battle.',
-    ],
-];
+// Fetch roles associated with the hero from the database
+$roleDetails = getHeroRoles($heroData['id']); // New function to fetch role details
 
 // Scan the directory for PHP files for valid hero pages
 $heroDir = dirname(__DIR__) . "/pages/heroes/{$hero}";
@@ -87,56 +39,49 @@ if (is_dir($heroDir)) {
     }, glob("{$heroDir}/*.php"));
 }
 
-// Ensure the requested page exists in the hero's folder
-if (!in_array($page, $validPages)) {
-    if (isset($_GET['ajax']) && $_GET['ajax'] === 'true') {
-        echo "<div class='hero-content'><h2>No content available.</h2></div>";
-        exit;
-    }
-    echo "<h2>No content available.</h2>";
-    exit;
+// Only resolve the full path to the requested page if valid pages exist
+$heroPath = null;
+if (!empty($validPages) && in_array($page, $validPages)) {
+    $heroPath = "{$heroDir}/{$page}.php";
 }
-
-// Resolve the full path to the requested page
-$heroPath = "{$heroDir}/{$page}.php";
 
 // Handle AJAX requests
 if (isset($_GET['ajax']) && $_GET['ajax'] === 'true') {
-    if (!file_exists($heroPath)) {
-        echo "<div class='hero-content'><h2>No content available.</h2></div>";
-    } else {
+    if ($heroPath && file_exists($heroPath)) {
         include $heroPath;
+    } else {
+        echo "<div class='hero-content'><h2>No content available.</h2></div>";
     }
     exit;
 }
 ?>
 
-<div class="hero-navigation">
+<div class="hero-header">
     <h2><?= htmlspecialchars($heroData['name']) ?></h2>
-    <?php if (!empty($heroData['icon'])): ?>
+    <?php if (!empty($heroData['icon']) && $heroData['icon'] !== 'null'): ?>
         <img src="<?= htmlspecialchars($heroData['icon']) ?>" 
              alt="<?= htmlspecialchars($heroData['name']) ?> Icon" 
              class="hero-icon">
     <?php endif; ?>
     <div class="hero-roles">
         <h3>Roles:</h3>
-        <ul>
-            <?php foreach (json_decode($heroData['roles'], true) as $role): ?>
-                <?php if (isset($roleDefinitions[$role])): ?>
-                    <li>
-                        <img src="<?= htmlspecialchars($roleDefinitions[$role]['icon']) ?>" 
-                             alt="<?= htmlspecialchars($role) ?> Icon" 
-                             class="role-icon">
+        <?php if (!empty($roleDetails)): ?>
+            <ul>
+                <?php foreach ($roleDetails as $role): ?>
+                    <li style="list-style-image: url('<?= htmlspecialchars($role['icon']) ?>');">
                         <span class="role-description">
-                            <?= htmlspecialchars($roleDefinitions[$role]['description']) ?>
+                            <?= htmlspecialchars($role['description'] ?? $role['name']) ?>
                         </span>
                     </li>
-                <?php else: ?>
-                    <li><?= htmlspecialchars($role) ?></li>
-                <?php endif; ?>
-            <?php endforeach; ?>
-        </ul>
+                <?php endforeach; ?>
+            </ul>
+        <?php else: ?>
+            <p>No roles assigned.</p>
+        <?php endif; ?>
     </div>
+</div>
+
+<?php if (!empty($validPages)): ?>
     <div class="hero-tabs">
         <?php foreach ($validPages as $validPage): ?>
             <a href="javascript:void(0);" 
@@ -147,10 +92,14 @@ if (isset($_GET['ajax']) && $_GET['ajax'] === 'true') {
             </a>
         <?php endforeach; ?>
     </div>
-</div>
+<?php endif; ?>
 
 <div class="hero-content">
-    <?php include $heroPath; ?>
+    <?php if ($heroPath && file_exists($heroPath)): ?>
+        <?php include $heroPath; ?>
+    <?php else: ?>
+        <p>No additional content available for this hero.</p>
+    <?php endif; ?>
 </div>
 
 <script>

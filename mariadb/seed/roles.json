@@ -1,0 +1,50 @@
+{
+    "Damage Dealer": {
+        "icon": "/static/images/role_icons/DPS.png",
+        "description": "Damage Dealer: Excels at dealing damage, increasing final damage by 3%."
+    },
+    "Burst Damage": {
+        "icon": "/static/images/role_icons/Burst.png",
+        "description": "Burst Striker: Specialises in delivering high burst damage in a short period through skills."
+    },
+    "Multi-Target": {
+        "icon": "/static/images/role_icons/Multi_Target.png",
+        "description": "Area Damage Dealer: Excels at dealing Area of Effect (AOE) damage to multiple enemies."
+    },
+    "Tank": {
+        "icon": "/static/images/role_icons/Tank.png",
+        "description": "Guardian: Positioned in the front row to absorb damage, reducing damage taken by 5%."
+    },
+    "Control": {
+        "icon": "/static/images/role_icons/Controller.png",
+        "description": "Controller: Capable of controlling enemies through crowd-control effects."
+    },
+    "Sustained": {
+        "icon": "/static/images/role_icons/Sustain.png",
+        "description": "Sustainer: Inflicts special effects and engages in prolonged combat."
+    },
+    "Buff": {
+        "icon": "/static/images/role_icons/Buff.png",
+        "description": "Buffer: Provides beneficial buffs to enhance teammates’ performance."
+    },
+    "Healer": {
+        "icon": "/static/images/role_icons/Healer.png",
+        "description": "Healer: Specialises in healing, enhancing healing effects by 5%."
+    },
+    "Single Target": {
+        "icon": "/static/images/role_icons/Single_target.png",
+        "description": "Precision Striker: Focuses on dealing high damage to a single enemy."
+    },
+    "Support": {
+        "icon": "/static/images/role_icons/Support.png",
+        "description": "Supporter: Offers strategic support by increasing teammates’ maximum health by 5%."
+    },
+    "Debuff": {
+        "icon": "/static/images/role_icons/Debuff.png",
+        "description": "Debuffer: Specialises in weakening enemies by applying debuffs."
+    },
+    "Summoner": {
+        "icon": "/static/images/role_icons/Summoner.png",
+        "description": "Summoner: Capable of summoning additional units to assist in battle."
+    }
+}

@@ -1,7 +1,7 @@
 {
     "name": "Warlock",
     "roles": [
-        "Supporter",
+        "Support",
         "Buff",
         "Debuff"
     ],

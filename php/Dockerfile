@@ -1,3 +1,5 @@
+# path: php/Dockerfile
+
 # Use a base image that includes both PHP-FPM and NGINX
 FROM php:7.4-fpm-alpine
 
@@ -13,8 +15,9 @@ COPY ./php /var/www/html
 COPY ./entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
 
-# Copy data folder for initialization
-COPY ./data/facts /tmp/facts
+# Copy database initialization folders into the container
+COPY ./mariadb/dbstruct /mariadb/dbstruct
+COPY ./mariadb/seed /mariadb/seed
 
 # Ensure correct ownership and permissions
 RUN chown -R www-data:www-data /var/www/html \

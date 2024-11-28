@@ -56,6 +56,26 @@ function getHeroByName($name) {
     global $pdo;
 
     $stmt = $pdo->prepare("SELECT * FROM heroes WHERE name = :name");
-    $stmt->execute(['name' => $name]);
+    $stmt->bindParam(':name', $name, PDO::PARAM_STR);
+    $stmt->execute();
     return $stmt->fetch(PDO::FETCH_ASSOC);
+}
+
+
+/**
+ * Get roles associated with a specific hero.
+ * @param int $heroId
+ * @return array
+ */
+function getHeroRoles($heroId) {
+    global $pdo;
+
+    $stmt = $pdo->prepare("
+        SELECT r.name, r.icon, r.description
+        FROM hero_roles hr
+        JOIN roles r ON hr.role_id = r.id
+        WHERE hr.hero_id = :hero_id
+    ");
+    $stmt->execute(['hero_id' => $heroId]);
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
