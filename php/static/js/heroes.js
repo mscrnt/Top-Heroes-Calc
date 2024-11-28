@@ -1,7 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
     const factionDropdown = document.getElementById('factionDropdown');
     const heroContainer = document.getElementById('heroContainer');
-    const factionTitle = document.getElementById('factionTitle');
     const previewContent = document.getElementById('previewContent');
     const modeToggleIcon = document.getElementById('modeToggleIcon');
     const heroDetailsSection = document.getElementById('heroDetails');
@@ -14,7 +13,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Create modal element for tile mode
     heroModal.id = 'heroModal';
     heroModal.className = 'hidden';
-        heroModal.innerHTML = `
+    heroModal.innerHTML = `
         <button class="modal-close">
             <i class="fa-regular fa-circle-xmark"></i>
         </button>
@@ -49,18 +48,18 @@ document.addEventListener('DOMContentLoaded', () => {
         currentFactionHeroes = Object.entries(factionHeroes).flatMap(([rarity, heroes]) => heroes);
 
         if (currentMode === 'tile') {
-            renderTileMode(factionHeroes, faction);
+            renderTileMode(factionHeroes);
         } else {
-            renderPreviewMode(factionHeroes, faction);
+            renderPreviewMode(factionHeroes);
         }
     }
 
-    function renderTileMode(factionHeroes, faction) {
+    function renderTileMode(factionHeroes) {
         heroContainer.innerHTML = '';
         heroContainer.classList.remove('hidden');
         previewContent.classList.add('hidden');
         heroDetailsSection.classList.add('hidden');
-    
+
         let currentIndex = 0; // Reset index for mapping
 
         Object.entries(factionHeroes).forEach(([rarity, heroes]) => {
@@ -74,17 +73,17 @@ document.addEventListener('DOMContentLoaded', () => {
             heroes.forEach((hero) => {
                 const heroCard = document.createElement('div');
                 heroCard.className = 'hero-card';
-                heroCard.innerHTML = `<img src="/static/images/${faction}/${rarity}/${hero}.webp" alt="${hero}" data-index="${currentIndex}">`;
+                heroCard.innerHTML = `
+                    <img src="${hero.card}" alt="${hero.name}" data-index="${currentIndex}">
+                `;
 
                 // Attach the correct index to the event listener
                 heroCard.addEventListener('click', (e) => {
                     const index = parseInt(e.target.dataset.index, 10); // Safely parse data-index
-                    openHeroModal(index, faction);
+                    openHeroModal(index, hero);
                 });
 
                 heroGroup.appendChild(heroCard);
-
-                //console.log(`Mapping hero: ${hero} to index: ${currentIndex}`);
                 currentIndex++; // Increment index after each mapping
             });
 
@@ -92,7 +91,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    function renderPreviewMode(factionHeroes, faction) {
+    function renderPreviewMode(factionHeroes) {
         previewContent.innerHTML = '';
         heroContainer.classList.add('hidden');
         previewContent.classList.remove('hidden');
@@ -105,8 +104,10 @@ document.addEventListener('DOMContentLoaded', () => {
             heroes.forEach((hero) => {
                 const previewCard = document.createElement('div');
                 previewCard.className = 'preview-card';
-                previewCard.innerHTML = `<img src="/static/images/${faction}/${rarity}/${hero}.webp" alt="${hero}" data-hero="${hero}" data-rarity="${rarity}">`;
-                previewCard.addEventListener('click', () => selectHero(hero, faction, rarity));
+                previewCard.innerHTML = `
+                    <img src="${hero.card}" alt="${hero.name}" data-hero="${hero.name}">
+                `;
+                previewCard.addEventListener('click', () => selectHero(hero));
                 previewContainer.appendChild(previewCard);
             });
         });
@@ -116,18 +117,19 @@ document.addEventListener('DOMContentLoaded', () => {
         // Auto-select the first hero in preview mode
         const firstHero = Object.entries(factionHeroes)[0]?.[1]?.[0];
         if (firstHero) {
-            selectHero(firstHero, faction, Object.keys(factionHeroes)[0]);
+            selectHero(firstHero);
         }
     }
 
-    function selectHero(hero, faction, rarity) {
+    function selectHero(hero) {
         const heroDetails = document.getElementById('heroDetails');
         heroDetails.classList.remove('hidden');
         heroDetails.innerHTML = '<p>Loading...</p>';
-    
+        
+        // Find the selected card in preview mode
         const previewCards = Array.from(previewContent.querySelectorAll('.preview-card'));
         const heroIndex = previewCards.findIndex(
-            (card) => card.querySelector('img').alt === hero
+            (card) => card.querySelector('img').alt === hero.name
         );
         selectedHeroIndex = heroIndex;
     
@@ -147,13 +149,20 @@ document.addEventListener('DOMContentLoaded', () => {
                 behavior: 'smooth',
             });
     
-            // Highlight selected hero
+            // Highlight selected hero by adding an outline
             previewCards.forEach((card) => card.classList.remove('selected'));
             selectedCard.classList.add('selected');
         }
     
-        // Fetch and display hero details
-        const heroSlug = hero.toLowerCase();
+        // Display hero details in the sidebar
+        heroDetails.innerHTML = `
+            <img src="${hero.icon}" alt="${hero.name}">
+            <h2>${hero.name}</h2>
+            <p>Rarity: ${hero.rarity}</p>
+        `;
+    
+        // Fetch and update additional details asynchronously, if needed
+        const heroSlug = hero.name.toLowerCase();
         const fetchURL = `/templates/hero_page.php?hero=${heroSlug}&page=gear`;
     
         fetch(fetchURL)
@@ -169,6 +178,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 heroDetails.innerHTML = `<p>Error loading details for ${heroSlug}.</p>`;
             });
     }
+    
     
     
 
@@ -199,7 +209,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
         heroModal.style.display = 'flex'; // Show modal
         fetchHeroPage(selectedHero, faction);
-    
+
         // Attach modal controls
         heroModal.querySelector('.modal-close').onclick = closeHeroModal;
         heroModal.querySelector('.modal-prev').onclick = () => navigateHero(-1, faction);
@@ -214,16 +224,15 @@ document.addEventListener('DOMContentLoaded', () => {
         heroModal.style.display = 'none';
     }
 
-    function navigateHero(direction, faction) {
+    function navigateHero(direction) {
         selectedHeroIndex = (selectedHeroIndex + direction + currentFactionHeroes.length) % currentFactionHeroes.length;
         const selectedHero = currentFactionHeroes[selectedHeroIndex];
-        //console.log(`Navigating to index: ${selectedHeroIndex}, Hero: ${selectedHero}`);
-        fetchHeroPage(selectedHero, faction);
+        openHeroModal(selectedHeroIndex, selectedHero);
     }
 
     function closeHeroModal() {
         heroModal.style.display = 'none'; // Hide modal
-        // Remove keydown listener
+// Remove keydown listener
         document.removeEventListener('keydown', handleModalKeyEvents);
     }
 
@@ -305,8 +314,8 @@ document.addEventListener('DOMContentLoaded', () => {
     
 
     modeToggleIcon.addEventListener('click', toggleMode);
-
-    renderHeroes('nature_heroes');
-
     factionDropdown.addEventListener('change', () => renderHeroes(factionDropdown.value));
+
+    // Render default faction once
+    renderHeroes('nature_heroes');
 });

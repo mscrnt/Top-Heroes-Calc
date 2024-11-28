@@ -1,16 +1,20 @@
-# path: php/Dockerfile
-
 # Use a base image that includes both PHP-FPM and NGINX
 FROM php:7.4-fpm-alpine
 
-# Install NGINX
-RUN apk add --no-cache nginx
+# Install required tools and PHP extensions
+RUN apk add --no-cache nginx mysql-client jq \
+    && docker-php-ext-install pdo_mysql
 
 # Set the working directory
 WORKDIR /var/www/html
 
-# Copy only the contents of the php folder into /var/www/html
+# Copy application files
 COPY ./php /var/www/html
+COPY ./entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
+
+# Copy data folder for initialization
+COPY ./data/facts /tmp/facts
 
 # Ensure correct ownership and permissions
 RUN chown -R www-data:www-data /var/www/html \
@@ -30,5 +34,5 @@ COPY ./nginx/default.conf /etc/nginx/conf.d/default.conf
 # Expose port 80
 EXPOSE 80
 
-# Start PHP-FPM and NGINX when the container starts
-CMD ["sh", "-c", "php-fpm -D && nginx -g 'daemon off;'"]
+# Set entrypoint script
+ENTRYPOINT ["/entrypoint.sh"]

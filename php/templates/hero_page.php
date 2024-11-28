@@ -1,6 +1,8 @@
 <?php
 // templates/hero_page.php
 
+include_once __DIR__ . '/../includes/db_functions.php';
+
 // Import CSS
 echo '<link rel="stylesheet" href="/static/css/hero_page.css">';
 
@@ -12,11 +14,10 @@ $page = $_GET['page'] ?? 'gear';
 $hero = preg_replace('/[^a-zA-Z0-9_-]/', '', $hero);
 $page = preg_replace('/[^a-zA-Z0-9_-]/', '', $page);
 
-// Define the hero's directory path
-$heroDir = dirname(__DIR__) . "/pages/heroes/{$hero}";
+// Fetch hero data from the database
+$heroData = getHeroByName($hero); // Ensure getHeroByName($hero) fetches hero data as an associative array
 
-// Check if the hero directory exists
-if (!$hero || !is_dir($heroDir)) {
+if (!$heroData) {
     if (isset($_GET['ajax']) && $_GET['ajax'] === 'true') {
         echo "<div class='hero-content'><h2>No content available.</h2></div>";
         exit;
@@ -25,10 +26,66 @@ if (!$hero || !is_dir($heroDir)) {
     exit;
 }
 
-// Scan the directory for PHP files
-$validPages = array_map(function ($filePath) {
-    return basename($filePath, '.php'); // Get the file name without extension
-}, glob("{$heroDir}/*.php"));
+// Role definitions with icons and descriptions
+$roleDefinitions = [
+    'Damage Dealer' => [
+        'icon' => '/static/images/role_icons/DPS.png',
+        'description' => 'Damage Dealer: Excels at dealing damage, increasing final damage by 3%.',
+    ],
+    'Burst Damage' => [
+        'icon' => '/static/images/role_icons/Burst.png',
+        'description' => 'Burst Striker: Specialises in delivering high burst damage in a short period through skills.',
+    ],
+    'Multi-Target' => [
+        'icon' => '/static/images/role_icons/Multi_Target.png',
+        'description' => 'Area Damage Dealer: Excels at dealing Area of Effect (AOE) damage to multiple enemies.',
+    ],
+    'Tank' => [
+        'icon' => '/static/images/role_icons/Tank.png',
+        'description' => 'Guardian: Positioned in the front row to absorb damage, reducing damage taken by 5%.',
+    ],
+    'Control' => [
+        'icon' => '/static/images/role_icons/Controller.png',
+        'description' => 'Controller: Capable of controlling enemies through crowd-control effects.',
+    ],
+    'Sustained' => [
+        'icon' => '/static/images/role_icons/Sustain.png',
+        'description' => 'Sustainer: Inflicts special effects and engages in prolonged combat.',
+    ],
+    'Buff' => [
+        'icon' => '/static/images/role_icons/Buff.png',
+        'description' => 'Buffer: Provides beneficial buffs to enhance teammates’ performance.',
+    ],
+    'Healer' => [
+        'icon' => '/static/images/role_icons/Healer.png',
+        'description' => 'Healer: Specialises in healing, enhancing healing effects by 5%.',
+    ],
+    'Single Target' => [
+        'icon' => '/static/images/role_icons/Single_target.png',
+        'description' => 'Precision Striker: Focuses on dealing high damage to a single enemy.',
+    ],
+    'Support' => [
+        'icon' => '/static/images/role_icons/Support.png',
+        'description' => 'Supporter: Offers strategic support by increasing teammates’ maximum health by 5%.',
+    ],
+    'Debuff' => [
+        'icon' => '/static/images/role_icons/Debuff.png',
+        'description' => 'Debuffer: Specialises in weakening enemies by applying debuffs.',
+    ],
+    'Summoner' => [
+        'icon' => '/static/images/role_icons/Summoner.png',
+        'description' => 'Summoner: Capable of summoning additional units to assist in battle.',
+    ],
+];
+
+// Scan the directory for PHP files for valid hero pages
+$heroDir = dirname(__DIR__) . "/pages/heroes/{$hero}";
+$validPages = [];
+if (is_dir($heroDir)) {
+    $validPages = array_map(function ($filePath) {
+        return basename($filePath, '.php'); // Get the file name without extension
+    }, glob("{$heroDir}/*.php"));
+}
 
 // Ensure the requested page exists in the hero's folder
 if (!in_array($page, $validPages)) {
@@ -43,13 +100,6 @@ if (!in_array($page, $validPages)) {
 // Resolve the full path to the requested page
 $heroPath = "{$heroDir}/{$page}.php";
 
-// Determine the hero icon path
-$heroIconPath = "/static/images/hero_icons/{$hero}.webp";
-if (!file_exists(dirname(__DIR__) . $heroIconPath)) {
-    // Fall back to .png if .webp doesn't exist
-    $heroIconPath = "/static/images/hero_icons/{$hero}.png";
-}
-
 // Handle AJAX requests
 if (isset($_GET['ajax']) && $_GET['ajax'] === 'true') {
     if (!file_exists($heroPath)) {
@@ -62,15 +112,36 @@ if (isset($_GET['ajax']) && $_GET['ajax'] === 'true') {
 ?>
 
 <div class="hero-navigation">
-    <h2><?= ucfirst(str_replace('_', ' ', $hero)) ?></h2>
-    <?php if (file_exists(dirname(__DIR__) . $heroIconPath)): ?>
-        <img src="<?= $heroIconPath ?>" alt="<?= ucfirst(str_replace('_', ' ', $hero)) ?> Icon" class="hero-icon">
+    <h2><?= htmlspecialchars($heroData['name']) ?></h2>
+    <?php if (!empty($heroData['icon'])): ?>
+        <img src="<?= htmlspecialchars($heroData['icon']) ?>" 
+             alt="<?= htmlspecialchars($heroData['name']) ?> Icon" 
+             class="hero-icon">
     <?php endif; ?>
+    <div class="hero-roles">
+        <h3>Roles:</h3>
+        <ul>
+            <?php foreach (json_decode($heroData['roles'], true) as $role): ?>
+                <?php if (isset($roleDefinitions[$role])): ?>
+                    <li>
+                        <img src="<?= htmlspecialchars($roleDefinitions[$role]['icon']) ?>" 
+                             alt="<?= htmlspecialchars($role) ?> Icon" 
+                             class="role-icon">
+                        <span class="role-description">
+                            <?= htmlspecialchars($roleDefinitions[$role]['description']) ?>
+                        </span>
+                    </li>
+                <?php else: ?>
+                    <li><?= htmlspecialchars($role) ?></li>
+                <?php endif; ?>
+            <?php endforeach; ?>
+        </ul>
+    </div>
     <div class="hero-tabs">
         <?php foreach ($validPages as $validPage): ?>
             <a href="javascript:void(0);" 
-               data-hero="<?= $hero ?>" 
-               data-page="<?= $validPage ?>" 
+               data-hero="<?= htmlspecialchars($hero) ?>" 
+               data-page="<?= htmlspecialchars($validPage) ?>" 
                class="<?= $page === $validPage ? 'active' : '' ?>">
                 <?= ucfirst(str_replace('_', ' ', $validPage)) ?>
             </a>

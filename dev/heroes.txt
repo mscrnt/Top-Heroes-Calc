@@ -1,0 +1,43 @@
+Outlaw
+Rogue
+Headhunter
+Barbarian
+Shaman
+Swordmaster
+Soulmancer
+Warlock
+Wilderness Hunter
+Desert Prince
+Storm Maiden
+Witch
+Blacksmith
+Guard
+Knight
+Minister
+Ranger
+Adjudicator
+Astrologer
+Bard
+Hostess
+Pyromancer
+Secret Keeper
+Bishop
+Rose Princess
+Paragon
+Warrior
+Wizard
+Dancer
+Priestess
+Druid
+Forest Maiden
+Pathfinder
+Pixie
+Sage
+Stonemanson
+Treeguard
+Watcher
+Windwalker
+Monk
+Tidecaller
+Archer
+Pharmacist

@@ -1,27 +1,43 @@
 <?php
 // templates/heroes.php
 
-// Data structure for heroes
+require_once 'includes/db_functions.php';
+
+// Initialize heroes array
 $heroes = [
-    'nature_heroes' => [
-        'Mythics' => ['Tidecaller', 'Monk'],
-        'Legendary' => ['Windwalker', 'Watcher', 'Treeguard', 'Stonemanson', 'Pixie', 'Sage', 'Pathfinder', 'Forest_Maiden', 'Druid'],
-        'Epic' => ['Priestess', 'Dancer'],
-        'Rare' => ['Pharmacist', 'Archer']
-    ],
-    'league_heroes' => [
-        'Mythics' => ['Rose_Princess', 'Paragon', 'Bishop'],
-        'Legendary' => ['Secret_Keeper', 'Pyromancer', 'Hostess', 'Bard', 'Astrologer', 'Adjudicator'],
-        'Epic' => ['Ranger', 'Minister', 'Knight'],
-        'Rare' => ['Wizard', 'Warrior']
-    ],
-    'horde_heroes' => [
-        'Mythics' => ['Witch', 'Storm_Maiden', 'Desert_Prince'],
-        'Legendary' => ['Wilderness_Hunter', 'Warlock', 'Swordmaster', 'Soulmancer', 'Shaman', 'Headhunter', 'Barbarian'],
-        'Epic' => ['Rogue', 'Outlaw'],
-        'Rare' => ['Guard', 'Blacksmith']
-    ]
+    'nature_heroes' => [],
+    'league_heroes' => [],
+    'horde_heroes' => [],
 ];
+
+// Fetch all heroes from the database
+$allHeroes = getAllHeroes();
+
+// Map factions to their respective keys in the $heroes array
+$factionMap = [
+    'Nature' => 'nature_heroes',
+    'League' => 'league_heroes',
+    'Horde' => 'horde_heroes',
+];
+
+// Loop through each hero and group them by faction and rarity
+foreach ($allHeroes as $hero) {
+    $factionKey = $factionMap[$hero['faction']] ?? null;
+
+    if ($factionKey) {
+        $rarity = ucfirst(strtolower($hero['rarity'])); // Ensure proper capitalization (e.g., "Mythic")
+        if (!isset($heroes[$factionKey][$rarity])) {
+            $heroes[$factionKey][$rarity] = []; // Initialize rarity group if not exists
+        }
+
+        // Add hero with card to the respective rarity group
+        $heroes[$factionKey][$rarity][] = [
+            'id' => $hero['id'],
+            'name' => $hero['name'],
+            'card' => $hero['card'] ?? null,
+        ];
+    }
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -63,7 +79,6 @@ $heroes = [
             <option value="horde_heroes">Horde Heroes</option> 
         </select>
     </form>
-    <!-- <h2 id="factionTitle">Nature Heroes</h2> -->
     <div id="heroContainer" class="tile-mode"></div>
     <div id="previewContent" class="hidden"></div>
     <div id="heroDetails" class="hidden"></div>
