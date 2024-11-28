@@ -15,9 +15,9 @@
 }
 
 .hero-header .hero-roles {
-    text-align: left;
     margin: 0 auto;
     display: inline-block;
+    text-align: left;
 }
 
 .hero-header .hero-roles h3 {
@@ -25,35 +25,35 @@
     margin-bottom: 10px;
 }
 
-.hero-header .hero-roles ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
+.roles-table {
+    width: -webkit-fill-available;
+    border-spacing: 10px;
+    margin: 0 auto;
+    text-align: left;
 }
 
-.hero-header .hero-roles ul li {
-    margin-bottom: 10px;
-    padding-left: 40px;
-    position: relative;
+.role-icon-cell {
+    width: 50px;
+    text-align: center;
+    vertical-align: middle;
 }
 
-.hero-header .hero-roles ul li::before {
-    content: "";
-    display: inline-block;
+.role-description-cell {
+    vertical-align: middle;
+    position: relative; 
+    color: black;
+    text-align-last: center;
+    font-family: cursive;
+}
+
+body.dark-mode .role-description-cell {
+    color: white;
+}
+
+
+.role-icon {
     width: 32px;
-    height: 32px;
-    position: absolute;
-    left: 0;
-    top: 50%;
-    transform: translateY(-50%);
-    background-size: cover;
-    background-repeat: no-repeat;
-}
-
-.hero-header .hero-roles ul li[style*="list-style-image"]::before {
-    background-image: var(--list-style-image);
-    width: 32px;
-    height: 32px;
+    height: auto;
 }
 
 .hero-tabs {
@@ -80,8 +80,4 @@
 .hero-tabs a:hover {
     background-color: #0056b3;
     color: #fff;
-}
-
-.role-icon {
-    width: 32px;
 }

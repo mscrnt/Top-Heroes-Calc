@@ -64,17 +64,23 @@ if (isset($_GET['ajax']) && $_GET['ajax'] === 'true') {
              class="hero-icon">
     <?php endif; ?>
     <div class="hero-roles">
-        <h3>Roles:</h3>
         <?php if (!empty($roleDetails)): ?>
-            <ul>
+            <table class="roles-table">
                 <?php foreach ($roleDetails as $role): ?>
-                    <li style="list-style-image: url('<?= htmlspecialchars($role['icon']) ?>');">
-                        <span class="role-description">
+                    <tr>
+                        <td class="role-icon-cell">
+                            <?php if (!empty($role['icon'])): ?>
+                                <img src="<?= htmlspecialchars($role['icon']) ?>" 
+                                     alt="<?= htmlspecialchars($role['name']) ?> Icon" 
+                                     class="role-icon">
+                            <?php endif; ?>
+                        </td>
+                        <td class="role-description-cell">
                             <?= htmlspecialchars($role['description'] ?? $role['name']) ?>
-                        </span>
-                    </li>
+                        </td>
+                    </tr>
                 <?php endforeach; ?>
-            </ul>
+            </table>
         <?php else: ?>
             <p>No roles assigned.</p>
         <?php endif; ?>
