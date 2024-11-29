@@ -10,8 +10,10 @@ def generate_attack_hp_values():
     return {f"level_{i}": {"attack": None, "hp": None} for i in range(1, 233)}
 
 # Define default roles and factions (you can customize this)
-DEFAULT_ROLES = ["Sustained", "Damage Dealer"]
-DEFAULT_FACTION = "League"
+DEFAULT_ROLES = []
+DEFAULT_FACTION = ""
+CARD_LOCATION = ""
+ICON_LOCATION = ""
 
 # Function to generate a JSON object for a hero
 def generate_hero_json(hero_name):
@@ -19,6 +21,8 @@ def generate_hero_json(hero_name):
         "name": hero_name,  # Use the name as is (with spaces)
         "roles": DEFAULT_ROLES,
         "faction": DEFAULT_FACTION,
+        "card_location": CARD_LOCATION,
+        "icon_location": ICON_LOCATION,
         "attack_hp_values": generate_attack_hp_values()
     }
 
@@ -40,6 +44,7 @@ def main():
         hero_data = generate_hero_json(hero)
         hero_file_name = hero.lower().replace(' ', '_')  # File name uses underscores
         hero_file_path = os.path.join(FACTS_DIR, f"{hero_file_name}.json")
+
 
         # Write the JSON data to the file
         with open(hero_file_path, 'w') as hero_file:
