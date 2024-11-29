@@ -41,21 +41,42 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function renderHeroes(faction) {
-        const factionHeroes = heroesData[faction];
-        if (!factionHeroes) {
+        let factionHeroes = heroesData[faction];
+    
+        // Combine all factions if "all_heroes" is selected
+        if (faction === 'all_heroes') {
+            factionHeroes = {};
+            for (const key in heroesData) {
+                if (key !== 'all_heroes') {
+                    // Merge heroes by rarity
+                    for (const rarity in heroesData[key]) {
+                        if (!factionHeroes[rarity]) {
+                            factionHeroes[rarity] = [];
+                        }
+                        factionHeroes[rarity] = factionHeroes[rarity].concat(heroesData[key][rarity]);
+                    }
+                }
+            }
+        }
+    
+        // If no heroes exist, display a message
+        if (!factionHeroes || Object.keys(factionHeroes).length === 0) {
             heroContainer.innerHTML = '<p>No heroes found for the selected faction.</p>';
             return;
         }
-
-        // Flatten the heroes into a single array
+    
+        // Flatten heroes into a single array for navigation
         currentFactionHeroes = Object.entries(factionHeroes).flatMap(([rarity, heroes]) => heroes);
-
+    
+        // Render based on the current mode
         if (currentMode === 'tile') {
             renderTileMode(factionHeroes);
         } else {
             renderPreviewMode(factionHeroes);
         }
     }
+    
+    
 
     function renderTileMode(factionHeroes) {
         heroContainer.innerHTML = '';

@@ -1,0 +1,25 @@
+{
+    "factions": [
+        {
+        "name": "Horde",
+        "strong": "League",
+        "weak": "Nature",
+        "color": "#e16f4b",
+        "icon": "/static/images/topheroes-red.png"
+        },
+        {
+        "name": "Nature",
+        "strong": "Horde",
+        "weak": "League",
+        "color": "#aad458",
+        "icon": "/static/images/topheroes-green.png"
+        },
+        {
+        "name": "League",
+        "strong": "Nature",
+        "weak": "Horde",
+        "color": "#68b5ec",
+        "icon": "/static/images/topheroes-blue.png"
+        }
+    ]
+}

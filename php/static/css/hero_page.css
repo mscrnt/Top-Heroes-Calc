@@ -32,17 +32,64 @@
     text-align: left;
 }
 
+.roles-table td {
+    padding: 10px;
+}
+
+/* Style for hero rarity */
+.hero-rarity {
+    font-size: 1.2em;
+    color: #0074d9; /* Example color: adjust as needed */
+    text-align: center;
+    margin: 5px 0;
+}
+
+/* Style for hero faction */
+.hero-faction {
+    font-size: 1.1em;
+    color: #28a745; /* Example green color for faction */
+    text-align: center;
+    margin: 5px 0;
+    font-weight: bold;
+}
+
+/* Bold prefix in role descriptions */
+.roles-table .role-description-cell strong {
+    font-weight: bold;
+    color: #333; /* Adjust color as needed */
+}
+
+.faction-icon {
+    width: 24px;
+    height: 24px;
+    vertical-align: middle;
+    margin-right: 8px; /* Space between the icon and the text */
+    margin-bottom: 5px;
+}
+
+
+body.dark-mode .roles-table .role-description-cell strong {
+    color: white;
+}
+
+
 .role-icon-cell {
     width: 50px;
     text-align: center;
     vertical-align: middle;
 }
 
+.role-prefix-cell {
+    font-weight: bold;
+    color: #333;
+    width: max-content;
+}
+
+
 .role-description-cell {
     vertical-align: middle;
     position: relative; 
     color: black;
-    text-align-last: center;
 }
 
 body.dark-mode .role-description-cell {

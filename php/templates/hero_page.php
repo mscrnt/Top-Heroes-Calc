@@ -63,11 +63,42 @@ if (isset($_GET['ajax']) && $_GET['ajax'] === 'true') {
              alt="<?= htmlspecialchars($heroData['name']) ?> Icon" 
              class="hero-icon">
     <?php endif; ?>
+
+    <!-- Display Faction Icon -->
+    <?php if (!empty($heroData['faction_icon'])): ?>
+        <?php
+        $factionColor = $heroData['faction_color'] ?? '#000'; // Default to black if no color found
+        ?>
+        <p class="hero-faction" style="color: <?= htmlspecialchars($factionColor) ?> !important;">
+            <img src="<?= htmlspecialchars($heroData['faction_icon']) ?>" 
+                 alt="<?= htmlspecialchars($heroData['faction']) ?> Icon" 
+                 class="faction-icon">
+            <?= htmlspecialchars($heroData['faction']) ?>
+        </p>
+    <?php endif; ?>
+
+    <!-- Display Hero Rarity with custom colors -->
+    <?php if (!empty($heroData['rarity'])): ?>
+        <?php
+        $rarityColors = [
+            'Mythic' => '#f28f7a',
+            'Legendary' => '#f6c674',
+            'Epic' => '#d18bdb',
+            'Rare' => '#7dccf1',
+        ];
+        $rarityColor = $rarityColors[ucfirst(strtolower($heroData['rarity']))] ?? '#000'; // Default to black if no match
+        ?>
+        <p class="hero-rarity" style="color: <?= htmlspecialchars($rarityColor) ?> !important;">
+            <?= htmlspecialchars($heroData['rarity']) ?>
+        </p>
+    <?php endif; ?>
+
     <div class="hero-roles">
         <?php if (!empty($roleDetails)): ?>
             <table class="roles-table">
                 <?php foreach ($roleDetails as $role): ?>
                     <tr>
+                        <!-- Role Icon -->
                         <td class="role-icon-cell">
                             <?php if (!empty($role['icon'])): ?>
                                 <img src="<?= htmlspecialchars($role['icon']) ?>" 
@@ -75,17 +106,28 @@ if (isset($_GET['ajax']) && $_GET['ajax'] === 'true') {
                                      class="role-icon">
                             <?php endif; ?>
                         </td>
+
+                        <!-- Role Description with Prefix -->
                         <td class="role-description-cell">
-                            <?= htmlspecialchars($role['description'] ?? $role['name']) ?>
+                            <?php
+                            preg_match('/^(.*?):/', $role['description'] ?? $role['name'], $matches);
+                            $prefix = $matches[1] ?? '';
+                            $description = preg_replace('/^(.*?):/', '', $role['description'] ?? $role['name']);
+                            ?>
+                            <strong><?= htmlspecialchars($prefix) ?>:</strong><br>
+                            <?= htmlspecialchars(trim($description)) ?>
                         </td>
                     </tr>
                 <?php endforeach; ?>
             </table>
         <?php else: ?>
-            <p>No roles assigned.</p>
+            <!-- <p>No roles assigned.</p> -->
         <?php endif; ?>
     </div>
 </div>
+
+
+
 
 <?php if (!empty($validPages)): ?>
     <div class="hero-tabs">

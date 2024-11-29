@@ -18,6 +18,37 @@ else
     echo "No dbstruct directory found. Skipping table structure setup."
 fi
 
+# Seed the factions table
+if [ -f "/mariadb/seed/factions.json" ]; then
+    echo "Populating factions table from factions.json..."
+    jq -c '.factions[]' /mariadb/seed/factions.json | while read -r faction; do
+        name=$(echo "$faction" | jq -r '.name')
+        strong=$(echo "$faction" | jq -r '.strong')
+        weak=$(echo "$faction" | jq -r '.weak')
+        color=$(echo "$faction" | jq -r '.color')
+        icon=$(echo "$faction" | jq -r '.icon')
+
+        echo "Inserting faction: $name (Strong: $strong, Weak: $weak, Color: $color, Icon: $icon)"
+        mysql -h "$MYSQL_HOST" -u"$MYSQL_USER" -p"$MYSQL_PASSWORD" -D "$MYSQL_DATABASE" -e "
+        INSERT INTO factions (name, strong, weak, color, icon)
+        VALUES ('$name', '$strong', '$weak', '$color', '$icon')
+        ON DUPLICATE KEY UPDATE
+            strong = VALUES(strong),
+            weak = VALUES(weak),
+            color = VALUES(color),
+            icon = VALUES(icon);
+        "
+    done
+
+    # Log all factions currently in the database
+    echo "Factions in the database:"
+    mysql -h "$MYSQL_HOST" -u"$MYSQL_USER" -p"$MYSQL_PASSWORD" -D "$MYSQL_DATABASE" -e "
+    SELECT id, name, strong, weak FROM factions;
+    "
+else
+    echo "factions.json not found. Skipping factions seeding."
+fi
+
 # Seed the roles table
 if [ -f "/mariadb/seed/roles.json" ]; then
     echo "Populating roles table from roles.json..."
@@ -26,6 +57,7 @@ if [ -f "/mariadb/seed/roles.json" ]; then
         icon=$(echo "$entry" | jq -r '.value.icon')
         description=$(echo "$entry" | jq -r '.value.description')
 
+        echo "Inserting role: $name (Icon: $icon, Description: $description)"
         mysql -h "$MYSQL_HOST" -u"$MYSQL_USER" -p"$MYSQL_PASSWORD" -D "$MYSQL_DATABASE" -e "
         INSERT INTO roles (name, icon, description)
         VALUES ('$name', '$icon', '$description')
@@ -35,7 +67,6 @@ if [ -f "/mariadb/seed/roles.json" ]; then
         "
     done
 
-    # Log all roles currently in the database
     echo "Roles in the database:"
     mysql -h "$MYSQL_HOST" -u"$MYSQL_USER" -p"$MYSQL_PASSWORD" -D "$MYSQL_DATABASE" -e "
     SELECT id, name, icon FROM roles;
@@ -46,9 +77,9 @@ fi
 
 # Seed the heroes table
 if [ -d "/mariadb/seed/heroes" ]; then
-    echo "Populating heroes table from JSON files in heroes/..."
+    echo "Populating heroes table from JSON files in heroes/... "
     for file in /mariadb/seed/heroes/*.json; do
-        echo "Processing $file..."
+        echo "Processing hero file: $file"
         name=$(jq -r '.name' "$file")
         faction=$(jq -r '.faction' "$file")
         attack_hp_values=$(jq -c '.attack_hp_values' "$file")
@@ -57,39 +88,46 @@ if [ -d "/mariadb/seed/heroes" ]; then
         card=$(jq -r '.card // null' "$file")
         roles=$(jq -r '.roles[]' "$file")
 
-        # Insert hero into the database
+        echo "Inserting hero: $name (Faction: $faction, Rarity: $rarity, Icon: $icon, Card: $card)"
+        # Fetch faction_id from factions table
+        faction_id=$(mysql -h "$MYSQL_HOST" -u"$MYSQL_USER" -p"$MYSQL_PASSWORD" -D "$MYSQL_DATABASE" -sse "
+            SELECT id FROM factions WHERE name = '$faction';
+        ")
+
+        if [ -z "$faction_id" ]; then
+            echo "ERROR: Faction '$faction' not found for hero '$name'. Skipping hero."
+            continue
+        fi
+
         mysql -h "$MYSQL_HOST" -u"$MYSQL_USER" -p"$MYSQL_PASSWORD" -D "$MYSQL_DATABASE" -e "
-        INSERT INTO heroes (name, faction, attack_hp_values, rarity, icon, card)
-        VALUES ('$name', '$faction', '$attack_hp_values', '$rarity', '$icon', '$card')
+        INSERT INTO heroes (name, faction_id, attack_hp_values, rarity, icon, card)
+        VALUES ('$name', $faction_id, '$attack_hp_values', '$rarity', '$icon', '$card')
         ON DUPLICATE KEY UPDATE
-            faction = VALUES(faction),
+            faction_id = VALUES(faction_id),
             attack_hp_values = VALUES(attack_hp_values),
             rarity = VALUES(rarity),
             icon = VALUES(icon),
             card = VALUES(card);
         "
 
-        # Log roles being processed for this hero
-        echo "Roles for hero '$name' in JSON: $roles"
-
         # Link roles to heroes in hero_roles
         hero_id=$(mysql -h "$MYSQL_HOST" -u"$MYSQL_USER" -p"$MYSQL_PASSWORD" -D "$MYSQL_DATABASE" -sse "
             SELECT id FROM heroes WHERE name = '$name';
         ")
+        echo "Assigning roles to hero '$name' (Hero ID: $hero_id)"
         echo "$roles" | while IFS= read -r role; do
-            # Properly handle roles with spaces or hyphens
             role_id=$(mysql -h "$MYSQL_HOST" -u"$MYSQL_USER" -p"$MYSQL_PASSWORD" -D "$MYSQL_DATABASE" -sse "
                 SELECT id FROM roles WHERE name = '$role';
             ")
             if [ -n "$role_id" ]; then
-                echo "Role '$role' found in database for hero '$name'."
+                echo "Linking role '$role' (Role ID: $role_id) to hero '$name' (Hero ID: $hero_id)"
                 mysql -h "$MYSQL_HOST" -u"$MYSQL_USER" -p"$MYSQL_PASSWORD" -D "$MYSQL_DATABASE" -e "
                 INSERT INTO hero_roles (hero_id, role_id)
                 VALUES ($hero_id, $role_id)
                 ON DUPLICATE KEY UPDATE hero_id = VALUES(hero_id), role_id = VALUES(role_id);
                 "
             else
-                echo "ERROR: Role '$role' not found in database for hero '$name'."
+                echo "ERROR: Role '$role' not found for hero '$name'."
             fi
         done
     done

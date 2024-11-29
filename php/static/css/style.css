@@ -64,6 +64,8 @@ p {
 body.dark-mode .container {
     background-color: #56423d;
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.4);
+    background-blend-mode: multiply;
+
 }
 
 .light-mode {

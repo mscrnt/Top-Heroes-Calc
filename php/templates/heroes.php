@@ -8,6 +8,7 @@ $heroes = [
     'nature_heroes' => [],
     'league_heroes' => [],
     'horde_heroes' => [],
+    'all_heroes' => [],
 ];
 
 // Fetch all heroes from the database
@@ -24,8 +25,16 @@ $factionMap = [
 foreach ($allHeroes as $hero) {
     $factionKey = $factionMap[$hero['faction']] ?? null;
 
+    // Add hero to all_heroes list
+    $heroes['all_heroes'][] = [
+        'id' => $hero['id'],
+        'name' => $hero['name'],
+        'card' => $hero['card'] ?? null,
+        'rarity' => ucfirst(strtolower($hero['rarity'])), // Ensure proper capitalization (e.g., "Mythic")
+    ];
+
     if ($factionKey) {
-        $rarity = ucfirst(strtolower($hero['rarity'])); // Ensure proper capitalization (e.g., "Mythic")
+        $rarity = ucfirst(strtolower($hero['rarity']));
         if (!isset($heroes[$factionKey][$rarity])) {
             $heroes[$factionKey][$rarity] = []; // Initialize rarity group if not exists
         }
@@ -53,6 +62,9 @@ foreach ($allHeroes as $hero) {
             background-size: 20px 20px;
             padding-left: 30px; /* Space for the icon */
         }
+        /* #factionDropdown option[value="all_heroes"] {
+            background-image: url('/static/images/topheroes-all.png');
+        } */
         #factionDropdown option[value="nature_heroes"] {
             background-image: url('/static/images/topheroes-green.png');
         }
@@ -77,6 +89,7 @@ foreach ($allHeroes as $hero) {
             <option value="nature_heroes">Nature Heroes</option>
             <option value="league_heroes">League Heroes</option>
             <option value="horde_heroes">Horde Heroes</option> 
+            <option value="all_heroes">All Heroes</option>
         </select>
     </form>
     <div id="heroContainer" class="tile-mode"></div>

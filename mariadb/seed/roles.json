@@ -9,7 +9,7 @@
     },
     "Multi-Target": {
         "icon": "/static/images/role_icons/Multi_Target.png",
-        "description": "Multi-target: This hero specializes in dealing area-of-effect (AoE) damage. "
+        "description": "Multi-target: This hero specializes in dealing area-of-effect (AoE) damage."
     },
     "Tank": {
         "icon": "/static/images/role_icons/Tank.png",
