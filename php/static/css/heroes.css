@@ -24,6 +24,10 @@ body::-webkit-scrollbar-thumb:hover {
     background-color: #0056b3; /* Darker blue on hover */
 }
 
+.container {
+    max-height: 90vh;
+}  
+
 /* Headers */
 h2, h3 {
     text-align: center;
@@ -282,3 +286,38 @@ body.dark-mode .modal-content {
     color: #007bff; /* Add hover effect */
 }
 
+@media (min-width: 729px) and (max-width: 891px) and (min-height: 972px) and (max-height: 1188px) {
+    .container {
+        max-width: 95%;
+        max-height: 85vh !important;
+    }
+}
+
+@media (min-width: 324px) and (max-width: 396px) and (min-height: 702px) and (max-height: 858px) {
+    .container {
+        max-height: 85vh !important;
+    }
+}
+@media (min-width: 738px) and (max-width: 902px) and (min-height: 1062px) and (max-height: 1298px) {
+    .container {
+        max-height: 85vh !important;
+    }
+}
+
+@media (min-width: 541px) and (max-width: 661px) and (min-height: 866px) and (max-height: 1058px) {
+    .container {
+        max-height: 85vh !important;
+    }
+}
+
+@media (min-width: 338px) and (max-width: 413px) and (min-height: 600px) and (max-height: 734px) {
+    .container {
+        max-height: 80vh !important;
+    }
+}
+
+@media (min-width: 373px) and (max-width: 455px) and (min-height: 806px) and (max-height: 985px) {
+    .container {
+        max-height: 83vh !important;
+    }
+}

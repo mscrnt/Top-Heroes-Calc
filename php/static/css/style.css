@@ -500,9 +500,51 @@ body.dark-mode .theme-toggle {
 
     .controls-bar {
         max-width: 90%;
-        padding: 20px;
+        padding: 15px;
         min-width: 85%;
     }
+}
+
+/* 1024 x 1366 */ 
+@media (min-width: 1024px) and (max-width: 1024px) and (min-height: 1366px) and (max-height: 1366px) {
+    .container {
+        max-height: 90vh;
+    }
+}
+
+/* 912 x 1368 */ 
+@media (min-width: 912px) and (max-width: 912px) and (min-height: 1368px) and (max-height: 1368px) {
+    .container {
+        max-height: 90vh;
+    }
+
+    .controls-bar {
+        max-width: 80%;
+        padding: 15px 20px;
+    }   
+}
+
+/* 1024 x 600 */ 
+@media (min-width: 1024px) and (max-width: 1024px) and (min-height: 600px) and (max-height: 600px) {
+    .container {
+        max-height: 80vh !important;
+    }
+
+    .controls-bar {
+        max-width: 70%;
+    }   
+}
+
+
+/* 1280 x 800 */ 
+@media (min-width: 1280px) and (max-width: 1280px) and (min-height: 800px) and (max-height: 800px) {
+    .container {
+        max-height: 78vh !important;
+    }
+
+    .controls-bar {
+        max-width: 90%;
+    }   
 }
 
 /* 601 x 962 */
