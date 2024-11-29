@@ -6,6 +6,9 @@
         "Buff"
     ],
     "faction": "League",
+    "rarity": "Legendary",
+    "card": "/static/images/hero_cards/Adjudicator.webp",
+    "icon": "/static/images/hero_icons/adjudicator.png",
     "attack_hp_values": {
         "level_1": {
             "attack": null,
@@ -935,8 +938,5 @@
             "attack": null,
             "hp": null
         }
-    },
-    "rarity": "Legendary",
-    "card": "/static/images/hero_cards/Adjudicator.webp",
-    "icon": "/static/images/hero_icons/adjudicator.png"
+    }
 }

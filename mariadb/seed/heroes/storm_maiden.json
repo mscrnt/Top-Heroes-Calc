@@ -936,7 +936,7 @@
             "hp": null
         }
     },
-    "rarity": "Mythics",
+    "rarity": "Mythic",
     "card": "/static/images/hero_cards/Storm_Maiden.webp",
     "icon": "/static/images/hero_icons/storm_maiden.png"
 }

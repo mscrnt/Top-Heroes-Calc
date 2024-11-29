@@ -932,7 +932,7 @@
             "hp": null
         }
     },
-    "rarity": "Mythics",
+    "rarity": "Mythic",
     "card": "/static/images/hero_cards/Bishop.webp",
     "icon": "/static/images/hero_icons/bishop.webp"
 }
