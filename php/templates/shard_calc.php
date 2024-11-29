@@ -4,9 +4,8 @@
 <link rel="stylesheet" href="/static/css/shard_calc.css">
 <script src="/static/js/shard_calc.js" defer></script>
 
-<h2>Hero Shard Calculator</h2>
 <center>
-    <p>Welcome to the Hero Shard Calculator! This handy little tool helps you figure out exactly how many shards you’ll need to max out your legendary and mythic heroes in <strong>Top Heroes</strong>. Click on a star level or enter your hero level to calculate the shards.</p>
+    <p>This tool helps you figure out exactly how many shards you’ll need to max out your legendary and mythic heroes in <strong>Top Heroes</strong>. Click on a star level or enter your hero level to calculate the shards.</p>
 </center>    
 <form>
     <div class="form-row">

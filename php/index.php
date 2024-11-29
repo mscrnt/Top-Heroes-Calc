@@ -3,7 +3,7 @@
 
 // Define page titles
 $pageTitles = [
-    'shard_calc' => 'Shard Calculator',
+    'shard_calc' => 'Hero Shard Calculator',
     'heroes' => 'Hero Info',
 ];
 
@@ -20,25 +20,30 @@ include 'templates/header.php';
 ?>
 
 <div class="page-layout">
-    <!-- Content Wrapper -->
-    <div class="container content-wrapper">
-        <!-- Controls Bar -->
-        <div class="controls-bar">
-            <!-- Hamburger Menu -->
-            <div class="hamburger-menu">
-                <i class="fa fa-bars" id="hamburgerIcon"></i>
-                <div class="menu-dropdown" id="menuDropdown">
-                    <a href="index.php?page=shard_calc" <?php if ($page === 'shard_calc') echo 'class="active"'; ?>>Shard Calculator</a>
-                    <a href="index.php?page=heroes" <?php if ($page === 'heroes') echo 'class="active"'; ?>>Heroes</a>
-                </div>
-            </div>
-
-            <!-- Light/Dark Mode Toggle -->
-            <div class="theme-toggle">
-                <i id="themeToggleIcon" class="fa-regular fa-sun"></i>
+    <!-- Controls Bar -->
+    <div class="controls-bar">
+        <!-- Hamburger Menu -->
+        <div class="hamburger-menu">
+            <i class="fa fa-bars" id="hamburgerIcon"></i>
+            <div class="menu-dropdown" id="menuDropdown">
+                <a href="index.php?page=shard_calc" <?php if ($page === 'shard_calc') echo 'class="active"'; ?>>Shard Calculator</a>
+                <a href="index.php?page=heroes" <?php if ($page === 'heroes') echo 'class="active"'; ?>>Heroes</a>
             </div>
         </div>
 
+        <!-- Page Title -->
+        <div class="controls-bar-title">
+            <?= htmlspecialchars($pageTitle) ?>
+        </div>
+
+        <!-- Light/Dark Mode Toggle -->
+        <div class="theme-toggle">
+            <i id="themeToggleIcon" class="fa-regular fa-sun"></i>
+        </div>
+    </div>
+
+    <!-- Content Wrapper -->
+    <div class="container content-wrapper">
         <!-- Main Content Container -->
         <div class="mt-2">
             <div class="main-container">

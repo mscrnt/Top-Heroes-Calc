@@ -43,7 +43,6 @@
     position: relative; 
     color: black;
     text-align-last: center;
-    font-family: cursive;
 }
 
 body.dark-mode .role-description-cell {

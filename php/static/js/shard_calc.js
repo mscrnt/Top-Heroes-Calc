@@ -203,21 +203,21 @@ function toggleChart() {
 function handleFloatingShardDisplay() {
     const floatingShard = document.querySelector('.floating-shard-display');
     const container = document.querySelector('.container.content-wrapper');
-    const desktopInitialTop = 220; // Default top for desktop
-    const mobileInitialTop = 290; // Default top for mobile
-    const fixedTopDistance = 10; // Distance from top when pinned
+    const heroTypeSelect = document.querySelector('#heroType');
+    const fixedTopDistance = 85; // Distance from top when pinned
 
-    let initialTopPixels = desktopInitialTop; // Default for desktop
+    let initialTopPixels = 0; // Dynamically calculated initial position
     let isPinned = false; // Tracks whether the shard is pinned to the top
 
-    // Function to calculate the initial position dynamically
+    // Function to calculate the initial top position based on the heroType element
     function calculateInitialTop() {
-        if (window.innerWidth <= 768) {
-            initialTopPixels = mobileInitialTop;
-            //console.log(`[ShardDisplay] Mobile view detected, using mobileInitialTop: ${mobileInitialTop}px`);
+        if (heroTypeSelect) {
+            const selectRect = heroTypeSelect.getBoundingClientRect();
+            const containerRect = container.getBoundingClientRect();
+            initialTopPixels = selectRect.top - containerRect.top + selectRect.height;
         } else {
-            initialTopPixels = desktopInitialTop;
-            //console.log(`[ShardDisplay] Desktop view detected, using desktopInitialTop: ${desktopInitialTop}px`);
+            console.warn('[ShardDisplay] heroType element not found. Using fallback top value.');
+            initialTopPixels = 220; // Fallback value
         }
         return initialTopPixels;
     }
