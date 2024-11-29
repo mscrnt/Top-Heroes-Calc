@@ -1,8 +1,9 @@
 {
     "name": "Sage",
     "roles": [
+        "Tank",
         "Sustained",
-        "Damage Dealer"
+        "Debuff"
     ],
     "faction": "Nature",
     "attack_hp_values": {

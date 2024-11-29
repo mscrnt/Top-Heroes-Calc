@@ -2,7 +2,8 @@
     "name": "Swordmaster",
     "roles": [
         "Sustained",
-        "Damage Dealer"
+        "Tank",
+        "Multi-Target"
     ],
     "faction": "Horde",
     "attack_hp_values": {

@@ -1,8 +1,8 @@
 {
     "name": "Outlaw",
     "roles": [
-        "Sustained",
-        "Damage Dealer"
+        "Support",
+        "Debuff"
     ],
     "faction": "Horde",
     "attack_hp_values": {

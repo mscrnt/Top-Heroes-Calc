@@ -1,8 +1,9 @@
 {
     "name": "Soulmancer",
     "roles": [
-        "Sustained",
-        "Damage Dealer"
+        "Support",
+        "Buff",
+        "Multi-Target"
     ],
     "faction": "Horde",
     "attack_hp_values": {

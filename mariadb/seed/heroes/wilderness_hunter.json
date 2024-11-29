@@ -2,7 +2,8 @@
     "name": "Wilderness Hunter",
     "roles": [
         "Sustained",
-        "Damage Dealer"
+        "Damage Dealer",
+        "Buff"
     ],
     "faction": "Horde",
     "attack_hp_values": {

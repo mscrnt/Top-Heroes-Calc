@@ -1,50 +1,50 @@
 {
     "Damage Dealer": {
         "icon": "/static/images/role_icons/DPS.png",
-        "description": "Damage Dealer: Excels at dealing damage, increasing final damage by 3%."
+        "description": "Damage Dealer: This hero excels at dealing damage, increasing final damage by 3%."
     },
     "Burst Damage": {
         "icon": "/static/images/role_icons/Burst.png",
-        "description": "Burst Striker: Specialises in delivering high burst damage in a short period through skills."
+        "description": "Burst Damage: This hero specializes in using skills to inflict high burst damage in a short period."
     },
     "Multi-Target": {
         "icon": "/static/images/role_icons/Multi_Target.png",
-        "description": "Area Damage Dealer: Excels at dealing Area of Effect (AOE) damage to multiple enemies."
+        "description": "Multi-target: This hero specializes in dealing area-of-effect (AoE) damage. "
     },
     "Tank": {
         "icon": "/static/images/role_icons/Tank.png",
-        "description": "Guardian: Positioned in the front row to absorb damage, reducing damage taken by 5%."
+        "description": "Tank: This hero excels at tanking damage in the front row, reducing damage taken by 5%."
     },
     "Control": {
         "icon": "/static/images/role_icons/Controller.png",
-        "description": "Controller: Capable of controlling enemies through crowd-control effects."
+        "description": "Control: This hero is capable of controlling enemies."
     },
     "Sustained": {
         "icon": "/static/images/role_icons/Sustain.png",
-        "description": "Sustainer: Inflicts special effects and engages in prolonged combat."
+        "description": "Sustained: This hero specializes in inflicting special effects on attacks and engaging in sustained combat."
     },
     "Buff": {
         "icon": "/static/images/role_icons/Buff.png",
-        "description": "Buffer: Provides beneficial buffs to enhance teammates’ performance."
+        "description": "Buff: This hero is able to provide buffs to teammates."
     },
     "Healer": {
         "icon": "/static/images/role_icons/Healer.png",
-        "description": "Healer: Specialises in healing, enhancing healing effects by 5%."
+        "description": "Healer: This hero excels at providing healing supoort, enhancing healing by 5%."
     },
     "Single Target": {
         "icon": "/static/images/role_icons/Single_target.png",
-        "description": "Precision Striker: Focuses on dealing high damage to a single enemy."
+        "description": "Single Target: This hero specializes in dealing single-target damage."
     },
     "Support": {
         "icon": "/static/images/role_icons/Support.png",
-        "description": "Supporter: Offers strategic support by increasing teammates’ maximum health by 5%."
+        "description": "Supporter: This hero excels at offering strategic assistance, raising maximum HP by 5%."
     },
     "Debuff": {
         "icon": "/static/images/role_icons/Debuff.png",
-        "description": "Debuffer: Specialises in weakening enemies by applying debuffs."
+        "description": "Debuff: This hero is capable of inflicting debuffs to enemies."
     },
     "Summoner": {
         "icon": "/static/images/role_icons/Summoner.png",
-        "description": "Summoner: Capable of summoning additional units to assist in battle."
+        "description": "Summon: This hero can summon units to join the battle"
     }
 }

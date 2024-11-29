@@ -1,8 +1,9 @@
 {
     "name": "Adjudicator",
     "roles": [
+        "Tank",
         "Sustained",
-        "Damage Dealer"
+        "Buff"
     ],
     "faction": "League",
     "attack_hp_values": {

@@ -1,8 +1,9 @@
 {
     "name": "Astrologer",
     "roles": [
-        "Sustained",
-        "Damage Dealer"
+        "Burst Damage",
+        "Damage Dealer",
+        "Single Target"
     ],
     "faction": "League",
     "attack_hp_values": {

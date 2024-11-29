@@ -1,7 +1,7 @@
 {
     "name": "Rogue",
     "roles": [
-        "Sustained",
+        "Debuff",
         "Damage Dealer"
     ],
     "faction": "Horde",

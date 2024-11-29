@@ -1,9 +1,6 @@
 {
     "name": "Stonemanson",
-    "roles": [
-        "Sustained",
-        "Damage Dealer"
-    ],
+    "roles": [],
     "faction": "Nature",
     "attack_hp_values": {
         "level_1": {

@@ -1,8 +1,9 @@
 {
     "name": "Tidecaller",
     "roles": [
-        "Sustained",
-        "Damage Dealer"
+        "Summoner",
+        "Damage Dealer",
+        "Control"
     ],
     "faction": "Nature",
     "attack_hp_values": {

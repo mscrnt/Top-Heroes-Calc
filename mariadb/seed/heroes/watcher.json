@@ -1,8 +1,9 @@
 {
     "name": "Watcher",
     "roles": [
-        "Sustained",
-        "Damage Dealer"
+        "Burst Damage",
+        "Damage Dealer",
+        "Debuff"
     ],
     "faction": "Nature",
     "attack_hp_values": {

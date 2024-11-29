@@ -1,8 +1,9 @@
 {
     "name": "Druid",
     "roles": [
-        "Sustained",
-        "Damage Dealer"
+        "Healer",
+        "Buff",
+        "Summoner"
     ],
     "faction": "Nature",
     "attack_hp_values": {

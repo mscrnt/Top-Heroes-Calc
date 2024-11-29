@@ -1,9 +1,6 @@
 {
     "name": "Headhunter",
-    "roles": [
-        "Sustained",
-        "Damage Dealer"
-    ],
+    "roles": [],
     "faction": "Horde",
     "attack_hp_values": {
         "level_1": {

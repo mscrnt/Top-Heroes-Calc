@@ -1,8 +1,8 @@
 {
     "name": "Minister",
     "roles": [
-        "Sustained",
-        "Damage Dealer"
+        "Healer",
+        "Buff"
     ],
     "faction": "League",
     "attack_hp_values": {

@@ -1,9 +1,6 @@
 {
     "name": "Hostess",
-    "roles": [
-        "Sustained",
-        "Damage Dealer"
-    ],
+    "roles": [],
     "faction": "League",
     "attack_hp_values": {
         "level_1": {

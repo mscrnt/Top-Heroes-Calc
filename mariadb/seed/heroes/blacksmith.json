@@ -1,8 +1,8 @@
 {
     "name": "Blacksmith",
     "roles": [
-        "Sustained",
-        "Damage Dealer"
+        "Support",
+        "Buff"
     ],
     "faction": "Horde",
     "attack_hp_values": {

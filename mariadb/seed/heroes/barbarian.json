@@ -1,8 +1,9 @@
 {
     "name": "Barbarian",
     "roles": [
-        "Sustained",
-        "Damage Dealer"
+        "Tank",
+        "Debuff",
+        "Control"
     ],
     "faction": "Horde",
     "attack_hp_values": {

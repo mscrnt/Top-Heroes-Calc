@@ -2,7 +2,8 @@
     "name": "Witch",
     "roles": [
         "Sustained",
-        "Damage Dealer"
+        "Healer",
+        "Control"
     ],
     "faction": "Horde",
     "attack_hp_values": {

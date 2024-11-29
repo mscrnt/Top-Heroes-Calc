@@ -1,11 +1,10 @@
 {
-    "name": "Paragon",
+    "name": "Brawler",
     "roles": [
-        "Burst Damage",
         "Damage Dealer",
-        "Multi-Target"
+        "Sustained"
     ],
-    "faction": "League",
+    "faction": "Horde",
     "attack_hp_values": {
         "level_1": {
             "attack": null,
@@ -936,7 +935,7 @@
             "hp": null
         }
     },
-    "rarity": "Mythics",
-    "card": "/static/images/hero_cards/Paragon.webp",
-    "icon": "/static/images/hero_icons/paragon.png"
+    "rarity": "Epic",
+    "card": "/static/images/hero_cards/Blacksmith.webp",
+    "icon": null
 }

@@ -2,7 +2,8 @@
     "name": "Storm Maiden",
     "roles": [
         "Sustained",
-        "Damage Dealer"
+        "Damage Dealer",
+        "Multi-Target"
     ],
     "faction": "Horde",
     "attack_hp_values": {

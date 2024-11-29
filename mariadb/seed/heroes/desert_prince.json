@@ -1,8 +1,9 @@
 {
     "name": "Desert Prince",
     "roles": [
+        "Tank",
         "Sustained",
-        "Damage Dealer"
+        "Multi-Target"
     ],
     "faction": "Horde",
     "attack_hp_values": {

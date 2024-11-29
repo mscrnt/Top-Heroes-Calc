@@ -1,8 +1,9 @@
 {
     "name": "Rose Princess",
     "roles": [
-        "Sustained",
-        "Damage Dealer"
+        "Tank",
+        "Burst Damage",
+        "Control"
     ],
     "faction": "League",
     "attack_hp_values": {

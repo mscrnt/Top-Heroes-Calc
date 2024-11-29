@@ -2,7 +2,8 @@
     "name": "Treeguard",
     "roles": [
         "Sustained",
-        "Damage Dealer"
+        "Tank",
+        "Buff"
     ],
     "faction": "Nature",
     "attack_hp_values": {

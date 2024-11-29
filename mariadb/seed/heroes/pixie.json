@@ -1,8 +1,9 @@
 {
     "name": "Pixie",
     "roles": [
-        "Sustained",
-        "Damage Dealer"
+        "Burst Damage",
+        "Damage Dealer",
+        "Control"
     ],
     "faction": "Nature",
     "attack_hp_values": {

@@ -1,8 +1,9 @@
 {
     "name": "Forest Maiden",
     "roles": [
-        "Sustained",
-        "Damage Dealer"
+        "Support",
+        "Control",
+        "Summoner"
     ],
     "faction": "Nature",
     "attack_hp_values": {
