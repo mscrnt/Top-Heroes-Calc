@@ -11,59 +11,59 @@
     "icon": "/static/images/hero_icons/adjudicator.png",
     "attack_hp_values": {
         "level_1": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_2": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_3": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_4": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_5": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_6": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_7": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_8": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_9": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_10": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_11": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_12": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_13": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_14": {
-            "attack": null,
+            "attack": 0,
             "hp": null
         },
         "level_15": {

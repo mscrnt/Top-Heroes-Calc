@@ -56,8 +56,10 @@ CREATE TABLE IF NOT EXISTS resource_icons (
 CREATE TABLE IF NOT EXISTS hero_leveling (
     id INT AUTO_INCREMENT PRIMARY KEY,
     level INT NOT NULL,
-    meat_required VARCHAR(50) NOT NULL,
+    meat_required INT NOT NULL, 
     resource_id INT NOT NULL,
     FOREIGN KEY (resource_id) REFERENCES resources(id) ON DELETE CASCADE,
-    UNIQUE (level, resource_id) 
+    UNIQUE KEY unique_level_meat_required (level, meat_required)
 );
+
+

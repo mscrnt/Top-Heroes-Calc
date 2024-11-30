@@ -8,935 +8,935 @@
     "faction": "Nature",
     "attack_hp_values": {
         "level_1": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_2": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_3": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_4": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_5": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_6": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_7": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_8": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_9": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_10": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_11": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_12": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_13": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_14": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_15": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_16": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_17": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_18": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_19": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_20": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_21": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_22": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_23": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_24": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_25": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_26": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_27": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_28": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_29": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_30": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_31": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_32": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_33": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_34": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_35": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_36": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_37": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_38": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_39": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_40": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_41": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_42": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_43": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_44": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_45": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_46": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_47": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_48": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_49": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_50": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_51": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_52": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_53": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_54": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_55": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_56": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_57": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_58": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_59": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_60": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_61": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_62": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_63": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_64": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_65": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_66": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_67": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_68": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_69": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_70": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_71": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_72": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_73": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_74": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_75": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_76": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_77": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_78": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_79": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_80": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_81": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_82": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_83": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_84": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_85": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_86": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_87": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_88": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_89": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_90": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_91": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_92": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_93": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_94": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_95": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_96": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_97": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_98": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_99": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_100": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_101": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_102": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_103": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_104": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_105": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_106": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_107": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_108": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_109": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_110": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_111": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_112": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_113": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_114": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_115": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_116": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_117": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_118": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_119": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_120": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_121": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_122": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_123": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_124": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_125": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_126": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_127": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_128": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_129": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_130": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_131": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_132": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_133": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_134": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_135": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_136": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_137": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_138": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_139": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_140": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_141": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_142": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_143": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_144": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_145": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_146": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_147": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_148": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_149": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_150": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_151": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_152": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_153": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_154": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_155": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_156": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_157": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_158": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_159": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_160": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_161": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_162": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_163": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_164": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_165": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_166": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_167": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_168": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_169": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_170": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_171": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_172": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_173": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_174": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_175": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_176": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_177": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_178": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_179": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_180": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_181": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_182": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_183": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_184": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_185": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_186": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_187": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_188": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_189": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_190": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_191": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_192": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_193": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_194": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_195": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_196": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_197": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_198": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_199": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_200": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_201": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_202": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_203": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_204": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_205": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_206": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_207": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_208": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_209": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_210": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_211": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_212": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_213": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_214": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_215": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_216": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_217": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_218": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_219": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_220": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_221": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_222": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_223": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_224": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_225": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_226": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_227": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_228": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_229": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_230": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_231": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         },
         "level_232": {
-            "attack": null,
-            "hp": null
+            "attack": 0,
+            "hp": 0
         }
     },
     "rarity": "Legendary",
     "card": "/static/images/hero_cards/Forest_Maiden.webp",
-    "icon": null
+    "icon": 0
 }

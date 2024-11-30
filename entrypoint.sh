@@ -1,8 +1,21 @@
 #!/bin/bash
 
+# Helper function to run MySQL queries and handle errors
+run_mysql_query() {
+    local query="$1"
+    local db="$2"
+    local result
+    result=$(mysql -h "$MYSQL_HOST" -P "$MYSQL_PORT" -u root -p"$MYSQL_ROOT_PASSWORD" -D "$MYSQL_DATABASE" -e "$query")
+    if [ $? -ne 0 ]; then
+        echo "ERROR: MySQL query failed: $query"
+        exit 1
+    fi
+    echo "$result"
+}
+
 # Wait for the database to be ready
 echo "Waiting for MariaDB to be ready..."
-until mysql -h "$MYSQL_HOST" -u"$MYSQL_USER" -p"$MYSQL_PASSWORD" -e "SELECT 1;" 2>/dev/null; do
+until mysql -h "$MYSQL_HOST" -P "$MYSQL_PORT" -u"$MYSQL_USER" -p"$MYSQL_PASSWORD" -e "SELECT 1;" 2>/dev/null; do
     sleep 1
 done
 
@@ -12,11 +25,12 @@ echo "MariaDB is ready. Initializing database..."
 if [ -d "/mariadb/dbstruct" ]; then
     for sql_file in /mariadb/dbstruct/db_struct.sql; do
         echo "Applying structure from $sql_file..."
-        mysql -h "$MYSQL_HOST" -u"$MYSQL_USER" -p"$MYSQL_PASSWORD" -D "$MYSQL_DATABASE" < "$sql_file"
+        mysql -h "$MYSQL_HOST" -P "$MYSQL_PORT" -u"$MYSQL_USER" -p"$MYSQL_PASSWORD" -D "$MYSQL_DATABASE" < "$sql_file"
     done
 else
     echo "No dbstruct directory found. Skipping table structure setup."
 fi
+
 
 # Seed the factions table
 if [ -f "/mariadb/seed/factions.json" ]; then
@@ -29,22 +43,20 @@ if [ -f "/mariadb/seed/factions.json" ]; then
         icon=$(echo "$faction" | jq -r '.icon')
 
         echo "Inserting faction: $name (Strong: $strong, Weak: $weak, Color: $color, Icon: $icon)"
-        mysql -h "$MYSQL_HOST" -u"$MYSQL_USER" -p"$MYSQL_PASSWORD" -D "$MYSQL_DATABASE" -e "
-        INSERT INTO factions (name, strong, weak, color, icon)
-        VALUES ('$name', '$strong', '$weak', '$color', '$icon')
-        ON DUPLICATE KEY UPDATE
-            strong = VALUES(strong),
-            weak = VALUES(weak),
-            color = VALUES(color),
-            icon = VALUES(icon);
-        "
+        query="INSERT INTO factions (name, strong, weak, color, icon)
+               VALUES ('$name', '$strong', '$weak', '$color', '$icon')
+               ON DUPLICATE KEY UPDATE
+                   strong = VALUES(strong),
+                   weak = VALUES(weak),
+                   color = VALUES(color),
+                   icon = VALUES(icon);"
+        run_mysql_query "$query" "$MYSQL_DATABASE"
     done
 
     # Log all factions currently in the database
     echo "Factions in the database:"
-    mysql -h "$MYSQL_HOST" -u"$MYSQL_USER" -p"$MYSQL_PASSWORD" -D "$MYSQL_DATABASE" -e "
-    SELECT id, name, strong, weak FROM factions;
-    "
+    query="SELECT id, name, strong, weak FROM factions;"
+    run_mysql_query "$query" "$MYSQL_DATABASE"
 else
     echo "factions.json not found. Skipping factions seeding."
 fi
@@ -58,13 +70,13 @@ if [ -f "/mariadb/seed/resources.json" ]; then
 
         # Insert resource
         echo "Inserting resource: $name"
-        mysql -h "$MYSQL_HOST" -u"$MYSQL_USER" -p"$MYSQL_PASSWORD" -D "$MYSQL_DATABASE" -e "
+        mysql -h "$MYSQL_HOST" -P "$MYSQL_PORT" -u"$MYSQL_USER" -p"$MYSQL_PASSWORD" -D "$MYSQL_DATABASE" -e "
         INSERT INTO resources (name)
         VALUES ('$name')
         ON DUPLICATE KEY UPDATE name = VALUES(name);
         "
 
-        resource_id=$(mysql -h "$MYSQL_HOST" -u"$MYSQL_USER" -p"$MYSQL_PASSWORD" -D "$MYSQL_DATABASE" -sse "
+        resource_id=$(mysql -h "$MYSQL_HOST" -P "$MYSQL_PORT" -u"$MYSQL_USER" -p"$MYSQL_PASSWORD" -D "$MYSQL_DATABASE" -sse "
             SELECT id FROM resources WHERE name = '$name';
         ")
 
@@ -87,7 +99,7 @@ if [ -f "/mariadb/seed/resources.json" ]; then
 
 
             # Insert icon
-            mysql -h "$MYSQL_HOST" -u"$MYSQL_USER" -p"$MYSQL_PASSWORD" -D "$MYSQL_DATABASE" -e "
+            mysql -h "$MYSQL_HOST" -P "$MYSQL_PORT" -u"$MYSQL_USER" -p"$MYSQL_PASSWORD" -D "$MYSQL_DATABASE" -e "
             INSERT INTO resource_icons (resource_id, type, icon_path)
             VALUES ($resource_id, '$type', '$path')
             ON DUPLICATE KEY UPDATE
@@ -99,7 +111,7 @@ if [ -f "/mariadb/seed/resources.json" ]; then
 
     # Log all resources currently in the database
     echo "Resources in the database:"
-    mysql -h "$MYSQL_HOST" -u"$MYSQL_USER" -p"$MYSQL_PASSWORD" -D "$MYSQL_DATABASE" -e "
+    mysql -h "$MYSQL_HOST" -P "$MYSQL_PORT" -u"$MYSQL_USER" -p"$MYSQL_PASSWORD" -D "$MYSQL_DATABASE" -e "
     SELECT id, name FROM resources;
     "
 else
@@ -115,7 +127,7 @@ if [ -f "/mariadb/seed/roles.json" ]; then
         description=$(echo "$entry" | jq -r '.value.description')
 
         echo "Inserting role: $name (Icon: $icon, Description: $description)"
-        mysql -h "$MYSQL_HOST" -u"$MYSQL_USER" -p"$MYSQL_PASSWORD" -D "$MYSQL_DATABASE" -e "
+        mysql -h "$MYSQL_HOST" -P "$MYSQL_PORT" -u"$MYSQL_USER" -p"$MYSQL_PASSWORD" -D "$MYSQL_DATABASE" -e "
         INSERT INTO roles (name, icon, description)
         VALUES ('$name', '$icon', '$description')
         ON DUPLICATE KEY UPDATE
@@ -125,7 +137,7 @@ if [ -f "/mariadb/seed/roles.json" ]; then
     done
 
     echo "Roles in the database:"
-    mysql -h "$MYSQL_HOST" -u"$MYSQL_USER" -p"$MYSQL_PASSWORD" -D "$MYSQL_DATABASE" -e "
+    mysql -h "$MYSQL_HOST" -P "$MYSQL_PORT" -u"$MYSQL_USER" -p"$MYSQL_PASSWORD" -D "$MYSQL_DATABASE" -e "
     SELECT id, name, icon FROM roles;
     "
 else
@@ -134,7 +146,7 @@ fi
 
 # Seed the heroes table
 if [ -d "/mariadb/seed/heroes" ]; then
-    echo "Populating heroes table from JSON files in heroes/... "
+    echo "Populating heroes table from JSON files in heroes/..."
     for file in /mariadb/seed/heroes/*.json; do
         echo "Processing hero file: $file"
         name=$(jq -r '.name' "$file")
@@ -146,8 +158,9 @@ if [ -d "/mariadb/seed/heroes" ]; then
         roles=$(jq -r '.roles[]' "$file")
 
         echo "Inserting hero: $name (Faction: $faction, Rarity: $rarity, Icon: $icon, Card: $card)"
+        
         # Fetch faction_id from factions table
-        faction_id=$(mysql -h "$MYSQL_HOST" -u"$MYSQL_USER" -p"$MYSQL_PASSWORD" -D "$MYSQL_DATABASE" -sse "
+        faction_id=$(mysql -h "$MYSQL_HOST" -P "$MYSQL_PORT" -u"$MYSQL_USER" -p"$MYSQL_PASSWORD" -D "$MYSQL_DATABASE" -sse "
             SELECT id FROM factions WHERE name = '$faction';
         ")
 
@@ -156,7 +169,7 @@ if [ -d "/mariadb/seed/heroes" ]; then
             continue
         fi
 
-        mysql -h "$MYSQL_HOST" -u"$MYSQL_USER" -p"$MYSQL_PASSWORD" -D "$MYSQL_DATABASE" -e "
+        mysql -h "$MYSQL_HOST" -P "$MYSQL_PORT" -u"$MYSQL_USER" -p"$MYSQL_PASSWORD" -D "$MYSQL_DATABASE" -e "
         INSERT INTO heroes (name, faction_id, attack_hp_values, rarity, icon, card)
         VALUES ('$name', $faction_id, '$attack_hp_values', '$rarity', '$icon', '$card')
         ON DUPLICATE KEY UPDATE
@@ -168,20 +181,20 @@ if [ -d "/mariadb/seed/heroes" ]; then
         "
 
         # Link roles to heroes in hero_roles
-        hero_id=$(mysql -h "$MYSQL_HOST" -u"$MYSQL_USER" -p"$MYSQL_PASSWORD" -D "$MYSQL_DATABASE" -sse "
+        hero_id=$(mysql -h "$MYSQL_HOST" -P "$MYSQL_PORT" -u"$MYSQL_USER" -p"$MYSQL_PASSWORD" -D "$MYSQL_DATABASE" -sse "
             SELECT id FROM heroes WHERE name = '$name';
         ")
         echo "Assigning roles to hero '$name' (Hero ID: $hero_id)"
         echo "$roles" | while IFS= read -r role; do
-            role_id=$(mysql -h "$MYSQL_HOST" -u"$MYSQL_USER" -p"$MYSQL_PASSWORD" -D "$MYSQL_DATABASE" -sse "
+            role_id=$(mysql -h "$MYSQL_HOST" -P "$MYSQL_PORT" -u"$MYSQL_USER" -p"$MYSQL_PASSWORD" -D "$MYSQL_DATABASE" -sse "
                 SELECT id FROM roles WHERE name = '$role';
             ")
             if [ -n "$role_id" ]; then
                 echo "Linking role '$role' (Role ID: $role_id) to hero '$name' (Hero ID: $hero_id)"
-                mysql -h "$MYSQL_HOST" -u"$MYSQL_USER" -p"$MYSQL_PASSWORD" -D "$MYSQL_DATABASE" -e "
+                mysql -h "$MYSQL_HOST" -P "$MYSQL_PORT" -u"$MYSQL_USER" -p"$MYSQL_PASSWORD" -D "$MYSQL_DATABASE" -e "
                 INSERT INTO hero_roles (hero_id, role_id)
-                VALUES ($hero_id, $role_id)
-                ON DUPLICATE KEY UPDATE hero_id = VALUES(hero_id), role_id = VALUES(role_id);
+                       VALUES ($hero_id, $role_id)
+                       ON DUPLICATE KEY UPDATE hero_id = VALUES(hero_id), role_id = VALUES(role_id);
                 "
             else
                 echo "ERROR: Role '$role' not found for hero '$name'."
@@ -193,17 +206,23 @@ else
 fi
 
 # Helper function to run MySQL queries and handle errors
-run_mysql_query() {
+mysql_query() {
     local query="$1"
     local db="$2"
     local result
-    result=$(mysql -h "$MYSQL_HOST" -u"$MYSQL_USER" -p"$MYSQL_PASSWORD" -D "$db" -sse "$query")
+    # Run the query
+    result=$(mysql -h "$MYSQL_HOST" -P "$MYSQL_PORT" -u root -p"$MYSQL_ROOT_PASSWORD" -D "$MYSQL_DATABASE" -sse "$query")
     if [ $? -ne 0 ]; then
         echo "ERROR: MySQL query failed: $query"
         exit 1
     fi
-    echo "$result"
+
+    # Check if any rows were affected (for inserts/updates)
+    affected_rows=$(mysql -h "$MYSQL_HOST" -P "$MYSQL_PORT" -u root -p"$MYSQL_ROOT_PASSWORD" -D "$MYSQL_DATABASE" -sse "SELECT ROW_COUNT();")
+    
+    echo "$affected_rows"  # Return the affected rows count
 }
+
 
 # Seed the hero_leveling table
 if [ -f "/mariadb/seed/hero_leveling.csv" ]; then
@@ -211,11 +230,14 @@ if [ -f "/mariadb/seed/hero_leveling.csv" ]; then
 
     # Get the resource ID for 'Meat' once
     meat_resource_id=$(run_mysql_query "SELECT id FROM resources WHERE name = 'Meat';" "$MYSQL_DATABASE")
+
+    # Debugging: Print meat_resource_id to check if it's correctly assigned
+    echo "meat_resource_id: $meat_resource_id"
+    
     if [ -z "$meat_resource_id" ]; then
         echo "ERROR: Resource 'Meat' not found. Ensure resources are seeded first."
         exit 1
     fi
-    echo "Resource ID for 'Meat': $meat_resource_id"
 
     # Process the CSV, skipping the header row
     row_number=0
@@ -232,10 +254,8 @@ if [ -f "/mariadb/seed/hero_leveling.csv" ]; then
         # Clean up the meat_required value: remove commas and extra spaces
         meat_required_clean=$(echo "$meat_required" | sed -E 's/,//g; s/^\s+|\s+$//g')
 
-        # Debug: Show the cleaned value
-        echo "Cleaned meat_required value: '$meat_required_clean'"
 
-        # Check if it contains a 'k' or 'm'
+        # Convert the meat_required value if it contains 'k' or 'm'
         if [[ "$meat_required_clean" =~ ^([0-9]+(\.[0-9]+)?)k$ ]]; then
             # Handle 'k' (thousands), keep decimal if present
             numeric_value=$(echo "$meat_required_clean" | sed -E 's/k$//')
@@ -253,25 +273,31 @@ if [ -f "/mariadb/seed/hero_leveling.csv" ]; then
             continue
         fi
 
-        # Debug: Show the converted value
-        echo "Converted value: $meat_required_clean -> $numeric_value"
 
         # Ensure the value is numeric and convert to whole number (integer)
         if [[ "$numeric_value" =~ ^[0-9]+(\.[0-9]+)?$ ]]; then
             # Round to the nearest whole number (integer) using bc
             rounded_value=$(echo "scale=0; $numeric_value / 1" | bc)  # Remove decimals, round to integer
 
+
             # Ensure it's an integer (just in case bc doesn't handle rounding as expected)
             if [[ "$rounded_value" =~ ^[0-9]+$ ]]; then
-                # Insert the data into the database directly
-                echo "Inserting into hero_leveling table: level=$level, meat_required=$rounded_value"
+                # Clean the meat_resource_id to ensure it's just the number
+                meat_resource_id_clean=$(echo "$meat_resource_id" | sed 's/[^0-9]//g')  # Strip any non-digit characters
+
+                # Prepare the insert query (properly formatted)
                 insert_query="INSERT INTO hero_leveling (level, meat_required, resource_id) 
-                              VALUES ($level, $rounded_value, $meat_resource_id)
+                              VALUES ($level, $rounded_value, $meat_resource_id_clean)
                               ON DUPLICATE KEY UPDATE meat_required = VALUES(meat_required);"
-                mysql -h "$MYSQL_HOST" -u"$MYSQL_USER" -p"$MYSQL_PASSWORD" -D "$MYSQL_DATABASE" -e "$insert_query"
+
+
+
+                # Use mysql_query to execute the insert query
+                result=$(mysql_query "$insert_query" "$MYSQL_DATABASE")
+
 
                 # Check if the insert was successful
-                if [ $? -eq 0 ]; then
+                if [[ -n "$result" ]]; then
                     echo "Successfully inserted level $level with meat_required $rounded_value."
                 else
                     echo "ERROR: Failed to insert level $level with meat_required $rounded_value."
@@ -282,13 +308,11 @@ if [ -f "/mariadb/seed/hero_leveling.csv" ]; then
         else
             echo "Skipping invalid or empty numeric value for level $level: $numeric_value"
         fi
-    done
 
+    done
 else
     echo "hero_leveling.csv not found. Skipping hero leveling seeding."
 fi
-
-
 
 
 # Start PHP-FPM and NGINX

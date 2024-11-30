@@ -16,11 +16,13 @@ services:
     environment:
       MYSQL_HOST: mysql
       MYSQL_DATABASE: top_heroes
-      MYSQL_USER: top_heroes
-      MYSQL_PASSWORD: top_heroes
+      MYSQL_USER: root
+      MYSQL_PASSWORD: SuperSecretPasswordOneTwoThree!
+      MYSQL_PORT: 3306
+
 
   mysql:
-    image: mariadb:10.5
+    image: mariadb
     container_name: mysql
     restart: always
     environment:
@@ -37,7 +39,7 @@ services:
 
 volumes:
   mysql_data:
-
+    
 networks:
   app-network:
     driver: bridge
