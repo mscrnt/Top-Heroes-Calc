@@ -256,20 +256,28 @@ if [ -f "/mariadb/seed/hero_leveling.csv" ]; then
         # Debug: Show the converted value
         echo "Converted value: $meat_required_clean -> $numeric_value"
 
-        # Ensure the value is numeric
+        # Ensure the value is numeric and convert to whole number (integer)
         if [[ "$numeric_value" =~ ^[0-9]+(\.[0-9]+)?$ ]]; then
-            # Insert the data into the database directly
-            echo "Inserting into hero_leveling table: level=$level, meat_required=$numeric_value"
-            insert_query="INSERT INTO hero_leveling (level, meat_required, resource_id) 
-                          VALUES ($level, '$numeric_value', $meat_resource_id)
-                          ON DUPLICATE KEY UPDATE meat_required = VALUES(meat_required);"
-            mysql -h "$MYSQL_HOST" -u"$MYSQL_USER" -p"$MYSQL_PASSWORD" -D "$MYSQL_DATABASE" -e "$insert_query"
+            # Round to the nearest whole number (integer) using bc
+            rounded_value=$(echo "scale=0; $numeric_value / 1" | bc)  # Remove decimals, round to integer
 
-            # Check if the insert was successful
-            if [ $? -eq 0 ]; then
-                echo "Successfully inserted level $level with meat_required $numeric_value."
+            # Ensure it's an integer (just in case bc doesn't handle rounding as expected)
+            if [[ "$rounded_value" =~ ^[0-9]+$ ]]; then
+                # Insert the data into the database directly
+                echo "Inserting into hero_leveling table: level=$level, meat_required=$rounded_value"
+                insert_query="INSERT INTO hero_leveling (level, meat_required, resource_id) 
+                              VALUES ($level, $rounded_value, $meat_resource_id)
+                              ON DUPLICATE KEY UPDATE meat_required = VALUES(meat_required);"
+                mysql -h "$MYSQL_HOST" -u"$MYSQL_USER" -p"$MYSQL_PASSWORD" -D "$MYSQL_DATABASE" -e "$insert_query"
+
+                # Check if the insert was successful
+                if [ $? -eq 0 ]; then
+                    echo "Successfully inserted level $level with meat_required $rounded_value."
+                else
+                    echo "ERROR: Failed to insert level $level with meat_required $rounded_value."
+                fi
             else
-                echo "ERROR: Failed to insert level $level with meat_required $numeric_value."
+                echo "Skipping invalid or non-integer value for level $level: $rounded_value"
             fi
         else
             echo "Skipping invalid or empty numeric value for level $level: $numeric_value"
