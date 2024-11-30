@@ -1,0 +1,58 @@
+{
+    "resources": [
+      {
+        "name": "Meat",
+        "icons": [
+          { "type": "1k", "path": "/static/images/resources/1k_meat.webp" },
+          { "type": "10k", "path": "/static/images/resources/10k_meat.webp" },
+          { "type": "100", "path": "/static/images/resources/100_meat.webp" },
+          { "type": "Epic", "path": "/static/images/resources/epic_meat.webp" },
+          { "type": "Legendary", "path": "/static/images/resources/legendary_meat.webp" },
+          { "type": "Normal", "path": "/static/images/resources/normal_meat.webp" },
+          { "type": "Default", "path": "/static/images/resources/meat.webp" }
+        ]
+      },
+      {
+        "name": "Wood",
+        "icons": [
+          { "type": "1k", "path": "/static/images/resources/1k_wood.webp" },
+          { "type": "10k", "path": "/static/images/resources/10k_wood.webp" },
+          { "type": "100", "path": "/static/images/resources/100_wood.webp" },
+          { "type": "Epic", "path": "/static/images/resources/epic_wood.webp" },
+          { "type": "Legendary", "path": "/static/images/resources/legendary_wood.webp" },
+          { "type": "Normal", "path": "/static/images/resources/normal_wood.webp" },
+          { "type": "Default", "path": "/static/images/resources/wood.webp" }
+        ]
+      },
+      {
+        "name": "Stone",
+        "icons": [
+          { "type": "1k", "path": "/static/images/resources/1k_stone.webp" },
+          { "type": "10k", "path": "/static/images/resources/10k_stone.webp" },
+          { "type": "100", "path": "/static/images/resources/100_stone.webp" },
+          { "type": "Epic", "path": "/static/images/resources/epic_stone.webp" },
+          { "type": "Legendary", "path": "/static/images/resources/legendary_stone.webp" },
+          { "type": "Normal", "path": "/static/images/resources/normal_stone.webp" },
+          { "type": "Default", "path": "/static/images/resources/stone.webp" }
+        ]
+      },
+      {
+        "name": "Rubis",
+        "icons": [
+          { "type": "1k", "path": "/static/images/resources/1k_rubis.webp" },
+          { "type": "100", "path": "/static/images/resources/100_rubis.webp" },
+          { "type": "Epic", "path": "/static/images/resources/epic_rubis.webp" },
+          { "type": "Legendary", "path": "/static/images/resources/legendary_rubis.webp" },
+          { "type": "Normal", "path": "/static/images/resources/normal_rubis.webp" },
+          { "type": "Default", "path": "/static/images/resources/rubis.webp" }
+        ]
+      },
+      {
+        "name": "Shard",
+        "icons": [
+          { "type": "Default", "path": "/static/images/resources/shard.webp" }
+        ]
+      }
+    ]
+  }
+  

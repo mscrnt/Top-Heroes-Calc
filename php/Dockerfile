@@ -3,8 +3,8 @@
 # Use a base image that includes both PHP-FPM and NGINX
 FROM php:7.4-fpm-alpine
 
-# Install required tools and PHP extensions
-RUN apk add --no-cache nginx mysql-client jq \
+# Install required tools, PHP extensions, and Bash
+RUN apk add --no-cache nginx mysql-client jq bash \
     && docker-php-ext-install pdo_mysql
 
 # Set the working directory
@@ -37,5 +37,5 @@ COPY ./nginx/default.conf /etc/nginx/conf.d/default.conf
 # Expose port 80
 EXPOSE 80
 
-# Set entrypoint script
-ENTRYPOINT ["/entrypoint.sh"]
+# Set the entrypoint script to use bash
+ENTRYPOINT ["/bin/bash", "/entrypoint.sh"]

@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # Wait for the database to be ready
 echo "Waiting for MariaDB to be ready..."
@@ -47,6 +47,63 @@ if [ -f "/mariadb/seed/factions.json" ]; then
     "
 else
     echo "factions.json not found. Skipping factions seeding."
+fi
+
+# Seed the resources table
+if [ -f "/mariadb/seed/resources.json" ]; then
+    echo "Populating resources table from resources.json..."
+    jq -c '.resources[]' /mariadb/seed/resources.json | while read -r resource; do
+        name=$(echo "$resource" | jq -r '.name')
+        icons=$(echo "$resource" | jq -c '.icons')
+
+        # Insert resource
+        echo "Inserting resource: $name"
+        mysql -h "$MYSQL_HOST" -u"$MYSQL_USER" -p"$MYSQL_PASSWORD" -D "$MYSQL_DATABASE" -e "
+        INSERT INTO resources (name)
+        VALUES ('$name')
+        ON DUPLICATE KEY UPDATE name = VALUES(name);
+        "
+
+        resource_id=$(mysql -h "$MYSQL_HOST" -u"$MYSQL_USER" -p"$MYSQL_PASSWORD" -D "$MYSQL_DATABASE" -sse "
+            SELECT id FROM resources WHERE name = '$name';
+        ")
+
+        if [ -z "$resource_id" ]; then
+            echo "ERROR: Resource '$name' could not be inserted."
+            continue
+        fi
+
+        # Insert resource icons
+        echo "$icons" | jq -c '.[]' | while read -r icon; do
+            type=$(echo "$icon" | jq -r '.type')
+            path=$(echo "$icon" | jq -r '.path')  # Corrected field to 'path'
+            
+            
+            # Sanitize data to prevent SQL errors
+            path=$(echo "$path" | sed 's/\\/\\\\/g' | sed "s/'/\\'/g")
+            type=$(echo "$type" | sed "s/'/\\'/g")
+
+            echo "Inserting icon: $path (Type: $type)"
+
+
+            # Insert icon
+            mysql -h "$MYSQL_HOST" -u"$MYSQL_USER" -p"$MYSQL_PASSWORD" -D "$MYSQL_DATABASE" -e "
+            INSERT INTO resource_icons (resource_id, type, icon_path)
+            VALUES ($resource_id, '$type', '$path')
+            ON DUPLICATE KEY UPDATE
+                type = VALUES(type),
+                icon_path = VALUES(icon_path);
+            "
+        done
+    done
+
+    # Log all resources currently in the database
+    echo "Resources in the database:"
+    mysql -h "$MYSQL_HOST" -u"$MYSQL_USER" -p"$MYSQL_PASSWORD" -D "$MYSQL_DATABASE" -e "
+    SELECT id, name FROM resources;
+    "
+else
+    echo "resources.json not found. Skipping resources seeding."
 fi
 
 # Seed the roles table
@@ -134,6 +191,97 @@ if [ -d "/mariadb/seed/heroes" ]; then
 else
     echo "No hero JSON files found in heroes/. Skipping heroes population."
 fi
+
+# Helper function to run MySQL queries and handle errors
+run_mysql_query() {
+    local query="$1"
+    local db="$2"
+    local result
+    result=$(mysql -h "$MYSQL_HOST" -u"$MYSQL_USER" -p"$MYSQL_PASSWORD" -D "$db" -sse "$query")
+    if [ $? -ne 0 ]; then
+        echo "ERROR: MySQL query failed: $query"
+        exit 1
+    fi
+    echo "$result"
+}
+
+# Seed the hero_leveling table
+if [ -f "/mariadb/seed/hero_leveling.csv" ]; then
+    echo "Populating hero_leveling table from hero_leveling.csv..."
+
+    # Get the resource ID for 'Meat' once
+    meat_resource_id=$(run_mysql_query "SELECT id FROM resources WHERE name = 'Meat';" "$MYSQL_DATABASE")
+    if [ -z "$meat_resource_id" ]; then
+        echo "ERROR: Resource 'Meat' not found. Ensure resources are seeded first."
+        exit 1
+    fi
+    echo "Resource ID for 'Meat': $meat_resource_id"
+
+    # Process the CSV, skipping the header row
+    row_number=0
+    tail -n +2 /mariadb/seed/hero_leveling.csv | while IFS=, read -r level meat_required; do
+        row_number=$((row_number + 1))
+        echo "Processing row $row_number..."
+
+        # Skip empty rows
+        if [ -z "$level" ] || [ -z "$meat_required" ]; then
+            echo "Skipping invalid or empty row $row_number"
+            continue
+        fi
+
+        # Clean up the meat_required value: remove commas and extra spaces
+        meat_required_clean=$(echo "$meat_required" | sed -E 's/,//g; s/^\s+|\s+$//g')
+
+        # Debug: Show the cleaned value
+        echo "Cleaned meat_required value: '$meat_required_clean'"
+
+        # Check if it contains a 'k' or 'm'
+        if [[ "$meat_required_clean" =~ ^([0-9]+(\.[0-9]+)?)k$ ]]; then
+            # Handle 'k' (thousands), keep decimal if present
+            numeric_value=$(echo "$meat_required_clean" | sed -E 's/k$//')
+            numeric_value=$(echo "$numeric_value * 1000" | bc)  # Multiply by 1000
+        elif [[ "$meat_required_clean" =~ ^([0-9]+(\.[0-9]+)?)m$ ]]; then
+            # Handle 'm' (millions), keep decimal if present
+            numeric_value=$(echo "$meat_required_clean" | sed -E 's/m$//')
+            numeric_value=$(echo "$numeric_value * 1000000" | bc)  # Multiply by 1000000
+        elif [[ "$meat_required_clean" =~ ^[0-9]+(\.[0-9]+)?$ ]]; then
+            # It's a simple number or decimal without k/m
+            numeric_value=$meat_required_clean
+        else
+            # If we can't convert, skip this row
+            echo "Skipping invalid meat_required value: $meat_required_clean"
+            continue
+        fi
+
+        # Debug: Show the converted value
+        echo "Converted value: $meat_required_clean -> $numeric_value"
+
+        # Ensure the value is numeric
+        if [[ "$numeric_value" =~ ^[0-9]+(\.[0-9]+)?$ ]]; then
+            # Insert the data into the database directly
+            echo "Inserting into hero_leveling table: level=$level, meat_required=$numeric_value"
+            insert_query="INSERT INTO hero_leveling (level, meat_required, resource_id) 
+                          VALUES ($level, '$numeric_value', $meat_resource_id)
+                          ON DUPLICATE KEY UPDATE meat_required = VALUES(meat_required);"
+            mysql -h "$MYSQL_HOST" -u"$MYSQL_USER" -p"$MYSQL_PASSWORD" -D "$MYSQL_DATABASE" -e "$insert_query"
+
+            # Check if the insert was successful
+            if [ $? -eq 0 ]; then
+                echo "Successfully inserted level $level with meat_required $numeric_value."
+            else
+                echo "ERROR: Failed to insert level $level with meat_required $numeric_value."
+            fi
+        else
+            echo "Skipping invalid or empty numeric value for level $level: $numeric_value"
+        fi
+    done
+
+else
+    echo "hero_leveling.csv not found. Skipping hero leveling seeding."
+fi
+
+
+
 
 # Start PHP-FPM and NGINX
 php-fpm -D && nginx -g 'daemon off;'

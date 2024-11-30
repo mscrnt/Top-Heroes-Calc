@@ -25,7 +25,6 @@ function getAllHeroes() {
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
 
-
 /**
  * Get a specific hero by ID.
  * @param int $id
@@ -86,7 +85,6 @@ function getHeroByName($name) {
     $stmt->execute();
     return $stmt->fetch(PDO::FETCH_ASSOC);
 }
-
 
 /**
  * Get roles associated with a specific hero.
@@ -169,5 +167,92 @@ function checkFactionMatchup($faction1, $faction2) {
         WHERE name = :faction1
     ");
     $stmt->execute(['faction1' => $faction1, 'faction2' => $faction2]);
+    return $stmt->fetchColumn();
+}
+
+/**
+ * Get all resources from the database.
+ * @return array
+ */
+function getAllResources() {
+    global $pdo;
+
+    $stmt = $pdo->query("SELECT * FROM resources");
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
+
+/**
+ * Get a resource by name.
+ * @param string $name
+ * @return array|null
+ */
+function getResourceByName($name) {
+    global $pdo;
+
+    $stmt = $pdo->prepare("SELECT * FROM resources WHERE name = :name");
+    $stmt->bindParam(':name', $name, PDO::PARAM_STR);
+    $stmt->execute();
+    return $stmt->fetch(PDO::FETCH_ASSOC);
+}
+
+/**
+ * Get icons for a specific resource.
+ * @param int $resourceId
+ * @return array
+ */
+function getResourceIcons($resourceId) {
+    global $pdo;
+
+    $stmt = $pdo->prepare("
+        SELECT ri.type, ri.icon_path
+        FROM resource_icons ri
+        WHERE ri.resource_id = :resource_id
+    ");
+    $stmt->execute(['resource_id' => $resourceId]);
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
+
+/**
+ * Get hero leveling information.
+ * @param int $level
+ * @param int $resourceId
+ * @return array|null
+ */
+function getHeroLeveling($level, $resourceId) {
+    global $pdo;
+
+    $stmt = $pdo->prepare("
+        SELECT level, meat_required
+        FROM hero_leveling
+        WHERE level = :level AND resource_id = :resource_id
+    ");
+    $stmt->execute(['level' => $level, 'resource_id' => $resourceId]);
+    return $stmt->fetch(PDO::FETCH_ASSOC);
+}
+
+/**
+ * Get the required meat for a hero leveling.
+ * @param int $level
+ * @param string $resourceName
+ * @return string|null
+ */
+function getHeroLevelingMeat($level, $resourceName) {
+    global $pdo;
+
+    // Get the resource ID for the given resource name
+    $resource = getResourceByName($resourceName);
+    if (!$resource) {
+        throw new InvalidArgumentException("Resource '$resourceName' not found.");
+    }
+
+    $resourceId = $resource['id'];
+
+    // Get hero leveling data for the specified level and resource
+    $stmt = $pdo->prepare("
+        SELECT meat_required
+        FROM hero_leveling
+        WHERE level = :level AND resource_id = :resource_id
+    ");
+    $stmt->execute(['level' => $level, 'resource_id' => $resourceId]);
     return $stmt->fetchColumn();
 }
