@@ -256,3 +256,21 @@ function getHeroLevelingMeat($level, $resourceName) {
     $stmt->execute(['level' => $level, 'resource_id' => $resourceId]);
     return $stmt->fetchColumn();
 }
+
+/**
+ * Get all hero leveling data for a specific resource.
+ * @param int $resourceId
+ * @return array
+ */
+function getAllHeroLevels($resourceId) {
+    global $pdo;
+
+    $stmt = $pdo->prepare("
+        SELECT level, meat_required
+        FROM hero_leveling
+        WHERE resource_id = :resource_id
+        ORDER BY level ASC
+    ");
+    $stmt->execute(['resource_id' => $resourceId]);
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}

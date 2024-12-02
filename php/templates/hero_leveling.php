@@ -22,15 +22,23 @@ if ($resource) {
     $resourceId = $resource['id'];
     $iconData = getResourceIcons($resourceId);
 
-    $iconPath = null;  
+    // Fetch all hero leveling data for the resource
+    $levelingTable = getAllHeroLevels($resourceId);
+
+    // Preload the leveling table into a JavaScript variable
+    echo "<script>const levelingData = " . json_encode($levelingTable) . ";</script>";
+
+    $iconPath = null;
     foreach ($iconData as $icon) {
         if ($icon['type'] === 'Default') {
-            $iconPath = $icon['icon_path'];  
+            $iconPath = $icon['icon_path'];
             break;
         }
     }
 
-    if (!$iconPath) {
+    if ($iconPath) {
+        echo "<script>const iconPath = '" . htmlspecialchars($iconPath, ENT_QUOTES) . "';</script>";
+    } else {
         $iconErrorMessage = "No default icon found for resource '$resourceName'.";
     }
 } else {
@@ -39,13 +47,9 @@ if ($resource) {
 
 // Calculate total meat required if both levels are set and valid
 if ($currentLevel && $desiredLevel && $currentLevel < $desiredLevel) {
-    for ($level = $currentLevel; $level < $desiredLevel; $level++) {
-        $levelingData = getHeroLeveling($level + 1, $resourceId);
-        if ($levelingData) {
-            $totalMeatRequired += $levelingData['meat_required'];
-        } else {
-            $errorMessage = "Meat required data not found for level " . ($level + 1) . ".";
-            break;
+    foreach ($levelingTable as $entry) {
+        if ($entry['level'] > $currentLevel && $entry['level'] <= $desiredLevel) {
+            $totalMeatRequired += $entry['meat_required'];
         }
     }
 }

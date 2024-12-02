@@ -87,33 +87,37 @@ document.addEventListener("DOMContentLoaded", function () {
     function fetchMeatRequired() {
         const currentLevel = parseInt(currentLevelSlider.value);
         const desiredLevel = parseInt(desiredLevelSlider.value);
-
+    
         if (currentLevel >= desiredLevel) {
             resultContainer.innerHTML = `<p class="error">Invalid levels. Current level must be less than desired level.</p>`;
             return;
         }
-
-        const url = `../pages/get_meat_required.php?current_level=${currentLevel}&desired_level=${desiredLevel}&resource_name=${resourceName}`;
-
-        fetch(url)
-            .then(response => response.json())
-            .then(data => {
-                if (data.error) {
-                    resultContainer.innerHTML = `<p class="error">${data.error}</p>`;
-                } else {
-                    resultContainer.innerHTML = `
-                        <h2>
-                            ${data.total_meat_required.toLocaleString()}
-                            <img src="${data.icon_path}" alt="Meat Icon" class="meat-icon">
-                            required
-                        </h2>`;
-                }
-            })
-            .catch(error => {
-                console.error("Error fetching meat data:", error);
-                resultContainer.innerHTML = `<p class="error">Error fetching meat data.</p>`;
-            });
+    
+        // Calculate total meat required using preloaded data
+        let totalMeatRequired = 0;
+        levelingData.forEach(entry => {
+            if (entry.level > currentLevel && entry.level <= desiredLevel) {
+                totalMeatRequired += parseInt(entry.meat_required, 10) || 0;
+            }
+        });
+    
+        // Ensure totalMeatRequired is properly calculated
+        if (isNaN(totalMeatRequired)) {
+            resultContainer.innerHTML = `<p class="error">Error calculating meat requirements.</p>`;
+            return;
+        }
+    
+        // Update the result container
+        resultContainer.innerHTML = `
+            <h2>
+                ${totalMeatRequired.toLocaleString()}
+                <img src="${iconPath}" alt="Meat Icon" class="meat-icon">
+                required
+            </h2>`;
     }
+    
+    
+    
 
     function handleIncrementDecrement(input, slider, step) {
         const minValue = parseInt(input.min);
