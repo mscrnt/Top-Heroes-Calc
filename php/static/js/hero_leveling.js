@@ -90,37 +90,53 @@ document.addEventListener("DOMContentLoaded", function () {
     function enforceConstraints(source) {
         let currentLevel = parseInt(currentLevelSlider.value);
         let desiredLevel = parseInt(desiredLevelSlider.value);
-
+    
+        function triggerGlow(lockElement) {
+            if (!lockElement.classList.contains("pulse")) {
+                lockElement.classList.add("pulse");
+                setTimeout(() => lockElement.classList.remove("pulse"), 1000); // Remove glow after 1 second
+            }
+        }
+    
         if (currentLevelLocked && desiredLevelLocked) {
             if (source === "current" && currentLevel >= desiredLevel) {
                 currentLevelSlider.value = desiredLevel - 1;
+                triggerGlow(desiredLevelLock);
             }
             if (source === "desired" && desiredLevel <= currentLevel) {
                 desiredLevelSlider.value = currentLevel + 1;
+                triggerGlow(currentLevelLock);
             }
         } else if (currentLevelLocked && !desiredLevelLocked) {
             if (source === "current" && currentLevel >= desiredLevel) {
                 desiredLevelSlider.value = currentLevel + 1;
+                triggerGlow(desiredLevelLock);
             } else if (source === "desired" && desiredLevel <= currentLevel) {
                 desiredLevelSlider.value = currentLevel + 1;
+                triggerGlow(currentLevelLock);
             }
         } else if (desiredLevelLocked && !currentLevelLocked) {
             if (source === "desired" && desiredLevel <= currentLevel) {
                 currentLevelSlider.value = desiredLevel - 1;
+                triggerGlow(currentLevelLock);
             } else if (source === "current" && currentLevel >= desiredLevel) {
                 currentLevelSlider.value = desiredLevel - 1;
+                triggerGlow(desiredLevelLock);
             }
         } else {
             if (source === "current" && currentLevel >= desiredLevel) {
                 desiredLevelSlider.value = currentLevel + 1;
+                triggerGlow(desiredLevelLock);
             }
             if (source === "desired" && desiredLevel <= currentLevel) {
                 currentLevelSlider.value = desiredLevel - 1;
+                triggerGlow(currentLevelLock);
             }
         }
-
+    
         updateValues();
     }
+    
 
     function fetchMeatRequired() {
         const currentLevel = parseInt(currentLevelSlider.value);
@@ -183,25 +199,36 @@ document.addEventListener("DOMContentLoaded", function () {
             timeoutId = setTimeout(performStep, delay);
         }
     
-        button.addEventListener("mousedown", () => {
+        function startHold() {
             isHeld = false;
             timeoutId = setTimeout(() => {
                 isHeld = true;
                 delay = 100; // Reset delay to the initial value for acceleration
                 performStep(); // Start the acceleration
             }, initialDelay); // Delay before treating it as a hold
-        });
+        }
     
-        button.addEventListener("mouseup", () => {
+        function endHold() {
             clearTimeout(timeoutId);
             if (!isHeld) {
                 // Single click behavior
                 handleIncrementDecrement(input, slider, step);
             }
-        });
+        }
     
-        button.addEventListener("mouseleave", () => clearTimeout(timeoutId));
+        // Mouse and touch event bindings
+        button.addEventListener("mousedown", startHold);
+        button.addEventListener("mouseup", endHold);
+        button.addEventListener("mouseleave", endHold);
+    
+        button.addEventListener("touchstart", (e) => {
+            e.preventDefault(); // Prevent long-press menu
+            startHold();
+        });
+        button.addEventListener("touchend", endHold);
+        button.addEventListener("touchcancel", endHold);
     }
+    
     
     
 

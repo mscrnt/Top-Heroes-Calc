@@ -262,3 +262,20 @@ input[type="number"].valid, input[type="range"].valid {
 .level-button i {
     pointer-events: none;
 }
+
+.locked.pulse {
+    animation: pulseGlow 1s infinite;
+    box-shadow: 0 0 10px rgba(255, 215, 0, 0.8);
+}
+
+@keyframes pulseGlow {
+    0% {
+        box-shadow: 0 0 5px rgba(255, 215, 0, 0.5);
+    }
+    50% {
+        box-shadow: 0 0 15px rgba(255, 215, 0, 1);
+    }
+    100% {
+        box-shadow: 0 0 5px rgba(255, 215, 0, 0.5);
+    }
+}
