@@ -18,6 +18,21 @@ if ($currentLevel && $desiredLevel && $currentLevel < $desiredLevel) {
     if ($resource) {
         $resourceId = $resource['id'];
 
+        // Fetch the default icon for the resource
+        $iconPath = null;
+        $iconData = getResourceIcons($resourceId);
+        foreach ($iconData as $icon) {
+            if ($icon['type'] === 'Default') {
+                $iconPath = $icon['icon_path'];
+                break;
+            }
+        }
+
+        if (!$iconPath) {
+            echo json_encode(['error' => "No default icon found for resource '$resourceName'"]);
+            exit;
+        }
+
         // Calculate the total meat required for each level in the range
         for ($level = $currentLevel + 1; $level <= $desiredLevel; $level++) {
             $levelingData = getHeroLeveling($level, $resourceId);
@@ -29,8 +44,11 @@ if ($currentLevel && $desiredLevel && $currentLevel < $desiredLevel) {
             }
         }
 
-        // Return the result as JSON
-        echo json_encode(['total_meat_required' => $totalMeatRequired]);
+        // Return the result with icon path
+        echo json_encode([
+            'total_meat_required' => $totalMeatRequired,
+            'icon_path' => $iconPath
+        ]);
     } else {
         echo json_encode(['error' => "Resource '$resourceName' not found"]);
     }
