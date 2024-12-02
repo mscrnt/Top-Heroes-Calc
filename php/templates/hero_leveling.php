@@ -1,32 +1,28 @@
 <?php
 include_once __DIR__ . '/../includes/db_functions.php';
 
-// Define the maximum level as a variable
-$maxLevel = 232;
-
 // Import CSS
 echo '<link rel="stylesheet" href="/static/css/hero_leveling.css">';
 
 // Import JavaScript
 echo '<script src="/static/js/hero_leveling.js" defer></script>';
 
-// Initialize variables
-$currentLevel = isset($_POST['current_level']) ? (int)$_POST['current_level'] : 1; // Default to 1
-$desiredLevel = isset($_POST['desired_level']) ? (int)$_POST['desired_level'] : $maxLevel; // Default to max level
-$totalMeatRequired = 0;
 
 // Fetch the resource for "Meat"
 $resourceName = "Meat";
 $resource = getResourceByName($resourceName);
+
 if ($resource) {
     $resourceId = $resource['id'];
     $iconData = getResourceIcons($resourceId);
 
     // Fetch all hero leveling data for the resource
     $levelingTable = getAllHeroLevels($resourceId);
+    $maxLevel = count($levelingTable); // Dynamic max level
 
-    // Preload the leveling table into a JavaScript variable
+    // Preload the leveling table and max level into JavaScript variables
     echo "<script>const levelingData = " . json_encode($levelingTable) . ";</script>";
+    echo "<script>const maxLevel = " . $maxLevel . ";</script>";
 
     $iconPath = null;
     foreach ($iconData as $icon) {
@@ -44,6 +40,11 @@ if ($resource) {
 } else {
     $iconErrorMessage = "Resource '$resourceName' not found in the database.";
 }
+
+// Initialize variables
+$currentLevel = isset($_POST['current_level']) ? (int)$_POST['current_level'] : 1; // Default to 1
+$desiredLevel = isset($_POST['desired_level']) ? (int)$_POST['desired_level'] : $maxLevel; // Default to max level
+$totalMeatRequired = 0;
 
 // Calculate total meat required if both levels are set and valid
 if ($currentLevel && $desiredLevel && $currentLevel < $desiredLevel) {
