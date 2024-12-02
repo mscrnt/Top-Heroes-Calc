@@ -27,26 +27,64 @@ document.addEventListener("DOMContentLoaded", function () {
     let currentLevelLocked = false;
     let desiredLevelLocked = false;
 
-    // Toggle lock states
+    // Load stored values or set defaults
+    function loadStoredValues() {
+        const storedCurrentLevel = parseInt(localStorage.getItem("currentLevel")) || 1;
+        const storedDesiredLevel = parseInt(localStorage.getItem("desiredLevel")) || maxLevel;
+        currentLevelLocked = localStorage.getItem("currentLevelLocked") === "true";
+        desiredLevelLocked = localStorage.getItem("desiredLevelLocked") === "true";
+
+        // Set values to the sliders and inputs
+        currentLevelSlider.value = storedCurrentLevel;
+        desiredLevelSlider.value = storedDesiredLevel;
+        currentLevelNum.value = storedCurrentLevel;
+        desiredLevelNum.value = storedDesiredLevel;
+
+        // Update lock icons and `locked` class
+        updateLockState(currentLevelLock, currentLevelLocked);
+        updateLockState(desiredLevelLock, desiredLevelLocked);
+
+        console.log("Stored values loaded:", {
+            currentLevel: storedCurrentLevel,
+            desiredLevel: storedDesiredLevel,
+            currentLevelLocked,
+            desiredLevelLocked,
+        });
+    }
+
+    // Save values to local storage
+    function saveValues() {
+        localStorage.setItem("currentLevel", currentLevelSlider.value);
+        localStorage.setItem("desiredLevel", desiredLevelSlider.value);
+        localStorage.setItem("currentLevelLocked", currentLevelLocked);
+        localStorage.setItem("desiredLevelLocked", desiredLevelLocked);
+    }
+
+    // Update the lock icon and class
+    function updateLockState(lockElement, isLocked) {
+        lockElement.classList.toggle("fa-lock", isLocked);
+        lockElement.classList.toggle("fa-lock-open", !isLocked);
+        lockElement.classList.toggle("locked", isLocked);
+    }
+
+    // Update lock states and save to local storage
     currentLevelLock.addEventListener("click", function () {
         currentLevelLocked = !currentLevelLocked;
-        currentLevelLock.classList.toggle("fa-lock", currentLevelLocked);
-        currentLevelLock.classList.toggle("fa-lock-open", !currentLevelLocked);
-        currentLevelLock.classList.toggle("locked");
-        console.log(`Current level lock state: ${currentLevelLocked}`);
+        updateLockState(currentLevelLock, currentLevelLocked);
+        saveValues();
     });
 
     desiredLevelLock.addEventListener("click", function () {
         desiredLevelLocked = !desiredLevelLocked;
-        desiredLevelLock.classList.toggle("fa-lock", desiredLevelLocked);
-        desiredLevelLock.classList.toggle("fa-lock-open", !desiredLevelLocked);
-        desiredLevelLock.classList.toggle("locked");
-        console.log(`Desired level lock state: ${desiredLevelLocked}`);
+        updateLockState(desiredLevelLock, desiredLevelLocked);
+        saveValues();
     });
 
+    // Update values and enforce constraints
     function updateValues() {
         currentLevelNum.value = currentLevelSlider.value;
         desiredLevelNum.value = desiredLevelSlider.value;
+        saveValues();
     }
 
     function enforceConstraints(source) {
@@ -93,7 +131,6 @@ document.addEventListener("DOMContentLoaded", function () {
             return;
         }
     
-        // Calculate total meat required using preloaded data
         let totalMeatRequired = 0;
         levelingData.forEach(entry => {
             if (entry.level > currentLevel && entry.level <= desiredLevel) {
@@ -101,13 +138,11 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         });
     
-        // Ensure totalMeatRequired is properly calculated
         if (isNaN(totalMeatRequired)) {
             resultContainer.innerHTML = `<p class="error">Error calculating meat requirements.</p>`;
             return;
         }
     
-        // Update the result container
         resultContainer.innerHTML = `
             <h2>
                 ${totalMeatRequired.toLocaleString()}
@@ -115,7 +150,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 required
             </h2>`;
     }
-    
+
     
     
 
@@ -245,6 +280,7 @@ document.addEventListener("DOMContentLoaded", function () {
         fetchMeatRequired();
     });
 
+    loadStoredValues();
     enforceConstraints("current");
     fetchMeatRequired();
 });
