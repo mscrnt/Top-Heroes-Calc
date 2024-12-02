@@ -1,6 +1,6 @@
 {
     "name": "Hostess",
-    "roles": [],
+    "roles": ["Tank", "Control", "Multi-target"],
     "faction": "League",
     "attack_hp_values": {
         "level_1": {

@@ -1,6 +1,6 @@
 {
     "name": "Bishop",
-    "roles": [],
+    "roles": ["Damage Dealer", "Burst Damage", "Control"],
     "faction": "League",
     "attack_hp_values": {
         "level_1": {
