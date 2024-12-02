@@ -17,6 +17,11 @@ document.addEventListener("DOMContentLoaded", function () {
     const desiredLevelMin = document.getElementById("desired_level_min");
     const desiredLevelMax = document.getElementById("desired_level_max");
 
+    const currentLevelDecrease = document.getElementById("current_level_decrease");
+    const currentLevelIncrease = document.getElementById("current_level_increase");
+    const desiredLevelDecrease = document.getElementById("desired_level_decrease");
+    const desiredLevelIncrease = document.getElementById("desired_level_increase");
+
     const resultContainer = document.getElementById("result");
 
     let currentLevelLocked = false;
@@ -47,9 +52,8 @@ document.addEventListener("DOMContentLoaded", function () {
     function enforceConstraints(source) {
         let currentLevel = parseInt(currentLevelSlider.value);
         let desiredLevel = parseInt(desiredLevelSlider.value);
-    
+
         if (currentLevelLocked && desiredLevelLocked) {
-            // Both sliders locked: sliders can't move each other beyond constraints
             if (source === "current" && currentLevel >= desiredLevel) {
                 currentLevelSlider.value = desiredLevel - 1;
             }
@@ -57,45 +61,40 @@ document.addEventListener("DOMContentLoaded", function () {
                 desiredLevelSlider.value = currentLevel + 1;
             }
         } else if (currentLevelLocked && !desiredLevelLocked) {
-            // Current level locked: desired level adjusts if needed
             if (source === "current" && currentLevel >= desiredLevel) {
-                desiredLevelSlider.value = currentLevel + 1; // Push desired level up
+                desiredLevelSlider.value = currentLevel + 1;
             } else if (source === "desired" && desiredLevel <= currentLevel) {
-                desiredLevelSlider.value = currentLevel + 1; // Stop desired level at valid point
+                desiredLevelSlider.value = currentLevel + 1;
             }
         } else if (desiredLevelLocked && !currentLevelLocked) {
-            // Desired level locked: current level adjusts if needed
             if (source === "desired" && desiredLevel <= currentLevel) {
-                currentLevelSlider.value = desiredLevel - 1; // Pull current level down
+                currentLevelSlider.value = desiredLevel - 1;
             } else if (source === "current" && currentLevel >= desiredLevel) {
-                currentLevelSlider.value = desiredLevel - 1; // Stop current level at valid point
+                currentLevelSlider.value = desiredLevel - 1;
             }
         } else {
-            // Both sliders unlocked: sliders can push each other
             if (source === "current" && currentLevel >= desiredLevel) {
-                desiredLevelSlider.value = currentLevel + 1; // Push desired level up
+                desiredLevelSlider.value = currentLevel + 1;
             }
             if (source === "desired" && desiredLevel <= currentLevel) {
-                currentLevelSlider.value = desiredLevel - 1; // Pull current level down
+                currentLevelSlider.value = desiredLevel - 1;
             }
         }
-    
-        // Update the displayed values
+
         updateValues();
     }
-    
 
     function fetchMeatRequired() {
         const currentLevel = parseInt(currentLevelSlider.value);
         const desiredLevel = parseInt(desiredLevelSlider.value);
-    
+
         if (currentLevel >= desiredLevel) {
             resultContainer.innerHTML = `<p class="error">Invalid levels. Current level must be less than desired level.</p>`;
             return;
         }
-    
+
         const url = `../pages/get_meat_required.php?current_level=${currentLevel}&desired_level=${desiredLevel}&resource_name=${resourceName}`;
-    
+
         fetch(url)
             .then(response => response.json())
             .then(data => {
@@ -115,15 +114,68 @@ document.addEventListener("DOMContentLoaded", function () {
                 resultContainer.innerHTML = `<p class="error">Error fetching meat data.</p>`;
             });
     }
+
+    function handleIncrementDecrement(input, slider, step) {
+        const minValue = parseInt(input.min);
+        const maxValue = parseInt(input.max);
+        let currentValue = parseInt(input.value);
+
+        if (currentValue + step >= minValue && currentValue + step <= maxValue) {
+            input.value = currentValue + step;
+            syncInputToSlider(input, slider);
+        }
+    }
+
+    function enableHold(button, input, slider, step) {
+        let timeoutId;
+        let initialDelay = 300; // Delay before acceleration starts
+        let delay = 100; // Initial delay after acceleration starts
+        const minDelay = 10; // Minimum delay for maximum speed
+        const accelerationFactor = 0.9; // Factor to reduce delay (lower = faster acceleration)
+        let isHeld = false; // Tracks if the button is being held
+    
+        function performStep() {
+            handleIncrementDecrement(input, slider, step);
+    
+            // Gradually decrease delay, but never go below minDelay
+            delay = Math.max(minDelay, delay * accelerationFactor);
+    
+            // Schedule the next step
+            timeoutId = setTimeout(performStep, delay);
+        }
+    
+        button.addEventListener("mousedown", () => {
+            isHeld = false;
+            timeoutId = setTimeout(() => {
+                isHeld = true;
+                delay = 100; // Reset delay to the initial value for acceleration
+                performStep(); // Start the acceleration
+            }, initialDelay); // Delay before treating it as a hold
+        });
+    
+        button.addEventListener("mouseup", () => {
+            clearTimeout(timeoutId);
+            if (!isHeld) {
+                // Single click behavior
+                handleIncrementDecrement(input, slider, step);
+            }
+        });
+    
+        button.addEventListener("mouseleave", () => clearTimeout(timeoutId));
+    }
+    
     
 
-    // Sync input box changes to sliders
+    enableHold(currentLevelDecrease, currentLevelNum, currentLevelSlider, -1);
+    enableHold(currentLevelIncrease, currentLevelNum, currentLevelSlider, 1);
+    enableHold(desiredLevelDecrease, desiredLevelNum, desiredLevelSlider, -1);
+    enableHold(desiredLevelIncrease, desiredLevelNum, desiredLevelSlider, 1);
+
     function syncInputToSlider(input, slider) {
         const value = parseInt(input.value);
         if (!isNaN(value)) {
             slider.value = value;
 
-            // Adjust the other slider if constraints are violated
             if (slider === currentLevelSlider) {
                 enforceConstraints("current");
             } else if (slider === desiredLevelSlider) {
@@ -144,21 +196,20 @@ document.addEventListener("DOMContentLoaded", function () {
     currentLevelSlider.addEventListener("input", () => {
         updateValues();
     });
-    
+
     currentLevelSlider.addEventListener("change", () => {
         enforceConstraints("current");
         fetchMeatRequired();
     });
-    
+
     desiredLevelSlider.addEventListener("input", () => {
         updateValues();
     });
-    
+
     desiredLevelSlider.addEventListener("change", () => {
         enforceConstraints("desired");
         fetchMeatRequired();
     });
-    
 
     currentLevelNum.addEventListener("blur", () => syncInputToSlider(currentLevelNum, currentLevelSlider));
     currentLevelNum.addEventListener("keydown", (event) => handleEnterKey(currentLevelNum, currentLevelSlider, event));
@@ -190,7 +241,6 @@ document.addEventListener("DOMContentLoaded", function () {
         fetchMeatRequired();
     });
 
-    // Initialize on page load
     enforceConstraints("current");
     fetchMeatRequired();
 });

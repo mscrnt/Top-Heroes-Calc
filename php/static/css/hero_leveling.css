@@ -31,10 +31,11 @@ label {
 /* Input Pair Styling */
 .input-pair {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     align-items: center;
     gap: 10px; /* Space between number input and slider */
-    margin-bottom: 20px; /* Adjust space between input pairs */
+    margin-bottom: 10px; /* Adjust space between input pairs */
+    margin-top: 10px;
 }
 
 /* Number Input Styling */
@@ -169,6 +170,7 @@ input[type="number"].valid, input[type="range"].valid {
     align-items: center;
     justify-content: space-between;
     margin-top: 10px;
+    margin-bottom: 25px;
 }
 
 /* Min and Max Labels */
@@ -228,5 +230,35 @@ input[type="number"].valid, input[type="range"].valid {
 }
 
 .lock-icon.locked {
-    color: #FF5722; /* Change color when locked */
+    color: #FF5722;
+}
+
+.level-button {
+    background-color: #4CAF50; 
+    border: none; 
+    color: #fff; 
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.2s, transform 0.1s;
+    margin-bottom: 0;
+}
+
+.level-button:hover {
+    background-color: #45a049; 
+    transform: scale(1.1); 
+}
+
+.level-button:active {
+    background-color: #388e3c; 
+    transform: scale(0.95); 
+}
+
+.level-button i {
+    pointer-events: none;
 }

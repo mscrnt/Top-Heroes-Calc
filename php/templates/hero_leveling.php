@@ -70,45 +70,57 @@ if ($currentLevel && $desiredLevel && $currentLevel < $desiredLevel) {
         <!-- Current Level Section -->
         <label for="current_level">Current Level:</label>
         <div class="input-pair">
+            <button type="button" id="current_level_decrease" class="level-button">
+                <i class="fa-solid fa-minus"></i>
+            </button>
             <input type="number" id="current_level_num" name="current_level_num" 
                 value="<?= htmlspecialchars($currentLevel) ?>" 
                 min="1" 
                 max="<?= $maxLevel - 1 ?>" 
                 step="1" 
                 required>
-            <div class="slider-container">
-                <span id="current_level_min" class="slider-min">1</span>
-                <input type="range" id="current_level" name="current_level" 
-                    value="<?= htmlspecialchars($currentLevel) ?>" 
-                    min="1" 
-                    max="<?= $maxLevel - 1 ?>" 
-                    step="1" 
-                    required>
-                <span id="current_level_max" class="slider-max"><?= $maxLevel - 1 ?></span>
-                <i id="current_level_lock" class="fa-solid fa-lock-open lock-icon"></i>
-            </div>
+            <button type="button" id="current_level_increase" class="level-button">
+                <i class="fa-solid fa-plus"></i>
+            </button>
+        </div>
+        <div class="slider-container">
+            <span id="current_level_min" class="slider-min">1</span>
+            <input type="range" id="current_level" name="current_level" 
+                value="<?= htmlspecialchars($currentLevel) ?>" 
+                min="1" 
+                max="<?= $maxLevel - 1 ?>" 
+                step="1" 
+                required>
+            <span id="current_level_max" class="slider-max"><?= $maxLevel - 1 ?></span>
+            <i id="current_level_lock" class="fa-solid fa-lock-open lock-icon"></i>
         </div>
 
         <!-- Desired Level Section -->
         <label for="desired_level">Target Level:</label>
         <div class="input-pair">
+            <button type="button" id="desired_level_decrease" class="level-button">
+                <i class="fa-solid fa-minus"></i>
+            </button>
             <input type="number" id="desired_level_num" name="desired_level_num" 
                 value="<?= htmlspecialchars($desiredLevel) ?>" 
                 min="2" 
                 max="<?= $maxLevel ?>" 
                 step="1" 
                 required>
-            <div class="slider-container">
-                <span id="desired_level_min" class="slider-min">2</span>
-                <input type="range" id="desired_level" name="desired_level" 
-                    value="<?= htmlspecialchars($desiredLevel) ?>" 
-                    min="2" 
-                    max="<?= $maxLevel ?>" 
-                    step="1" 
-                    required>
-                <span id="desired_level_max" class="slider-max"><?= $maxLevel ?></span>
-                <i id="desired_level_lock" class="fa-solid fa-lock-open lock-icon"></i>
-            </div>
+            <button type="button" id="desired_level_increase" class="level-button">
+                <i class="fa-solid fa-plus"></i>
+            </button>
+        </div>
+        <div class="slider-container">
+            <span id="desired_level_min" class="slider-min">2</span>
+            <input type="range" id="desired_level" name="desired_level" 
+                value="<?= htmlspecialchars($desiredLevel) ?>" 
+                min="2" 
+                max="<?= $maxLevel ?>" 
+                step="1" 
+                required>
+            <span id="desired_level_max" class="slider-max"><?= $maxLevel ?></span>
+            <i id="desired_level_lock" class="fa-solid fa-lock-open lock-icon"></i>
         </div>
 
         <button type="submit">Calculate</button>
@@ -131,4 +143,3 @@ if ($currentLevel && $desiredLevel && $currentLevel < $desiredLevel) {
     </div>
 </body>
 </html>
-
