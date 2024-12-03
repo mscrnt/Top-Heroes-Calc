@@ -23,7 +23,7 @@ form {
 
 label {
     margin-bottom: 8px;
-    font-size: 1rem;
+    font-size: 1.5rem;
     text-align: center;
     color: white;
 }
@@ -107,7 +107,7 @@ img {
 }
 
 .meat-icon {
-    width: 32px;
+    width: 50px;
     height: auto; 
     vertical-align: middle; 
     margin-left: 5px;
@@ -139,12 +139,12 @@ input[type="number"].valid, input[type="range"].valid {
 #result {
     background-color: #00000082;
     padding: 10px;
-    border-radius: 5px;
+    border-radius: 15px;
     margin-top: 20px;
 }
 
 #result h2 {
-    font-size: 1.2rem;
+    font-size: 2.2rem;
     font-weight: bold;
     display: flex;
     margin-bottom: -10px;

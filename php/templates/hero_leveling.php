@@ -1,13 +1,5 @@
 <?php
 include_once __DIR__ . '/../includes/db_functions.php';
-
-// Import CSS
-echo '<link rel="stylesheet" href="/static/css/hero_leveling.css">';
-
-// Import JavaScript
-echo '<script src="/static/js/hero_leveling.js" defer></script>';
-
-
 // Fetch the resource for "Meat"
 $resourceName = "Meat";
 $resource = getResourceByName($resourceName);
@@ -61,16 +53,27 @@ if ($currentLevel && $desiredLevel && $currentLevel < $desiredLevel) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/css/hero_leveling.css">
+    <script src="/static/js/hero_leveling.js" defer></script>
 </head>
 <body>
-    <?php if (isset($iconPath)): ?>
-        <div>
-            <img src="<?= htmlspecialchars($iconPath) ?>" alt="Meat Icon">
-        </div>
-    <?php elseif (isset($iconErrorMessage)): ?>
-        <p class="error"><?= htmlspecialchars($iconErrorMessage) ?></p>
-    <?php endif; ?>
+    <!-- Calculation Result -->
+    <div id="result">
+        <?php if ($currentLevel && $desiredLevel): ?>
+            <?php if (isset($errorMessage)): ?>
+                <p class="error"><?= htmlspecialchars($errorMessage) ?></p>
+            <?php else: ?>
+                <h2>
+                    <?= number_format($totalMeatRequired) ?>
+                    <?php if (isset($iconPath)): ?>
+                        <img src="<?= htmlspecialchars($iconPath) ?>" alt="Meat Icon" class="meat-icon">
+                    <?php endif; ?>
+                </h2>
+            <?php endif; ?>
+        <?php endif; ?>
+    </div>
 
+    <!-- Form Section -->
     <form method="POST" action="">
         <!-- Current Level Section -->
         <label for="current_level">Current Level:</label>
@@ -130,21 +133,5 @@ if ($currentLevel && $desiredLevel && $currentLevel < $desiredLevel) {
 
         <button type="submit">Calculate</button>
     </form>
-
-    <div id="result">
-        <?php if ($currentLevel && $desiredLevel): ?>
-            <?php if (isset($errorMessage)): ?>
-                <p class="error"><?= htmlspecialchars($errorMessage) ?></p>
-            <?php else: ?>
-                <h2>
-                    <?= number_format($totalMeatRequired) ?>
-                    <?php if (isset($iconPath)): ?>
-                        <img src="<?= htmlspecialchars($iconPath) ?>" alt="Meat Icon" class="meat-icon">
-                    <?php endif; ?>
-                    required
-                </h2>
-            <?php endif; ?>
-        <?php endif; ?>
-    </div>
 </body>
 </html>

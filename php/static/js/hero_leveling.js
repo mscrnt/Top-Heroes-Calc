@@ -163,7 +163,6 @@ document.addEventListener("DOMContentLoaded", function () {
             <h2>
                 ${totalMeatRequired.toLocaleString()}
                 <img src="${iconPath}" alt="Meat Icon" class="meat-icon">
-                required
             </h2>`;
     }
 
@@ -185,9 +184,10 @@ document.addEventListener("DOMContentLoaded", function () {
         let timeoutId;
         let initialDelay = 300; // Delay before acceleration starts
         let delay = 100; // Initial delay after acceleration starts
-        const minDelay = 10; // Minimum delay for maximum speed
+        const minDelay = 5; // Minimum delay for maximum speed
         const accelerationFactor = 0.9; // Factor to reduce delay (lower = faster acceleration)
         let isHeld = false; // Tracks if the button is being held
+        let isMouseDown = false; // Tracks if the mouse is down (to avoid hover issues)
     
         function performStep() {
             handleIncrementDecrement(input, slider, step);
@@ -201,14 +201,18 @@ document.addEventListener("DOMContentLoaded", function () {
     
         function startHold() {
             isHeld = false;
+            isMouseDown = true;
             timeoutId = setTimeout(() => {
-                isHeld = true;
-                delay = 100; // Reset delay to the initial value for acceleration
-                performStep(); // Start the acceleration
+                if (isMouseDown) {
+                    isHeld = true;
+                    delay = 100; // Reset delay to the initial value for acceleration
+                    performStep(); // Start the acceleration
+                }
             }, initialDelay); // Delay before treating it as a hold
         }
     
         function endHold() {
+            isMouseDown = false;
             clearTimeout(timeoutId);
             if (!isHeld) {
                 // Single click behavior
@@ -219,7 +223,13 @@ document.addEventListener("DOMContentLoaded", function () {
         // Mouse and touch event bindings
         button.addEventListener("mousedown", startHold);
         button.addEventListener("mouseup", endHold);
-        button.addEventListener("mouseleave", endHold);
+    
+        // Prevent mouse hover issues by tracking mouse state
+        button.addEventListener("mouseleave", () => {
+            if (isMouseDown) {
+                endHold();
+            }
+        });
     
         button.addEventListener("touchstart", (e) => {
             e.preventDefault(); // Prevent long-press menu
@@ -229,9 +239,7 @@ document.addEventListener("DOMContentLoaded", function () {
         button.addEventListener("touchcancel", endHold);
     }
     
-    
-    
-
+      
     enableHold(currentLevelDecrease, currentLevelNum, currentLevelSlider, -1);
     enableHold(currentLevelIncrease, currentLevelNum, currentLevelSlider, 1);
     enableHold(desiredLevelDecrease, desiredLevelNum, desiredLevelSlider, -1);
