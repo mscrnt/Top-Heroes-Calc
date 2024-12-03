@@ -22,10 +22,29 @@ document.addEventListener("DOMContentLoaded", function () {
     const desiredLevelDecrease = document.getElementById("desired_level_decrease");
     const desiredLevelIncrease = document.getElementById("desired_level_increase");
 
+    const currentLevelNotice = document.getElementById("current_level_notice");
+    const desiredLevelNotice = document.getElementById("desired_level_notice");
+
     const resultContainer = document.getElementById("result");
 
     let currentLevelLocked = false;
     let desiredLevelLocked = false;
+
+    // Dynamically position the notice below the slider container
+    function adjustNoticePosition(notice, container) {
+        const containerRect = container.getBoundingClientRect();
+        notice.style.position = "absolute";
+        notice.style.top = `${containerRect.bottom + window.scrollY}px`; // 5px below the container
+        notice.style.left = `${containerRect.left + window.scrollX}px`;
+        notice.style.width = `${containerRect.width}px`;
+    }
+
+    // Update positions of notices dynamically
+    function updateNoticePositions() {
+        adjustNoticePosition(currentLevelNotice, currentLevelSlider.closest(".slider-container"));
+        adjustNoticePosition(desiredLevelNotice, desiredLevelSlider.closest(".slider-container"));
+    }
+
 
     // Load stored values or set defaults
     function loadStoredValues() {
@@ -34,22 +53,13 @@ document.addEventListener("DOMContentLoaded", function () {
         currentLevelLocked = localStorage.getItem("currentLevelLocked") === "true";
         desiredLevelLocked = localStorage.getItem("desiredLevelLocked") === "true";
 
-        // Set values to the sliders and inputs
         currentLevelSlider.value = storedCurrentLevel;
         desiredLevelSlider.value = storedDesiredLevel;
         currentLevelNum.value = storedCurrentLevel;
         desiredLevelNum.value = storedDesiredLevel;
 
-        // Update lock icons and `locked` class
         updateLockState(currentLevelLock, currentLevelLocked);
         updateLockState(desiredLevelLock, desiredLevelLocked);
-
-        console.log("Stored values loaded:", {
-            currentLevel: storedCurrentLevel,
-            desiredLevel: storedDesiredLevel,
-            currentLevelLocked,
-            desiredLevelLocked,
-        });
     }
 
     // Save values to local storage
@@ -90,63 +100,64 @@ document.addEventListener("DOMContentLoaded", function () {
     function enforceConstraints(source) {
         let currentLevel = parseInt(currentLevelSlider.value);
         let desiredLevel = parseInt(desiredLevelSlider.value);
-    
-        function triggerGlow(lockElement) {
-            if (!lockElement.classList.contains("pulse")) {
-                lockElement.classList.add("pulse");
-                setTimeout(() => lockElement.classList.remove("pulse"), 1000); // Remove glow after 1 second
+
+        // Trigger pulse for a given element
+        function triggerGlow(element) {
+            if (!element.classList.contains("pulse")) {
+                element.classList.add("pulse");
+                setTimeout(() => element.classList.remove("pulse"), 3000); // Remove pulse after 1 second
             }
         }
-    
+
         if (currentLevelLocked && desiredLevelLocked) {
             if (source === "current" && currentLevel >= desiredLevel) {
                 currentLevelSlider.value = desiredLevel - 1;
                 triggerGlow(desiredLevelLock);
+                triggerGlow(currentLevelNotice); // Show notice for current level
             }
             if (source === "desired" && desiredLevel <= currentLevel) {
                 desiredLevelSlider.value = currentLevel + 1;
                 triggerGlow(currentLevelLock);
+                triggerGlow(desiredLevelNotice); // Show notice for desired level
             }
         } else if (currentLevelLocked && !desiredLevelLocked) {
             if (source === "current" && currentLevel >= desiredLevel) {
                 desiredLevelSlider.value = currentLevel + 1;
-                triggerGlow(desiredLevelLock);
             } else if (source === "desired" && desiredLevel <= currentLevel) {
                 desiredLevelSlider.value = currentLevel + 1;
                 triggerGlow(currentLevelLock);
+                triggerGlow(desiredLevelNotice); // Show notice for current level
             }
         } else if (desiredLevelLocked && !currentLevelLocked) {
             if (source === "desired" && desiredLevel <= currentLevel) {
                 currentLevelSlider.value = desiredLevel - 1;
-                triggerGlow(currentLevelLock);
             } else if (source === "current" && currentLevel >= desiredLevel) {
                 currentLevelSlider.value = desiredLevel - 1;
                 triggerGlow(desiredLevelLock);
+                triggerGlow(currentLevelNotice); // Show notice for desired level
             }
         } else {
             if (source === "current" && currentLevel >= desiredLevel) {
                 desiredLevelSlider.value = currentLevel + 1;
-                triggerGlow(desiredLevelLock);
-            }
+                            }
             if (source === "desired" && desiredLevel <= currentLevel) {
                 currentLevelSlider.value = desiredLevel - 1;
-                triggerGlow(currentLevelLock);
-            }
+                            }
         }
-    
+
         updateValues();
     }
-    
 
+    // Calculate and display the meat required
     function fetchMeatRequired() {
         const currentLevel = parseInt(currentLevelSlider.value);
         const desiredLevel = parseInt(desiredLevelSlider.value);
-    
+
         if (currentLevel >= desiredLevel) {
             resultContainer.innerHTML = `<p class="error">Invalid levels. Current level must be less than desired level.</p>`;
             return;
         }
-    
+
         let totalMeatRequired = 0;
         levelingData.forEach(entry => {
             if (entry.level > currentLevel && entry.level <= desiredLevel) {
@@ -314,6 +325,10 @@ document.addEventListener("DOMContentLoaded", function () {
         enforceConstraints("desired");
         fetchMeatRequired();
     });
+
+    // Adjust notice positions on DOM load and resize
+    updateNoticePositions();
+    window.addEventListener("resize", updateNoticePositions);
 
     loadStoredValues();
     enforceConstraints("current");

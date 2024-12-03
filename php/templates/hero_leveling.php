@@ -102,6 +102,8 @@ if ($currentLevel && $desiredLevel && $currentLevel < $desiredLevel) {
             <span id="current_level_max" class="slider-max"><?= $maxLevel - 1 ?></span>
             <i id="current_level_lock" class="fa-solid fa-lock-open lock-icon"></i>
         </div>
+        <p class="notice" id="current_level_notice">Unlock Target Level to increase Current Level greater.</p>
+
 
         <!-- Desired Level Section -->
         <label for="desired_level">Target Level:</label>
@@ -130,6 +132,8 @@ if ($currentLevel && $desiredLevel && $currentLevel < $desiredLevel) {
             <span id="desired_level_max" class="slider-max"><?= $maxLevel ?></span>
             <i id="desired_level_lock" class="fa-solid fa-lock-open lock-icon"></i>
         </div>
+        <p class="notice" id="desired_level_notice">Unlock Current Level to decrease Target Level lesser.</p>
+
 
         <button type="submit">Calculate</button>
     </form>
