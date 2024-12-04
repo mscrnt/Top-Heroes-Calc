@@ -352,7 +352,7 @@ body.dark-mode .theme-toggle {
     }
 }
 
-/* 393 x 873 */
+/* 393 x 873 (Pixel 6) */
 @media (min-width: 354px) and (max-width: 432px) and (min-height: 785px) and (max-height: 960px) {
     .main-container {
         max-width: 95%;
@@ -366,6 +366,12 @@ body.dark-mode .theme-toggle {
 
     .container {
         padding: 20px;
+        max-width: -webkit-fill-available;
+    }
+
+    .mt-2 {
+        margin-top: 10px;
+        max-height: 75vh;
     }
 }
 
@@ -382,7 +388,7 @@ body.dark-mode .theme-toggle {
 
     .container {
         padding: 20px;
-        max-width: 90%;
+        max-width: -webkit-fill-available;
     }
 }
 
@@ -399,7 +405,7 @@ body.dark-mode .theme-toggle {
     }
 
     .container {
-        max-width: 90%;
+        max-width: -webkit-fill-available;
         max-height: 83vh;
     }
 }
@@ -438,7 +444,7 @@ body.dark-mode .theme-toggle {
     }
 
     .container {
-        max-width: 95%;
+        max-width: -webkit-fill-available;
         padding: 20px;
     }
 }
@@ -456,7 +462,7 @@ body.dark-mode .theme-toggle {
     }
 
     .container {
-        max-width: 95%;
+        max-width: -webkit-fill-available;
         max-height: 85vh;
     }
 }
@@ -471,7 +477,7 @@ body.dark-mode .theme-toggle {
     }
 
     .container {
-        max-width: 90%;
+        max-width: -webkit-fill-available;
         max-height: 85vh;
     }
 }
@@ -489,7 +495,7 @@ body.dark-mode .theme-toggle {
     }
 
     .container {
-        max-width: 90%;
+        max-width: -webkit-fill-available;
         padding: 20px;
     }
 }
@@ -511,6 +517,7 @@ body.dark-mode .theme-toggle {
 @media (min-width: 1024px) and (max-width: 1024px) and (min-height: 1366px) and (max-height: 1366px) {
     .container {
         max-height: 90vh;
+        max-width: -webkit-fill-available;
     }
 }
 
@@ -518,6 +525,7 @@ body.dark-mode .theme-toggle {
 @media (min-width: 912px) and (max-width: 912px) and (min-height: 1368px) and (max-height: 1368px) {
     .container {
         max-height: 90vh;
+        max-width: -webkit-fill-available;
     }
 
     .controls-bar {
@@ -530,6 +538,7 @@ body.dark-mode .theme-toggle {
 @media (min-width: 1024px) and (max-width: 1024px) and (min-height: 600px) and (max-height: 600px) {
     .container {
         max-height: 80vh !important;
+        max-width: -webkit-fill-available;
     }
 
     .controls-bar {
@@ -542,6 +551,7 @@ body.dark-mode .theme-toggle {
 @media (min-width: 1280px) and (max-width: 1280px) and (min-height: 800px) and (max-height: 800px) {
     .container {
         max-height: 78vh !important;
+        max-width: -webkit-fill-available;
     }
 
     .controls-bar {
@@ -563,7 +573,7 @@ body.dark-mode .theme-toggle {
     }
 
     .container {
-        max-width: 90%;
+        max-width: -webkit-fill-available;
         max-height: 85vh;
     }
 
@@ -586,7 +596,7 @@ body.dark-mode .theme-toggle {
     }
 
     .container {
-        max-width: 90%;
+        max-width: -webkit-fill-available;
         max-height: 80vh;
     }
 
