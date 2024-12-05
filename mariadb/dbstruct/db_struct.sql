@@ -62,4 +62,49 @@ CREATE TABLE IF NOT EXISTS hero_leveling (
     UNIQUE KEY unique_level_meat_required (level, meat_required)
 );
 
+-- Create buildings table
+CREATE TABLE IF NOT EXISTS buildings (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255) NOT NULL UNIQUE,
+    max_level INT NOT NULL
+);
 
+-- Create castle_levels table
+CREATE TABLE IF NOT EXISTS castle_levels (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    level INT NOT NULL UNIQUE,
+    required_wood INT DEFAULT NULL,
+    required_stone INT DEFAULT NULL,
+    wood_resource_id INT DEFAULT NULL,
+    stone_resource_id INT DEFAULT NULL,
+    level_cap INT DEFAULT NULL,
+    building_a_id INT DEFAULT NULL,
+    building_b_id INT DEFAULT NULL,
+    FOREIGN KEY (wood_resource_id) REFERENCES resources(id) ON DELETE CASCADE,
+    FOREIGN KEY (stone_resource_id) REFERENCES resources(id) ON DELETE CASCADE,
+    FOREIGN KEY (building_a_id) REFERENCES buildings(id) ON DELETE SET NULL,
+    FOREIGN KEY (building_b_id) REFERENCES buildings(id) ON DELETE SET NULL
+);
+
+
+-- Create building_levels table
+CREATE TABLE IF NOT EXISTS building_levels (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    building_id INT NOT NULL,
+    castle_level INT NOT NULL,
+    level INT NOT NULL,
+    FOREIGN KEY (building_id) REFERENCES buildings(id) ON DELETE CASCADE,
+    FOREIGN KEY (castle_level) REFERENCES castle_levels(level) ON DELETE CASCADE,
+    UNIQUE KEY unique_building_castle_level (building_id, castle_level)
+);
+
+-- Create castle_building_unlocks table
+CREATE TABLE IF NOT EXISTS castle_building_unlocks (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    castle_level INT NOT NULL,
+    building_id INT NOT NULL,
+    building_level INT NOT NULL,
+    FOREIGN KEY (castle_level) REFERENCES castle_levels(level) ON DELETE CASCADE,
+    FOREIGN KEY (building_id) REFERENCES buildings(id) ON DELETE CASCADE,
+    UNIQUE KEY unique_castle_building_unlock (castle_level, building_id, building_level)
+);

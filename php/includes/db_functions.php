@@ -274,3 +274,143 @@ function getAllHeroLevels($resourceId) {
     $stmt->execute(['resource_id' => $resourceId]);
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
+
+/**
+ * Get all buildings and their maximum levels.
+ * @return array
+ */
+function getAllBuildingsWithMaxLevels() {
+    global $pdo;
+
+    $stmt = $pdo->query("SELECT id, name, max_level FROM buildings ORDER BY name ASC");
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
+
+/**
+ * Check if a building is available at a specific castle level.
+ * @param int $buildingId
+ * @param int $castleLevel
+ * @return bool
+ */
+function isBuildingAvailableAtCastleLevel($buildingId, $castleLevel) {
+    global $pdo;
+
+    $stmt = $pdo->prepare("
+        SELECT COUNT(*)
+        FROM building_levels
+        WHERE building_id = :building_id AND castle_level = :castle_level
+    ");
+    $stmt->execute(['building_id' => $buildingId, 'castle_level' => $castleLevel]);
+    return $stmt->fetchColumn() > 0;
+}
+
+/**
+ * Get hero leveling costs for a specific resource.
+ * @param string $resourceName
+ * @return array
+ */
+function getHeroLevelingCostsByResource($resourceName) {
+    global $pdo;
+
+    $resource = getResourceByName($resourceName);
+    if (!$resource) {
+        throw new InvalidArgumentException("Resource '$resourceName' not found.");
+    }
+
+    $stmt = $pdo->prepare("
+        SELECT 
+            hl.level,
+            hl.meat_required
+        FROM hero_leveling hl
+        WHERE hl.resource_id = :resource_id
+        ORDER BY hl.level ASC
+    ");
+    $stmt->execute(['resource_id' => $resource['id']]);
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
+
+/**
+ * Get resource requirements for a specific castle level.
+ * @param int $castleLevel
+ * @return array|null
+ */
+function getResourceRequirementsForCastleLevel($castleLevel) {
+    global $pdo;
+
+    $stmt = $pdo->prepare("
+        SELECT 
+            required_wood,
+            required_stone
+        FROM castle_levels
+        WHERE level = :castle_level
+    ");
+    $stmt->execute(['castle_level' => $castleLevel]);
+    return $stmt->fetch(PDO::FETCH_ASSOC);
+}
+
+/**
+ * Get all building levels for a specific building.
+ * @param int $buildingId
+ * @return array
+ */
+function getAllBuildingLevels($buildingId) {
+    global $pdo;
+
+    $stmt = $pdo->prepare("
+        SELECT 
+            bl.level AS building_level,
+            cl.level AS castle_level
+        FROM building_levels bl
+        JOIN castle_levels cl ON bl.castle_level = cl.level
+        WHERE bl.building_id = :building_id
+        ORDER BY bl.level ASC
+    ");
+    $stmt->execute(['building_id' => $buildingId]);
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
+
+/**
+ * Get buildings unlocked at a specific castle level.
+ * @param int $castleLevel
+ * @return array
+ */
+function getBuildingsUnlockedAtCastleLevel($castleLevel) {
+    global $pdo;
+
+    $stmt = $pdo->prepare("
+        SELECT 
+            cb.building_id,
+            b.name AS building_name,
+            cb.building_level
+        FROM castle_building_unlocks cb
+        JOIN buildings b ON cb.building_id = b.id
+        WHERE cb.castle_level = :castle_level
+        ORDER BY cb.building_level ASC
+    ");
+    $stmt->execute(['castle_level' => $castleLevel]);
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
+
+/**
+ * Get all castle levels with their requirements, unlocked buildings, and level caps.
+ * @return array
+ */
+function getAllCastleLevels() {
+    global $pdo;
+
+    $stmt = $pdo->query("
+        SELECT 
+            cl.level AS castle_level,
+            cl.required_wood,
+            cl.required_stone,
+            cl.level_cap,
+            b1.name AS building_a_name,
+            b2.name AS building_b_name
+        FROM castle_levels cl
+        LEFT JOIN buildings b1 ON cl.building_a_id = b1.id
+        LEFT JOIN buildings b2 ON cl.building_b_id = b2.id
+        ORDER BY cl.level ASC
+    ");
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
+

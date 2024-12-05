@@ -1,0 +1,208 @@
+{
+    "castle_levels": [
+        {
+            "level": 1,
+            "required_wood": 5,
+            "required_stone": 0,
+            "level_cap": 10
+        },
+        {
+            "level": 2,
+            "required_wood": 500,
+            "required_stone": 0,
+            "level_cap": 20
+        },
+        {
+            "level": 3,
+            "required_wood": 1000,
+            "required_stone": 1000
+        },
+        {
+            "level": 4,
+            "required_wood": 0,
+            "required_stone": 0
+        },
+        {
+            "level": 5,
+            "required_wood": 0,
+            "required_stone": 0
+        },
+        {
+            "level": 6,
+            "required_wood": 0,
+            "required_stone": 0
+        },
+        {
+            "level": 7,
+            "required_wood": 0,
+            "required_stone": 0,
+            "level_cap": 40
+        },
+        {
+            "level": 8,
+            "required_wood": 65000,
+            "required_stone": 65000,
+            "level_cap": 50
+        },
+        {
+            "level": 9,
+            "required_wood": 70000,
+            "required_stone": 70000
+        },
+        {
+            "level": 10,
+            "required_wood": 0,
+            "required_stone": 0
+        },
+        {
+            "level": 11,
+            "required_wood": 0,
+            "required_stone": 0
+        },
+        {
+            "level": 12,
+            "required_wood": 0,
+            "required_stone": 0
+        },
+        {
+            "level": 13,
+            "required_wood": 0,
+            "required_stone": 0
+        },
+        {
+            "level": 14,
+            "required_wood": 0,
+            "required_stone": 0
+        },
+        {
+            "level": 15,
+            "required_wood": 0,
+            "required_stone": 0
+        },
+        {
+            "level": 16,
+            "required_wood": 0,
+            "required_stone": 0
+        },
+        {
+            "level": 17,
+            "required_wood": 0,
+            "required_stone": 0
+        },
+        {
+            "level": 18,
+            "required_wood": 0,
+            "required_stone": 0
+        },
+        {
+            "level": 19,
+            "required_wood": 0,
+            "required_stone": 0
+        },
+        {
+            "level": 20,
+            "required_wood": 0,
+            "required_stone": 0
+        },
+        {
+            "level": 21,
+            "required_wood": 2040000,
+            "required_stone": 2040000
+        },
+        {
+            "level": 22,
+            "required_wood": 2300000,
+            "required_stone": 2300000
+        },
+        {
+            "level": 23,
+            "required_wood": 2680000,
+            "required_stone": 2680000
+        },
+        {
+            "level": 24,
+            "required_wood": 3550000,
+            "required_stone": 3550000
+        },
+        {
+            "level": 25,
+            "required_wood": 0,
+            "required_stone": 0
+        },
+        {
+            "level": 26,
+            "required_wood": 0,
+            "required_stone": 0
+        },
+        {
+            "level": 27,
+            "required_wood": 0,
+            "required_stone": 0
+        },
+        {
+            "level": 28,
+            "required_wood": 0,
+            "required_stone": 0
+        },
+        {
+            "level": 29,
+            "required_wood": 0,
+            "required_stone": 0
+        },
+        {
+            "level": 30,
+            "required_wood": 0,
+            "required_stone": 0
+        },
+        {
+            "level": 31,
+            "required_wood": 0,
+            "required_stone": 0
+        },
+        {
+            "level": 32,
+            "required_wood": 0,
+            "required_stone": 0
+        },
+        {
+            "level": 33,
+            "required_wood": 0,
+            "required_stone": 0
+        },
+        {
+            "level": 34,
+            "required_wood": 0,
+            "required_stone": 0
+        },
+        {
+            "level": 35,
+            "required_wood": 0,
+            "required_stone": 0
+        },
+        {
+            "level": 36,
+            "required_wood": 0,
+            "required_stone": 0
+        },
+        {
+            "level": 37,
+            "required_wood": 0,
+            "required_stone": 0
+        },
+        {
+            "level": 38,
+            "required_wood": 0,
+            "required_stone": 0
+        },
+        {
+            "level": 39,
+            "required_wood": 0,
+            "required_stone": 0
+        },
+        {
+            "level": 40,
+            "required_wood": 0,
+            "required_stone": 0
+        }
+    ]
+}
