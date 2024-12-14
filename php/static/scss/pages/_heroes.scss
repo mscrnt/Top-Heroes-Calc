@@ -1,0 +1,274 @@
+// Import variables and mixins
+@import '../base/variables';
+@import '../base/mixins';
+
+// General Page Styling
+body {
+  @include scrollbar($color-primary, lighten($color-light, 10%)); // Match scrollbar styling
+}
+
+// Headers
+h2, h3 {
+  text-align: center;
+  @include text-style($font-size: 1.25rem, $font-weight: bold, $color: $color-dark);
+}
+
+p {
+  color: $color-dark;
+
+  body.dark-mode & {
+    color: $color-light;
+  }
+}
+
+// Images
+img {
+  width: 6.25rem; // 100px
+}
+
+.affinity-icon {
+  width: 1.125rem; // 18px
+}
+
+.stat-icon {
+  width: 2rem; // 32px
+}
+
+.heroes_info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+// Dropdown Form
+.dropdown-form {
+  text-align: center;
+  margin-bottom: $spacing-medium;
+  max-width: max-content;
+}
+
+select {
+  font-size: 1rem;
+  padding: $spacing-small;
+  border-radius: $border-radius-small;
+  border: 1px solid $color-secondary;
+  color: $color-dark;
+  box-sizing: border-box;
+
+  &:focus {
+    border-color: $color-primary;
+    outline: none;
+    @include box-shadow(0, 0, 0.25rem, 0, rgba(47, 85, 150, 0.5));
+  }
+}
+
+// Mode Toggle Styling
+.mode-toggle {
+  text-align: center;
+  margin-bottom: $spacing-small;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: $spacing-small;
+  font-size: 1.75rem;
+  color: $color-primary;
+
+  span {
+    font-weight: bold;
+  }
+
+  i {
+    font-size: 1.5rem;
+    cursor: pointer;
+    @include transition(transform, $transition-duration, $transition-ease);
+
+    &:hover {
+      transform: scale(1.1);
+    }
+  }
+}
+
+// Tile Mode
+.hero-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $spacing-medium;
+  justify-content: center;
+}
+
+.hero-card {
+  text-align: center;
+  width: 9.375rem; // 150px
+  border-radius: $border-radius-medium;
+  @include box-shadow($box-shadow-light);
+  @include transition(transform, $transition-duration, $transition-ease);
+
+  &:hover {
+    transform: translateY(-0.3125rem); // -5px
+    @include box-shadow($box-shadow-dark);
+  }
+
+  img {
+    width: 100%;
+    border-radius: $border-radius-medium;
+  }
+
+  p {
+    margin: $spacing-small 0 0;
+    font-weight: bold;
+  }
+}
+
+// Preview Mode
+.preview-container {
+  display: flex;
+  overflow-x: auto;
+  gap: $spacing-medium;
+  padding: $spacing-medium;
+  margin-bottom: $spacing-medium;
+  @include scrollbar($color-primary, $color-light);
+}
+
+.preview-card {
+  min-width: 9.375rem; // 150px
+  text-align: center;
+
+  &.selected img {
+    border: 0.1875rem solid $color-warning; // 3px
+    border-radius: $border-radius-medium;
+    @include transition(border, $transition-duration, $transition-ease);
+  }
+
+  img {
+    border: 0.125rem solid transparent; // 2px
+    width: 100%;
+    border-radius: $border-radius-medium;
+  }
+}
+
+// Hidden Elements
+.hidden {
+  display: none;
+}
+
+// Hero Details Styling
+.hero-details,
+#heroDetails {
+  text-align: center;
+  padding: $spacing-medium;
+  border-radius: $border-radius-medium;
+  @include box-shadow($box-shadow-dark);
+  background-color: rgba($color-light, $opacity-high);
+  overflow: auto;
+
+  body.dark-mode & {
+    background-color: rgba($color-dark, $opacity-high);
+  }
+
+  h3 {
+    font-size: 1.25rem; // 20px
+    margin-bottom: $spacing-xsmall;
+  }
+
+  img {
+    max-width: 9.375rem; // 150px
+    border-radius: $border-radius-medium;
+  }
+
+  p {
+    margin: $spacing-xsmall 0;
+    font-size: 1rem; // 16px
+  }
+}
+
+// Modal Styling
+#heroModal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, $opacity-medium);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: $z-index-modal;
+
+  .modal-content {
+    position: relative;
+    padding: $spacing-medium;
+    border-radius: $border-radius-medium;
+    width: 50%;
+    max-height: 90%;
+    overflow-y: auto;
+    @include box-shadow($box-shadow-dark);
+    background-color: rgba($color-light, $opacity-high);
+
+    body.dark-mode & {
+      background-color: rgba($color-dark, $opacity-high);
+    }
+  }
+
+  .modal-close,
+  .modal-prev,
+  .modal-next {
+    position: absolute;
+    background: transparent;
+    border: none;
+    color: $color-light;
+    cursor: pointer;
+    z-index: $z-index-tooltip;
+
+    &:hover {
+      color: $color-primary;
+    }
+  }
+
+  .modal-close {
+    top: $spacing-xsmall;
+    right: $spacing-xsmall;
+    font-size: 2rem;
+
+    i {
+      pointer-events: none;
+    }
+  }
+
+  .modal-prev,
+  .modal-next {
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 1.5rem;
+  }
+
+  .modal-prev {
+    left: $spacing-xsmall;
+  }
+
+  .modal-next {
+    right: $spacing-xsmall;
+  }
+}
+
+// Responsive Adjustments
+@include respond(phone-md, down) {
+  .hero-card {
+    width: 8rem; // Adjust width for smaller screens
+  }
+
+  .preview-container {
+    gap: $spacing-small;
+    padding: $spacing-small;
+  }
+
+  #heroModal .modal-content {
+    padding: $spacing-small;
+    width: -webkit-fill-available;
+  }
+}
+
+@include respond(tablet-md, up) {
+  .hero-card {
+    width: 10rem; // Slightly larger for tablets
+  }
+}

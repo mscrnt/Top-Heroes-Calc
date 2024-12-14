@@ -1,0 +1,213 @@
+// Import variables and mixins
+@import '../base/variables';
+@import '../base/mixins';
+
+
+.hero-header {
+    text-align: center;
+    margin-bottom: $spacing-medium;
+
+    h2 {
+        @include text-style(1.5rem, 1.2, bold, $color-dark);
+        margin-bottom: $spacing-small;
+    }
+
+    .hero-icon {
+        width: 6.25rem; // 100px
+        height: auto;
+        margin-bottom: $spacing-small;
+    }
+
+    .hero-roles {
+        margin: 0 auto;
+        display: inline-block;
+        text-align: left;
+
+        h3 {
+            @include text-style(1.25rem, 1.5, bold, $color-dark);
+            margin-bottom: $spacing-small;
+        }
+    }
+}
+
+.modalHeroDetails {
+    text-align: center;
+}
+
+
+ul {
+    color: black;
+}
+
+body.dark-mode {
+    ul {
+        color: white;
+    }
+}
+
+.gear-guide, .hero-page{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    p {
+        color: black;
+        margin-bottom: $spacing-small;
+        text-align: center;
+
+        body.dark-mode & {
+            color: white;
+        }
+    }
+
+    .gear-grid {
+        align-items: center;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+}
+
+.roles-table {
+    width: 100%;
+    border-spacing: $spacing-small;
+    margin: 0 auto;
+    text-align: left;
+
+    td {
+        padding: $spacing-small;
+    }
+
+    .role-description-cell {
+        vertical-align: middle;
+        position: relative;
+        color: rgb(0 0 0);
+
+        body.dark-mode & {
+            color: $color-light;
+        }
+
+        strong {
+            font-weight: bold;
+            color: $color-dark;
+
+            body.dark-mode & {
+                color: $color-light;
+            }
+        }
+    }
+
+    .role-icon-cell {
+        width: 3.125rem; // 50px
+        text-align: center;
+        vertical-align: middle;
+    }
+
+    .role-prefix-cell {
+        font-weight: bold;
+        color: $color-dark;
+        width: max-content;
+    }
+
+    .role-icon {
+        width: 2rem; // 32px
+        height: auto;
+    }
+}
+
+// Hero Rarity and Faction
+.hero-rarity {
+    font-size: 1.2em;
+    color: $color-primary;
+    text-align: center;
+    margin: $spacing-xsmall 0;
+}   
+
+.hero-faction {
+    font-size: 1.1em;
+    color: $color-warning;
+    text-align: center;
+    margin: $spacing-xsmall 0;
+    font-weight: bold;
+
+    .faction-icon {
+        width: 1.5rem; // 24px
+        height: 1.5rem;
+        vertical-align: middle;
+        margin-right: $spacing-xsmall;
+    }
+}
+
+// Hero Tabs
+.hero-tabs {
+    display: flex;
+    justify-content: center;
+    gap: $spacing-small;
+    margin-top: $spacing-medium;
+
+    a {
+        text-decoration: none;
+        padding: $spacing-small $spacing-medium;
+        border-radius: $border-radius-small;
+        background-color: lighten($color-light, 10%);
+        color: $color-dark;
+        @include transition(background-color, $transition-duration, $transition-ease);
+
+        &.active {
+            background-color: $color-primary;
+            color: $color-white;
+        }
+
+        &:hover {
+            background-color: darken($color-primary, 10%);
+            color: $color-white;
+        }
+    }
+}
+
+// Responsive Ranges for Hero Header
+@include respond-range(phone-sm, phone-md) {
+    .hero-header h2 {
+        font-size: 1.25rem;
+    }
+
+    .hero-header .hero-icon {
+        width: 5rem; // 80px
+    }
+
+    .hero-tabs a {
+        font-size: 0.875rem;
+        padding: $spacing-xsmall $spacing-small;
+    }
+}
+
+@include respond-range(phone-md, tablet-sm) {
+    .hero-header h2 {
+        font-size: 1.4rem;
+    }
+
+    .hero-header .hero-icon {
+        width: 5.5rem; // 88px
+    }
+}
+
+@include respond-range(tablet-sm, tablet-md) {
+    .hero-header h2 {
+        font-size: 1.5rem;
+    }
+
+    .hero-header .hero-icon {
+        width: 6rem; // 96px
+    }
+}
+
+@include respond-range(tablet-md, desktop-sm) {
+    .hero-header h2 {
+        font-size: 1.75rem;
+    }
+
+    .hero-header .hero-icon {
+        width: 6.25rem; // 100px
+    }
+}

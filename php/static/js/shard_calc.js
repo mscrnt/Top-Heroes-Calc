@@ -202,62 +202,89 @@ function toggleChart() {
 
 function handleFloatingShardDisplay() {
     const floatingShard = document.querySelector('.floating-shard-display');
-    const container = document.querySelector('.container.content-wrapper');
     const heroTypeSelect = document.querySelector('#heroType');
-    const fixedTopDistance = 85; // Distance from top when pinned
+    const fixedTopDistance = 64; // Distance from the top of the viewport when pinned (0.5rem)
+    const offsetBelowHeroType = 8; // Distance below the #heroType element
+    let isPinned = false;
 
-    let initialTopPixels = 0; // Dynamically calculated initial position
-    let isPinned = false; // Tracks whether the shard is pinned to the top
+    // Debugging utility
+    function logPositionDetails() {
+        const heroTypeRect = heroTypeSelect.getBoundingClientRect();
+        const floatingShardRect = floatingShard.getBoundingClientRect();
 
-    // Function to calculate the initial top position based on the heroType element
-    function calculateInitialTop() {
-        if (heroTypeSelect) {
-            const selectRect = heroTypeSelect.getBoundingClientRect();
-            const containerRect = container.getBoundingClientRect();
-            initialTopPixels = selectRect.top - containerRect.top + selectRect.height;
-        } else {
-            console.warn('[ShardDisplay] heroType element not found. Using fallback top value.');
-            initialTopPixels = 220; // Fallback value
-        }
-        return initialTopPixels;
+        // console.log('[Debug] HeroType Element Position:', {
+        //     top: heroTypeRect.top,
+        //     bottom: heroTypeRect.bottom,
+        // });
+        // console.log('[Debug] Floating Shard Position:', {
+        //     top: floatingShardRect.top,
+        //     bottom: floatingShardRect.bottom,
+        // });
     }
 
-    function initializePosition() {
-        initialTopPixels = calculateInitialTop(); // Recalculate the initial position dynamically
-        floatingShard.style.top = `${initialTopPixels}px`;
-        floatingShard.style.position = 'absolute'; // Default to absolute
-        //console.log(`[ShardDisplay] Initialized position: top=${initialTopPixels}px, position=absolute`);
-    }
+    function updateFloatingShardPosition() {
+        const heroTypeRect = heroTypeSelect.getBoundingClientRect();
+        const scrollY = window.scrollY || document.documentElement.scrollTop;
 
-    function updateFloatingPosition() {
-        const scrollTop = container.scrollTop;
-
-        //console.log(`[ShardDisplay] scrollTop: ${scrollTop}, threshold: ${initialTopPixels - fixedTopDistance}`);
-
-        if (scrollTop > initialTopPixels - fixedTopDistance && !isPinned) {
-            // Pin the shard to the top
+        if (heroTypeRect.bottom + offsetBelowHeroType <= fixedTopDistance && !isPinned) {
+            // Pin the shard to the top of the viewport
             floatingShard.style.position = 'fixed';
             floatingShard.style.top = `${fixedTopDistance}px`;
             isPinned = true;
-            //console.log(`[ShardDisplay] Pinned to top. Position=fixed, top=${fixedTopDistance}px`);
-        } else if (scrollTop <= initialTopPixels - fixedTopDistance && isPinned) {
-            // Unpin the shard
+            // console.log('[Debug] Floating shard pinned to viewport.');
+        } else if (heroTypeRect.bottom + offsetBelowHeroType > fixedTopDistance && isPinned) {
+            // Reposition the floating shard below the heroType element
             floatingShard.style.position = 'absolute';
-            floatingShard.style.top = `${initialTopPixels}px`;
+            floatingShard.style.top = `${heroTypeRect.bottom + scrollY + offsetBelowHeroType}px`;
             isPinned = false;
-            //console.log(`[ShardDisplay] Unpinned from top. Position=absolute, top=${initialTopPixels}px`);
+            // console.log('[Debug] Floating shard unpinned and repositioned.');
+        } else if (!isPinned) {
+            // Update the floating shard's position dynamically below the heroType element
+            floatingShard.style.top = `${heroTypeRect.bottom + scrollY + offsetBelowHeroType}px`;
         }
+
+        logPositionDetails();
     }
 
-    // Set the initial position on load
+    function initializePosition() {
+        const heroTypeRect = heroTypeSelect.getBoundingClientRect();
+        const scrollY = window.scrollY || document.documentElement.scrollTop;
+
+        // Position the shard 8px below the heroType element
+        floatingShard.style.position = 'absolute';
+        floatingShard.style.top = `${heroTypeRect.bottom + scrollY + offsetBelowHeroType}px`;
+
+        // console.log('[Debug] Initializing floating shard position...');
+        logPositionDetails();
+    }
+
+    function detectScrollableContainer() {
+        let scrollContainer = window;
+
+        let parent = heroTypeSelect.parentElement;
+        while (parent) {
+            const overflowY = window.getComputedStyle(parent).overflowY;
+            if (overflowY === 'scroll' || overflowY === 'auto') {
+                scrollContainer = parent;
+                break;
+            }
+            parent = parent.parentElement;
+        }
+
+        return scrollContainer;
+    }
+
+    const scrollContainer = detectScrollableContainer();
+
+    // Initialize position and add listeners
     initializePosition();
 
-    // Listen for scroll events to update position
-    container.addEventListener('scroll', updateFloatingPosition);
+    if (scrollContainer === window) {
+        window.addEventListener('scroll', updateFloatingShardPosition);
+    } else {
+        scrollContainer.addEventListener('scroll', updateFloatingShardPosition);
+    }
 
-    // Recalculate the initial offset if the window is resized
-    window.addEventListener('resize', () => {
-        initializePosition();
-        //console.log(`[ShardDisplay] Reinitialized position on resize.`);
-    });
+    window.addEventListener('resize', initializePosition);
 }
+

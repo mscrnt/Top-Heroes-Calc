@@ -1,5 +1,5 @@
 <?php
-// templates/footer.php
+// includes/footer.php
 ?>
 <div id="footer-banner">
     <div class="footer-content">

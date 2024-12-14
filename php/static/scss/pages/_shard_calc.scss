@@ -1,0 +1,263 @@
+// Import variables and mixins
+@import '../base/variables';
+@import '../base/mixins';
+
+// Section header styling
+h2 {
+  margin-bottom: $spacing-medium;
+  top: $spacing-small;
+}
+
+h3 {
+  margin-top: $spacing-large;
+}
+
+// Form styling
+form {
+  margin-bottom: $spacing-medium;
+}
+
+.form-group {
+  margin-bottom: $spacing-small;
+}
+
+label {
+  font-weight: bold;
+  color: $color-secondary;
+  margin-bottom: $spacing-xsmall;
+  display: block;
+}
+
+input[type="text"],
+select {
+  width: 100%;
+  padding: $spacing-small;
+  border: 1px solid $color-secondary;
+  border-radius: $border-radius-small;
+  font-size: 0.875rem;
+  box-sizing: border-box;
+
+  &:focus {
+    border-color: $color-primary;
+    outline: none;
+    @include box-shadow(0, 0, 0.25rem, 0, rgba(47, 85, 150, 0.5));
+  }
+}
+
+.form-text {
+  font-size: 0.75rem;
+  color: lighten($color-light, 40%);
+  margin-top: $spacing-xsmall;
+}
+
+.form-row {
+  display: flex;
+  gap: $spacing-small;
+
+  .form-group {
+    flex: 1;
+    min-width: 9.375rem; // 150px
+  }
+}
+
+// Button styling
+#calculateButton,
+#resetButton {
+  float: right;
+  margin-left: $spacing-small;
+}
+
+// Chart styling
+.shard-chart {
+  margin-top: $spacing-medium;
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: center;
+
+    tr {
+      background-color: $color-primary;
+    }
+
+    th {
+      color: $color-white;
+    }
+
+    th,
+    .fa-star {
+      font-weight: bold;
+      padding: $spacing-xsmall;
+    }
+
+    th,
+    td {
+      padding: $spacing-xsmall;
+      border: 1px solid black;
+      position: relative;
+      font-weight: bold;
+    }
+
+    .level-cell,
+    .star-cell {
+      background-color: $color-primary;
+      color: $color-white;
+      cursor: pointer;
+      position: relative;
+
+      &:hover {
+        background-color: lighten($color-primary, 20%);
+        border-color: $color-accent;
+        transition: all $transition-duration $transition-ease;
+
+        .fa-star {
+          transform: scale(1.2);
+          transition: transform $transition-duration $transition-ease, color $transition-duration $transition-ease;
+        }
+
+        .progress-overlay {
+          background-color: rgba(255, 255, 255, $opacity-medium);
+        }
+      }
+    }
+  }
+}
+
+// Group-specific styling
+.group-1 {
+  .fa-star { color: #FFD700; } // Gold
+  .shards-per-step, .per-star, .overall { background-color: rgb(255, 241, 204); } // Light yellow
+}
+
+.group-2 {
+  .fa-star { color: #B7410E; } // Rust
+  .shards-per-step, .per-star, .overall { background-color: rgb(252, 228, 216); } // Light coral
+}
+
+.group-3 {
+  .fa-star { color: #C0C0C0; } // Silver
+  .shards-per-step, .per-star, .overall { background-color: rgb(217, 217, 217); } // Light gray
+}
+
+// Star container styling
+.star-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: $spacing-xsmall;
+
+  .fa-star {
+    font-size: 1.5rem;
+  }
+
+  .fa-star.active {
+    border: 0.125rem solid $color-accent;
+    border-radius: 50%;
+  }
+}
+
+// Progress overlay styling
+.progress-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 0%; // Initial width
+  background-color: rgba(255, 255, 255, $opacity-high);
+  z-index: $z-index-base;
+  transition: width $transition-duration $transition-ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  color: $color-primary;
+  font-size: 1.5rem;
+  border-radius: $border-radius-small;
+  user-select: none;
+}
+
+.total-row {
+  background-color: #f0f0f0 !important;
+  font-weight: bold;
+}
+
+// Floating Shard Display
+.floating-shard-display {
+  position: fixed;
+  border-radius: $border-radius-medium;
+  padding: $spacing-small;
+  z-index: $z-index-header;
+  text-align: center;
+  font-family: $font-family-base;
+  transition: top 0s ease;
+
+  img {
+    width: 3rem;
+    height: auto;
+  }
+
+  p {
+    margin: $spacing-xsmall 0;
+    font-size: 2rem;
+    font-weight: bolder;
+    color: rgb(245 204 101) !important;
+  }
+
+  #result {
+    vertical-align: middle;
+  }
+}
+
+/* Dark mode adjustments */
+body.dark-mode .progress-overlay {
+  background-color: #1e1e1e;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.4);
+}
+
+body.dark-mode .form-text {
+  color: #9e9e9e;
+}
+
+body.dark-mode .shard-chart th,
+body.dark-mode .shard-chart td {
+  background-color: #333333;
+  color: #e0e0e0;
+  border-color: #555555;
+}
+
+body.dark-mode .total-row {
+  background-color: #424242;
+}
+
+body.dark-mode .progress-overlay {
+  background-color: rgba(224, 224, 224, 0.8);
+  color: #1e1e1e;
+}
+
+body.dark-mode label {
+  color: #cccccc;
+}
+
+// Responsive adjustments
+@include respond(phone-sm, down) {
+  // Placeholder for smallest phones
+}
+
+@include respond(phone-md, down) {
+  .shard-chart table {
+    border: none;
+  }
+
+  .progress-overlay {
+    font-size: 1rem;
+  }
+
+  .fa-star {
+    font-size: 1.125rem;
+  }
+
+  .shard-chart th:not(.level-cell):not(.star-cell),
+  .shard-chart td:not(.level-cell):not(.star-cell) {
+      display: none; 
+  }
+}

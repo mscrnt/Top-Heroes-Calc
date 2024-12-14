@@ -1,0 +1,118 @@
+// Import variables and mixins
+@import '../base/variables';
+@import '../base/mixins';
+
+/* General Button Styles */
+button {
+  padding: 0.625rem 1rem; // Replace 10px 15px
+  border: none;
+  border-radius: 0.3125rem; // Replace 5px
+  font-size: 1rem; // Replace 14px
+  cursor: pointer;
+  @include transition(background-color, 0.3s, ease);
+
+  &:hover {
+    @include box-shadow(0, 0.125rem, 0.3125rem, 0, rgba(0, 0, 0, 0.2));
+  }
+}
+
+/* Primary Button */
+button.btn-primary {
+  background-color: $color-primary;
+  color: $color-white;
+
+  &:hover {
+    background-color: darken($color-primary, 10%);
+  }
+
+  &:focus {
+    outline: none;
+    @include box-shadow(0, 0, 0.25rem, 0, rgba(47, 85, 150, 0.5));
+  }
+
+  body.dark-mode & {
+    background-color: lighten($color-primary, 10%);
+    color: $color-dark;
+
+    &:hover {
+      background-color: lighten($color-primary, 20%);
+    }
+  }
+}
+
+/* Secondary Button */
+button.btn-secondary {
+  background-color: $color-secondary;
+  color: darken($color-dark, 40%);
+
+  &:hover {
+    background-color: darken($color-secondary, 10%);
+  }
+
+  &:focus {
+    outline: none;
+    @include box-shadow(0, 0, 0.25rem, 0, rgba(128, 128, 128, 0.5));
+  }
+
+  body.dark-mode & {
+    background-color: darken($color-secondary, 10%);
+    color: lighten($color-light, 40%);
+
+    &:hover {
+      background-color: darken($color-secondary, 20%);
+    }
+  }
+}
+
+/* Disabled Button */
+button:disabled {
+  background-color: lighten($color-dark, 40%);
+  color: lighten($color-dark, 60%);
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+/* Icon Button */
+button.icon-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem; // Replace 8px
+  background-color: transparent;
+  border: none;
+  color: $color-primary;
+
+  &:hover {
+    color: darken($color-primary, 10%);
+  }
+
+  &:focus {
+    outline: none;
+    @include box-shadow(0, 0, 0.25rem, 0, rgba(47, 85, 150, 0.5));
+  }
+
+  body.dark-mode & {
+    color: lighten($color-primary, 10%);
+
+    &:hover {
+      color: lighten($color-primary, 20%);
+    }
+  }
+}
+
+/* Full Width Button */
+button.full-width {
+  width: 100%;
+}
+
+/* Responsive Button Adjustments */
+@include respond(sm, down) {
+  button {
+    font-size: 0.875rem; // Slightly smaller for smaller screens
+    padding: 0.5rem 0.875rem; // Adjust padding
+  }
+
+  button.full-width {
+    padding: 0.75rem; // Ensure buttons look good on mobile
+  }
+}

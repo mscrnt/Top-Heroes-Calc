@@ -1,0 +1,125 @@
+.container {
+  background-image: url('/static/images/wood_texture.jpg');
+  background-color: $color-light;
+  box-shadow: $box-shadow-light;
+  background-repeat: repeat; 
+  background-size: cover; 
+  border-radius: $border-radius-medium;
+  padding: 1.5rem;
+  overflow-y: auto;
+  max-height: 80vh;
+  margin: auto;
+  transition: $transition-duration, $transition-ease;
+
+  // Specific styles for each range
+  @include respond-range(phone-sm, phone-md) {
+      max-width: 85%;
+      max-height: 85vh;
+  }
+
+  @include respond-range(phone-md, phone-lg) {
+      max-width: 90%;
+      padding: $spacing-small;
+      max-height: 85vh;
+  }
+
+  @include respond-range(phone-lg, tablet-sm) {
+      max-width: 90%;
+      padding: $spacing-medium;
+      max-height: 90vh;
+  }
+
+  @include respond-range(tablet-sm, tablet-md) {
+      max-width: 90%;
+      padding: $spacing-medium;
+      max-height: 92vh;
+  }
+
+  @include respond-range(tablet-md, tablet-lg) {
+      max-width: 90%;
+      padding: $spacing-large;
+      max-height: 93vh;
+  }
+
+  @include respond-range(tablet-lg, desktop-sm) {
+      max-width: 90%;
+      padding: $spacing-large;
+      max-height: 94vh;
+  }
+
+  @include respond-range(desktop-sm, desktop-md) {
+      max-width: 90%;
+      padding: $spacing-large;
+      max-height: 95vh;
+  }
+
+  @include respond-range(desktop-md, desktop-lg) {
+      max-width: 90%;
+      padding: $spacing-xlarge;
+      max-height: 95vh;
+  }
+
+  @include respond-range(desktop-lg, large) {
+      max-width: 90%;
+      padding: $spacing-xlarge;
+      max-height: 95vh;
+  }
+
+  // Dark mode adjustments
+  body.dark-mode & {
+      background-color: $color-dark;
+      box-shadow: $box-shadow-dark;
+  }
+}
+
+.container-content {
+  margin: 0 auto;
+  max-width: 43.75rem;
+  max-height: 80vh;
+
+  // Specific styles for each range
+  @include respond-range(phone-sm, phone-md) {
+      max-width: 90vw;
+      padding: $spacing-small;
+  }
+
+  @include respond-range(phone-md, phone-lg) {
+      max-width: 90%;
+      padding: $spacing-small;
+  }
+
+  @include respond-range(phone-lg, tablet-sm) {
+      max-width: 85%;
+      padding: $spacing-medium;
+  }
+
+  @include respond-range(tablet-sm, tablet-md) {
+      max-width: 80%;
+      padding: $spacing-medium;
+  }
+
+  @include respond-range(tablet-md, tablet-lg) {
+      max-width: 75%;
+      padding: $spacing-large;
+  }
+
+  @include respond-range(tablet-lg, desktop-sm) {
+      max-width: 70%;
+      padding: $spacing-large;
+  }
+
+  @include respond-range(desktop-sm, desktop-md) {
+      max-width: 65%;
+      padding: $spacing-large;
+  }
+
+  @include respond-range(desktop-md, desktop-lg) {
+      max-width: 60%;
+      padding: $spacing-xlarge;
+  }
+
+  @include respond-range(desktop-lg, large) {
+      max-width: 55%;
+      padding: $spacing-xlarge;
+  }
+}

@@ -1,0 +1,82 @@
+// Colors
+$color-primary: rgb(47, 85, 150);; // Primary action buttons and highlights
+$color-secondary: #cccccc; // Secondary text and borders
+$color-dark: #2f2c2c82; // Background for dark mode or dark elements
+$color-light: rgb(230, 230, 230); // Background for light mode or light elements
+$color-accent: #234e96; // Accent color for links or interactive elements
+$color-danger: rgb(234, 85, 60); // Alerts, errors
+$color-warning: rgb(248, 121, 64); // Warnings
+$color-white: #ffffff; // Default white for text or backgrounds
+
+// Typography
+$font-family-base: 'Arial', sans-serif; // Default font for text
+$font-family-heading: 'Helvetica', sans-serif; // Font for headings and titles
+
+// Spacing
+$spacing-xsmall: 0.25rem; // 4px
+$spacing-small: 0.5rem; // 8px
+$spacing-medium: 1rem; // 16px
+$spacing-large: 2rem; // 32px
+$spacing-xlarge: 4rem; // 64px
+
+// Borders
+$border-radius-small: 0.3125rem; // 5px - Small elements like buttons
+$border-radius-medium: 0.5rem; // 8px - Cards and panels
+$border-radius-large: 1rem; // 16px - Large elements like modals
+
+// Shadows
+$box-shadow-light: 
+    0rem 0.125rem 1.25rem 1.25rem rgba(0, 0, 0, 0.1), 
+    -0.0625rem 0rem 1.25rem 1.25rem rgba(0, 0, 0, 0.15), 
+    0.0625rem 0rem 2.5rem 1.25rem rgba(0, 0, 0, 0.2);
+
+$box-shadow-dark: 0 0.25rem 0.625rem rgba(0, 0, 0, 0.4); // Stronger shadow for dark mode
+
+// Transitions
+$transition-duration: 0.3s; // Standard transition duration
+$transition-ease: ease-in-out; // Standard easing function
+
+// Opacity Levels
+$opacity-low: 0.1; // Very subtle
+$opacity-medium: 0.5; // Partially visible
+$opacity-high: 0.9; // Almost fully visible
+
+// Breakpoints
+$breakpoints: (
+  phone-sm: 320px,   // Small phones
+  phone-md: 480px,   // Medium phones
+  phone-lg: 568px,   // Large phones
+  tablet-sm: 569px,  // Small tablets
+  tablet-md: 768px,  // Medium tablets
+  tablet-lg: 800px,  // Large tablets
+  desktop-sm: 801px, // Small desktops
+  desktop-md: 959px, // Medium desktops
+  desktop-lg: 1024px,// Large desktops
+  large: 1200px      // Extra-large screens
+);
+
+
+// Z-Index Layers
+$z-index-base: 1; // Default layer
+$z-index-header: 500; // Floating elements
+$z-index-dropdown: 1000; // Dropdowns
+$z-index-fixed: 10000; // Fixed elements
+$z-index-modal: 10500; // Modals
+$z-index-tooltip: 1100; // Tooltips and popups
+
+// Containers and Grids
+$container-max-width: 1200px; // Maximum width for container layouts
+$gutter-width: 1.5rem; // Spacing between columns in grids
+
+// CSS Variable Output (optional, for runtime theming support)
+:root {
+  --color-primary: #{$color-primary};
+  --color-secondary: #{$color-secondary};
+  --color-dark: #{$color-dark};
+  --color-light: #{$color-light};
+  --color-accent: #{$color-accent};
+  --color-danger: #{$color-danger};
+  --color-warning: #{$color-warning};
+  --font-family-base: #{$font-family-base};
+  --font-family-heading: #{$font-family-heading};
+}

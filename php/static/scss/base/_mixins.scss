@@ -1,0 +1,117 @@
+// path: scss/base/_mixins.scss
+
+// Import variables
+@import 'variables';
+
+// Media Query Mixin
+@mixin respond($breakpoint, $direction: up) {
+    $breakpoint-value: map-get($breakpoints, $breakpoint);
+
+    @if $breakpoint-value == null {
+    @warn "Breakpoint '#{$breakpoint}' not found in \$breakpoints map.";
+    } @else if $direction == up {
+    @media (min-width: $breakpoint-value) {
+        @content;
+    }
+    } @else if $direction == down {
+    @media (max-width: $breakpoint-value) {
+        @content;
+    }
+    }
+}
+  
+// Media Query for Ranges
+@mixin respond-range($min, $max) {
+    $min-value: map-get($breakpoints, $min);
+    $max-value: map-get($breakpoints, $max);
+  
+    @if $min-value == null or $max-value == null {
+      @warn "One of the breakpoints '#{$min}' or '#{$max}' is not found in the \$breakpoints map.";
+    } @else {
+      @media all and (min-width: $min-value) and (max-width: $max-value) {
+        @content;
+      }
+    }
+  }
+  
+  
+
+// Box Shadow Mixin
+@mixin box-shadow($x: 0, $y: 0, $blur: 1rem, $spread: 0, $color: rgba(0, 0, 0, 0.1)) {
+  box-shadow: $x $y $blur $spread $color;
+}
+
+// Transition Mixin
+@mixin transition($property: all, $duration: 0.3s, $timing-function: ease) {
+  transition: $property $duration $timing-function;
+}
+
+// Typography Mixin
+@mixin text-style($font-size: 1rem, $line-height: 1.5, $font-weight: normal, $color: $color-dark) {
+  font-size: $font-size;
+  line-height: $line-height;
+  font-weight: $font-weight;
+  color: $color;
+}
+
+// Centering Mixin (Flexbox)
+@mixin flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+// Gradient Background Mixin
+@mixin gradient-bg($start-color, $end-color, $direction: to bottom) {
+  background: linear-gradient($direction, $start-color, $end-color);
+}
+
+// Visibility Toggle Mixin
+@mixin visibility($is-visible: true) {
+  @if $is-visible {
+    visibility: visible;
+    opacity: 1;
+  } @else {
+    visibility: hidden;
+    opacity: 0;
+  }
+  transition: visibility 0.2s, opacity 0.2s;
+}
+
+// Dark Mode Styling Helper
+@mixin dark-mode($selector, $property, $light-value, $dark-value) {
+  #{$selector} {
+    #{$property}: $light-value;
+
+    body.dark-mode & {
+      #{$property}: $dark-value;
+    }
+  }
+}
+
+// Scrollbar Mixin
+@mixin scrollbar($thumb-color, $track-color) {
+  // Firefox
+  scrollbar-width: thin;
+  scrollbar-color: $thumb-color $track-color;
+
+  // Webkit browsers (Chrome, Edge, Safari)
+  &::-webkit-scrollbar {
+    width: 0.75rem; // Adjust as needed
+  }
+
+  &::-webkit-scrollbar-track {
+    background: $track-color;
+    border-radius: $border-radius-small;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: $thumb-color;
+    border-radius: $border-radius-small;
+    border: 0.1875rem solid $track-color; // Adjust border width
+  }
+
+  &::-webkit-scrollbar-thumb:hover {
+    background-color: darken($thumb-color, 10%);
+  }
+}

@@ -53,7 +53,6 @@ if ($currentLevel && $desiredLevel && $currentLevel < $desiredLevel) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/static/css/hero_leveling.css">
     <script src="/static/js/hero_leveling.js" defer></script>
 </head>
 <body>
@@ -74,7 +73,7 @@ if ($currentLevel && $desiredLevel && $currentLevel < $desiredLevel) {
     </div>
 
     <!-- Form Section -->
-    <form method="POST" action="">
+    <form id="hl_form" method="POST" action="">
         <!-- Current Level Section -->
         <label for="current_level">Current Level:</label>
         <div class="input-pair">

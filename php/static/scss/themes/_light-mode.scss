@@ -1,0 +1,41 @@
+body {
+    background-color: #ffffff;
+    background-image: url('/static/images/village.webp');
+    background-repeat: no-repeat;
+    background-position: center top;
+    background-size: cover; // Covers the entire viewport
+  
+    // Controls bar adjustments
+    .controls-bar {
+      color: $color-primary;
+    } 
+  
+    .controls-bar-title {
+      color: $color-primary;
+    }
+  
+    // Hamburger menu adjustments
+    .hamburger-menu i {
+      color: $color-primary;
+    }
+  
+    // Theme toggle adjustments
+    .theme-toggle i {
+      color: $color-primary;
+    }
+  
+    // Typography adjustments
+    h2, h3 {
+      color: $color-danger;
+    }
+  
+    p {
+      color: lighten($color-white, 20%);
+    }
+
+    // Responsive adjustments
+    @include respond(phone-md, down) {
+      background-size: unset !important;
+    }
+  }
+  

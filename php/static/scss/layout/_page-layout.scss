@@ -1,0 +1,40 @@
+// Layout Styles
+.page-layout {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; // Ensure it takes up full height
+    align-items: center;
+
+    // Responsive adjustments
+    @include respond(phone-md, down) {
+      min-height: auto; // Let it adapt to smaller screens
+    }
+  }
+  
+  .content-wrapper {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-items: stretch; 
+    padding: $spacing-medium;
+  
+    max-width: max-content; // Allow content to expand
+    width: 100%; // Fluid on smaller screens
+
+  
+    // Responsive adjustments
+    @include respond(desktop-lg, down) {
+      padding: $spacing-medium;
+    }
+  
+    @include respond(tablet-md, down) {
+      padding: $spacing-small;
+    }
+  
+    @include respond(phone-lg, down) {
+      padding: $spacing-xsmall;
+      align-items: stretch; // Allow more fluid layouts on smaller screens
+      max-width: max-content; // Allow content to expand
+    }
+  }
+  

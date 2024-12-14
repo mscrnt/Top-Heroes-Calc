@@ -3,9 +3,6 @@
 
 include_once __DIR__ . '/../includes/db_functions.php';
 
-// Import CSS
-echo '<link rel="stylesheet" href="/static/css/hero_page.css">';
-
 // Get the hero and page parameters from the URL
 $hero = $_GET['hero'] ?? null;
 $page = $_GET['page'] ?? 'gear';

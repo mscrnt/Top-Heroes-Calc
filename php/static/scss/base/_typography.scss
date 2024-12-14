@@ -1,0 +1,32 @@
+body {
+    font-family: $font-family-base;
+    margin: 0;
+    padding: $spacing-xsmall; // Keep as spacing variable for consistency
+    overflow: hidden;
+  }
+  
+  h2, h3 {
+    text-align: center;
+    font-weight: bold;
+    position: relative;
+    top: 0;
+    text-shadow: 0.125em 0.125em 0.25em rgba(0, 0, 0, 0.5); // Replacing 2px/4px with equivalent em
+    z-index: 1;
+    padding: $spacing-small;
+    border-radius: 0.3125em; // Replacing 5px
+    box-shadow: 0 0.25em 0.625em rgba(255, 255, 255, 0); // Replacing 4px/10px
+    margin: 0;
+  }
+  
+  h2 {
+    color: $color-danger;
+  }
+  
+  h3 {
+    color: $color-warning;
+  }
+  
+  p {
+    color: $color-white;
+  }
+  

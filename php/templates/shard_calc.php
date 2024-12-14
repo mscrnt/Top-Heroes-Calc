@@ -1,7 +1,6 @@
 <?php
 // templates/shard_calc.php
 ?>
-<link rel="stylesheet" href="/static/css/shard_calc.css">
 <script src="/static/js/shard_calc.js" defer></script>
 
 <center>
@@ -28,12 +27,8 @@
 
 <div class="floating-shard-display">
     <p>
-        <img src="static/images/resources/shard.webp" alt="Shard Icon" style="width: 64px; height: 64px; vertical-align: middle;">
+        <img src="static/images/resources/shard.webp" alt="Shard Icon" style="vertical-align: middle;"><strong><span id="result"></span></strong>
     </p>
-    <p>
-        <strong><span id="result"></span><br>REQUIRED</strong>
-    </p>
-
 </div>
 
 <!-- PHP Logic to Generate Charts -->

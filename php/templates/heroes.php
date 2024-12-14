@@ -53,7 +53,6 @@ foreach ($allHeroes as $hero) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/static/css/heroes.css">
     <style>
         /* Style for dropdown options with images */
         #factionDropdown option {
@@ -77,29 +76,31 @@ foreach ($allHeroes as $hero) {
     </style>
 </head>
 <body>
-    <div class="mode-toggle">
-        <span id="previewLabel">Tile</span>
-        <i class="fa-solid fa-toggle-off" id="modeToggleIcon"></i>
-        <span id="tileLabel">Preview</span>
-    </div>
-    
-    <h2>Select Faction</h2>
-    <form class="dropdown-form">
-        <select name="faction" id="factionDropdown">
-            <option value="nature_heroes">Nature Heroes</option>
-            <option value="league_heroes">League Heroes</option>
-            <option value="horde_heroes">Horde Heroes</option> 
-            <option value="all_heroes">All Heroes</option>
-        </select>
-    </form>
-    <div id="heroContainer" class="tile-mode"></div>
-    <div id="previewContent" class="hidden"></div>
-    <div id="heroDetails" class="hidden"></div>
+    <div class="heroes_info">
+        <div class="mode-toggle">
+            <span id="previewLabel">Tile</span>
+            <i class="fa-solid fa-toggle-off" id="modeToggleIcon"></i>
+            <span id="tileLabel">Preview</span>
+        </div>
+        
+        <h2>Select Faction</h2>
+        <form class="dropdown-form">
+            <select name="faction" id="factionDropdown">
+                <option value="nature_heroes">Nature Heroes</option>
+                <option value="league_heroes">League Heroes</option>
+                <option value="horde_heroes">Horde Heroes</option> 
+                <option value="all_heroes">All Heroes</option>
+            </select>
+        </form>
+        <div id="heroContainer" class="tile-mode"></div>
+        <div id="previewContent" class="hidden"></div>
+        <div id="heroDetails" class="hidden"></div>
 
-    <!-- Embed heroesData as a JSON variable -->
-    <script>
-        const heroesData = <?= json_encode($heroes) ?>;
-    </script>
-    <script src="/static/js/heroes.js" defer></script>
+        <!-- Embed heroesData as a JSON variable -->
+        <script>
+            const heroesData = <?= json_encode($heroes) ?>;
+        </script>
+        <script src="/static/js/heroes.js" defer></script>
+    </div>
 </body>
 </html>

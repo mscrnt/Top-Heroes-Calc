@@ -1,5 +1,5 @@
 <?php
-// templates/header.php
+// includes/header.php
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -10,6 +10,8 @@
 
     <!-- External CSS -->
     <link rel="stylesheet" href="/static/css/all.min.css">
+
+    <!-- Internal CSS -->
     <link rel="stylesheet" href="/static/css/style.css">
 
     <!-- Favicon -->

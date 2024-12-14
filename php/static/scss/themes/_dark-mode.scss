@@ -1,0 +1,49 @@
+body.dark-mode {
+    background-color: #000000d6; // Dark background
+    background-image: url('/static/images/night-village.webp');
+    background-repeat: no-repeat;
+    background-position: center top;
+    background-size: cover; // Covers the entire viewport
+    background-blend-mode: overlay; // Adds texture overlay
+  
+    // General container adjustments
+    .container {
+      box-shadow: 0rem 0.25rem 0.625rem rgba(0, 0, 0, 0.4);
+      background-blend-mode: multiply;
+    }
+  
+    // Controls bar adjustments
+    .controls-bar {
+      background-color: $color-dark; // Semi-transparent dark background
+      color: lighten($color-primary, 20%);
+    }
+  
+    .controls-bar-title {
+      color: lighten($color-primary, 20%);
+    }
+  
+    // Hamburger menu adjustments
+    .hamburger-menu i {
+      color: lighten($color-primary, 20%);
+    }
+  
+    // Theme toggle adjustments
+    .theme-toggle i {
+      color: lighten($color-primary, 20%);
+    }
+  
+    // Typography adjustments
+    h2, h3 {
+      color: lighten($color-danger, 20%);
+    }
+  
+    p {
+      color: lighten($color-white, 20%);
+    }
+
+        // Responsive adjustments
+    @include respond(phone-md, down) {
+      background-size: unset !important;
+    }
+  }
+  
