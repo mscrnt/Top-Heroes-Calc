@@ -1,49 +1,61 @@
+// php\static\scss\themes\_dark-mode.scss
+
 body.dark-mode {
-    background-color: #000000d6; // Dark background
-    background-image: url('/static/images/night-village.webp');
-    background-repeat: no-repeat;
-    background-position: center top;
-    background-size: cover; // Covers the entire viewport
-    background-blend-mode: overlay; // Adds texture overlay
-  
-    // General container adjustments
-    .container {
-      box-shadow: 0rem 0.25rem 0.625rem rgba(0, 0, 0, 0.4);
-      background-blend-mode: multiply;
-    }
-  
-    // Controls bar adjustments
-    .controls-bar {
-      background-color: $color-dark; // Semi-transparent dark background
+  background-color: #000000d6;
+  background-image: url('/static/images/night-village.webp');
+  background-repeat: no-repeat;
+  background-position: center top;
+  background-size: cover;
+  background-blend-mode: overlay;
+
+  // General container adjustments
+  .container {
+    box-shadow: $box-shadow-dark;
+    background-blend-mode: multiply;
+  }
+
+  // Top bar (new)
+  .top-bar {
+    background-color: rgba(20, 20, 20, 0.9);
+
+    .title {
       color: lighten($color-primary, 20%);
-    }
-  
-    .controls-bar-title {
-      color: lighten($color-primary, 20%);
-    }
-  
-    // Hamburger menu adjustments
-    .hamburger-menu i {
-      color: lighten($color-primary, 20%);
-    }
-  
-    // Theme toggle adjustments
-    .theme-toggle i {
-      color: lighten($color-primary, 20%);
-    }
-  
-    // Typography adjustments
-    h2, h3 {
-      color: lighten($color-danger, 20%);
-    }
-  
-    p {
-      color: lighten($color-white, 20%);
     }
 
-        // Responsive adjustments
-    @include respond(phone-md, down) {
-      background-size: unset !important;
+    .menu-icon,
+    .theme-toggle {
+      color: lighten($color-primary, 20%);
     }
   }
-  
+
+  // Menu dropdown
+  .menu-dropdown {
+    background-color: #1e1e1e;
+    border-color: #333;
+
+    a {
+      color: lighten($color-secondary, 20%);
+
+      &:hover,
+      &.active {
+        background-color: $color-accent;
+        color: $color-white;
+      }
+    }
+  }
+
+  // Typography adjustments
+  h2,
+  h3 {
+    color: lighten($color-danger, 20%);
+  }
+
+  p {
+    color: lighten($color-white, 20%);
+  }
+
+  // Responsive
+  @include respond(phone-md, down) {
+    background-size: unset !important;
+  }
+}

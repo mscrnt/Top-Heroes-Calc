@@ -1,41 +1,49 @@
+// php\static\scss\themes\_light-mode.scss
+
 body {
-    background-color: #ffffff;
-    background-image: url('/static/images/village.webp');
-    background-repeat: no-repeat;
-    background-position: center top;
-    background-size: cover; // Covers the entire viewport
-  
-    // Controls bar adjustments
-    .controls-bar {
+  background-color: #ffffff;
+  background-image: url('/static/images/village.webp');
+  background-repeat: no-repeat;
+  background-position: center top;
+  background-size: cover;
+
+  .top-bar {
+    background-color: rgba($color-light, 0.95);
+
+    .title {
       color: $color-primary;
-    } 
-  
-    .controls-bar-title {
-      color: $color-primary;
-    }
-  
-    // Hamburger menu adjustments
-    .hamburger-menu i {
-      color: $color-primary;
-    }
-  
-    // Theme toggle adjustments
-    .theme-toggle i {
-      color: $color-primary;
-    }
-  
-    // Typography adjustments
-    h2, h3 {
-      color: $color-danger;
-    }
-  
-    p {
-      color: lighten($color-white, 20%);
     }
 
-    // Responsive adjustments
-    @include respond(phone-md, down) {
-      background-size: unset !important;
+    .menu-icon,
+    .theme-toggle {
+      color: $color-primary;
     }
   }
-  
+
+  .menu-dropdown {
+    background-color: $color-white;
+
+    a {
+      color: darken($color-light, 50%);
+
+      &:hover,
+      &.active {
+        background-color: $color-accent;
+        color: $color-white;
+      }
+    }
+  }
+
+  h2,
+  h3 {
+    color: $color-danger;
+  }
+
+  p {
+    color: lighten($color-white, 20%);
+  }
+
+  @include respond(phone-md, down) {
+    background-size: unset !important;
+  }
+}
