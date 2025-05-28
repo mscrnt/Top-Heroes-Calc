@@ -8,52 +8,58 @@ $pageTitles = [
 ];
 
 $page = $_GET['page'] ?? 'shard_calc';
-$allowed_pages = ['shard_calc', 'heroes', 'hero_leveling'];
+$allowed_pages = array_keys($pageTitles);
 $page = in_array($page, $allowed_pages) ? $page : 'shard_calc';
 $pageTitle = $pageTitles[$page] ?? 'Top Heroes';
 
 include 'includes/header.php';
 ?>
 
-<!-- Top Bar Navigation -->
-<header class="top-bar">
-    <!-- Hamburger + Dropdown -->
-    <div class="hamburger-menu">
-        <button class="menu-icon" id="hamburgerIcon">
+<div class="page-layout">
+  <header class="top-bar">
+    <div class="top-bar-wrapper">
+      <div class="top-bar-inner">
+        <div class="hamburger-menu">
+          <button id="hamburgerIcon" class="menu-icon" aria-label="Menu">
             <i class="fa fa-bars"></i>
-        </button>
-        <div class="menu-dropdown" id="menuDropdown">
-            <a href="index.php?page=shard_calc" class="<?= $page === 'shard_calc' ? 'active' : '' ?>">Shard Calculator</a>
-            <a href="index.php?page=heroes" class="<?= $page === 'heroes' ? 'active' : '' ?>">Hero Info</a>
-            <a href="index.php?page=hero_leveling" class="<?= $page === 'hero_leveling' ? 'active' : '' ?>">Hero Level Calculator</a>
+          </button>
+          <div id="menuDropdown" class="menu-dropdown">
+            <a href="?page=shard_calc" class="<?= $page === 'shard_calc' ? 'active' : '' ?>">Shard Calculator</a>
+            <a href="?page=heroes" class="<?= $page === 'heroes' ? 'active' : '' ?>">Hero Info</a>
+            <a href="?page=hero_leveling" class="<?= $page === 'hero_leveling' ? 'active' : '' ?>">Hero Level Calculator</a>
+          </div>
         </div>
+
+        <h1 class="title"><?= htmlspecialchars($pageTitle) ?></h1>
+
+        <button id="themeToggle" class="theme-toggle" aria-label="Toggle Theme">
+          <i id="themeToggleIcon" class="fa fa-sun"></i>
+        </button>
+      </div> <!-- /.top-bar-inner -->
+    </div> <!-- /.top-bar-wrapper -->
+  </header>
+
+  <?php if ($page === 'shard_calc') include 'templates/shard_floating_form.php'; ?>
+
+  <div class="content-wrapper">
+    <div class="container">
+      <div class="container-content">
+        <?php include "templates/{$page}.php"; ?>
+      </div>
     </div>
+  </div>
 
-    <!-- Title -->
-    <h1 class="title"><?= htmlspecialchars($pageTitle) ?></h1>
-
-    <!-- Theme Toggle Button -->
-    <button class="theme-toggle" id="themeToggle">
-        <i id="themeToggleIcon" class="fa fa-sun"></i>
-    </button>
-</header>
-
-<!-- Main Content -->
-<main class="main">
-    <?php include "templates/{$page}.php"; ?>
-</main>
-
-<!-- Mobile Bottom Navigation -->
-<nav class="bottom-nav">
-    <a href="index.php?page=shard_calc" class="<?= $page === 'shard_calc' ? 'active' : '' ?>">
-        <i class="fa fa-chart-bar"></i>
+  <nav class="bottom-nav">
+    <a href="?page=shard_calc" class="<?= $page === 'shard_calc' ? 'active' : '' ?>" title="Shard Calculator">
+      <i class="fa fa-chart-bar"></i>
     </a>
-    <a href="index.php?page=heroes" class="<?= $page === 'heroes' ? 'active' : '' ?>">
-        <i class="fa fa-users"></i>
+    <a href="?page=heroes" class="<?= $page === 'heroes' ? 'active' : '' ?>" title="Hero Info">
+      <i class="fa fa-users"></i>
     </a>
-    <a href="index.php?page=hero_leveling" class="<?= $page === 'hero_leveling' ? 'active' : '' ?>">
-        <i class="fa fa-level-up-alt"></i>
+    <a href="?page=hero_leveling" class="<?= $page === 'hero_leveling' ? 'active' : '' ?>" title="Level Calculator">
+      <i class="fa fa-level-up-alt"></i>
     </a>
-</nav>
+  </nav>
+</div>
 
 <?php include 'includes/footer.php'; ?>

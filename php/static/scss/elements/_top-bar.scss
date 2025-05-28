@@ -1,52 +1,55 @@
+// php\static\scss\elements\_top-bar.scss
+
+@import '../base/variables';
+
 .top-bar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: $spacing-small $spacing-medium;
-  background-color: rgba($color-dark, 0.95);
-  backdrop-filter: blur(6px);
-  box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, 0.4);
+  width: 100%;
+  height: $top-bar-height;
   position: sticky;
   top: 0;
   z-index: $z-index-header;
+  display: flex;
+  justify-content: center;
+  background: transparent;
+  backdrop-filter: none;
+  box-shadow: none;
 
-  .title {
-    font-size: 1.25rem;
-    font-weight: 600;
-    color: $color-white;
-    margin: 0;
-    flex: 1;
-    text-align: center;
+  .top-bar-wrapper {
+    width: 100%;
+    max-width: $container-max-width;
+    height: $top-bar-height;
+    margin: 0 auto;
+    border-radius: 0 0 $border-radius-md $border-radius-md;
+    backdrop-filter: blur(6px);
+    box-shadow: $box-shadow-dark;
+    display: flex;
+    align-items: center;
   }
 
-  .menu-icon,
-  .theme-toggle {
-    background: none;
-    border: none;
-    color: $color-white;
-    font-size: 1.25rem;
-    cursor: pointer;
-    z-index: $z-index-header;
+  .top-bar-inner {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: $spacing-sm $spacing-md;
+    height: $top-bar-height;
 
-    &:hover {
-      color: $color-warning;
-    }
-  }
-
-  @include respond(phone-md, down) {
-    padding: $spacing-small $spacing-small;
     .title {
-      font-size: 1rem;
+      font-size: $font-size-lg;
+      font-weight: 600;
+      margin: 0;
+      flex: 1;
+      text-align: center;
+      font-family: $font-family-heading;
     }
-  }
 
-  body.dark-mode & {
-    background-color: rgba(20, 20, 20, 0.9);
-
-    .title,
     .menu-icon,
     .theme-toggle {
-      color: lighten($color-primary, 20%);
+      background: none;
+      border: none;
+      font-size: $font-size-lg;
+      cursor: pointer;
+      z-index: $z-index-header;
     }
   }
 }

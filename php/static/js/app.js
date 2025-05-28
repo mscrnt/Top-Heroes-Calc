@@ -1,54 +1,39 @@
 // static/lib/app.js
 
 document.addEventListener("DOMContentLoaded", () => {
-    const body = document.body;
-
+    const root = document.documentElement;
     const themeToggleBtn = document.getElementById("themeToggle");
     const themeToggleIcon = document.getElementById("themeToggleIcon");
     const hamburgerBtn = document.getElementById("hamburgerIcon");
     const menuDropdown = document.getElementById("menuDropdown");
 
-    // Load theme from localStorage
+    // Load and apply theme
     const savedTheme = localStorage.getItem("theme") || "light";
-    setTheme(savedTheme);
+    applyTheme(savedTheme);
 
-    // Handle theme toggle
     if (themeToggleBtn && themeToggleIcon) {
         themeToggleBtn.addEventListener("click", () => {
-            const isDark = body.classList.contains("dark-mode");
-            const newTheme = isDark ? "light" : "dark";
-            setTheme(newTheme);
-            localStorage.setItem("theme", newTheme);
+            const current = root.getAttribute("data-theme") || "light";
+            const next = current === "dark" ? "light" : "dark";
+            applyTheme(next);
+            localStorage.setItem("theme", next);
         });
     }
 
-    // Handle hamburger menu toggle
     if (hamburgerBtn && menuDropdown) {
         hamburgerBtn.addEventListener("click", () => {
             menuDropdown.classList.toggle("show");
         });
 
-        // Close if clicked outside
         document.addEventListener("click", (event) => {
-            const isClickInsideMenu = menuDropdown.contains(event.target);
-            const isClickOnHamburger = hamburgerBtn.contains(event.target);
-            if (!isClickInsideMenu && !isClickOnHamburger) {
+            if (!hamburgerBtn.contains(event.target) && !menuDropdown.contains(event.target)) {
                 menuDropdown.classList.remove("show");
             }
         });
     }
 
-    function setTheme(mode) {
-        if (mode === "dark") {
-            body.classList.add("dark-mode");
-            body.classList.remove("light-mode");
-            themeToggleIcon.classList.add("fa-moon");
-            themeToggleIcon.classList.remove("fa-sun");
-        } else {
-            body.classList.add("light-mode");
-            body.classList.remove("dark-mode");
-            themeToggleIcon.classList.add("fa-sun");
-            themeToggleIcon.classList.remove("fa-moon");
-        }
+    function applyTheme(mode) {
+        root.setAttribute("data-theme", mode);
+        themeToggleIcon.className = mode === "dark" ? "fa fa-moon" : "fa fa-sun";
     }
 });

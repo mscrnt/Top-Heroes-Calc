@@ -1,103 +1,169 @@
-// php\static\scss\pages\_shard_calc.scss
-
-// Import variables and mixins
 @import '../base/variables';
 @import '../base/mixins';
 
-// Section header styling
+/* Headings */
+h2, h3 {
+  text-align: center;
+  font-family: $font-family-heading;
+  font-weight: 600;
+}
+
 h2 {
-  margin-bottom: $spacing-medium;
-  top: $spacing-small;
+  font-size: $font-size-xl;
+  margin-bottom: $spacing-lg;
+  color: $color-primary;
 }
 
 h3 {
-  margin-top: $spacing-large;
+  font-size: $font-size-lg;
+  margin-top: $spacing-xl;
+  color: $color-accent;
 }
 
-// Form styling
+/* Form Layout */
 form {
-  margin-bottom: $spacing-medium;
+  margin-bottom: $spacing-lg;
+  padding: $spacing-md;
+  background-color: rgba($color-white, 0.95);
+  border-radius: $border-radius-md;
+  box-shadow: $box-shadow-light;
+  @include transition(all, $transition-duration, $transition-ease);
+
+  @include respond(phone-md, down) {
+    padding: $spacing-sm;
+  }
 }
 
-.form-group {
-  margin-bottom: $spacing-small;
+.form-row {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-sm;
+
+  @include respond(tablet-md, up) {
+    flex-direction: row;
+  }
+
+  .form-group {
+    flex: 1;
+    min-width: 120px;
+  }
 }
 
 label {
-  font-weight: bold;
-  color: $color-secondary;
-  margin-bottom: $spacing-xsmall;
+  font-weight: 500;
+  font-size: $font-size-sm;
+  margin-bottom: $spacing-xxs;
+  color: $color-dark;
   display: block;
+
+  [data-theme="dark"] & {
+    color: #ccc;
+  }
 }
 
 input[type="text"],
 select {
-  width: 100%;
-  padding: $spacing-small;
+  width: 90%;
+  padding: $spacing-sm;
+  font-size: $font-size-sm;
+  border-radius: $border-radius-sm;
   border: 1px solid $color-secondary;
-  border-radius: $border-radius-small;
-  font-size: 0.875rem;
-  box-sizing: border-box;
+  background: $color-white;
 
   &:focus {
-    border-color: $color-primary;
+    border-color: $color-accent;
+    @include box-shadow(0, 0, 0.25rem, 0, rgba($color-accent, 0.25));
     outline: none;
-    @include box-shadow(0, 0, 0.25rem, 0, rgba(47, 85, 150, 0.5));
   }
 }
 
 .form-text {
   font-size: 0.75rem;
-  color: lighten($color-light, 40%);
-  margin-top: $spacing-xsmall;
-}
+  color: $color-muted;
+  margin-top: $spacing-xxs;
 
-.form-row {
-  display: flex;
-  gap: $spacing-small;
-
-  .form-group {
-    flex: 1;
-    min-width: 9.375rem; // 150px
+  [data-theme="dark"] & {
+    color: #aaa;
   }
 }
 
-// Button styling
+/* Buttons */
 #calculateButton,
 #resetButton {
-  float: right;
-  margin-left: $spacing-small;
+  margin-top: $spacing-sm;
+  padding: $spacing-sm $spacing-md;
+  font-size: $font-size-sm;
+  border: none;
+  border-radius: $border-radius-sm;
+  cursor: pointer;
+  @include transition(all, $transition-duration, $transition-ease);
+
+  &.btn-primary {
+    background-color: $color-primary;
+    color: $color-white;
+
+    &:hover {
+      background-color: darken($color-primary, 10%);
+    }
+  }
+
+  &.btn-secondary {
+    background-color: $color-secondary;
+    color: $color-black;
+
+    &:hover {
+      background-color: darken($color-secondary, 10%);
+    }
+  }
 }
 
-// Chart styling
+/* Floating Shard Display */
+.floating-shard-display {
+  position: fixed;
+  bottom: 1rem;
+  right: 1rem;
+  padding: $spacing-sm;
+  background: $color-white;
+  border-radius: $border-radius-md;
+  box-shadow: $box-shadow-lg;
+  z-index: $z-index-tooltip;
+  text-align: center;
+  font-family: $font-family-base;
+  margin-bottom: 1rem;
+
+  img {
+    width: 3rem;
+    height: auto;
+  }
+
+  p {
+    margin: $spacing-xxs 0;
+    font-size: 2rem;
+    font-weight: bold;
+    color: rgb(245, 204, 101);
+  }
+}
+
+/* Chart Table */
 .shard-chart {
-  margin-top: $spacing-medium;
+  margin-top: $spacing-lg;
+  overflow-x: auto;
 
   table {
     width: 100%;
     border-collapse: collapse;
-    text-align: center;
+    font-size: $font-size-sm;
+    box-shadow: $box-shadow-sm;
 
-    tr {
-      background-color: $color-primary;
+    th, td {
+      padding: $spacing-xs;
+      border: 1px solid #ddd;
     }
 
     th {
+      background-color: $color-primary;
       color: $color-white;
-    }
-
-    th,
-    .fa-star {
-      font-weight: bold;
-      padding: $spacing-xsmall;
-    }
-
-    th,
-    td {
-      padding: $spacing-xsmall;
-      border: 1px solid black;
-      position: relative;
-      font-weight: bold;
+      font-weight: 600;
     }
 
     .level-cell,
@@ -106,160 +172,134 @@ select {
       color: $color-white;
       cursor: pointer;
       position: relative;
+      transition: background-color 0.3s ease;
 
       &:hover {
-        background-color: lighten($color-primary, 20%);
-        border-color: $color-accent;
-        transition: all $transition-duration $transition-ease;
-
+        background-color: lighten($color-primary, 10%);
         .fa-star {
-          transform: scale(1.2);
-          transition: transform $transition-duration $transition-ease, color $transition-duration $transition-ease;
-        }
-
-        .progress-overlay {
-          background-color: rgba(255, 255, 255, $opacity-medium);
+          transform: scale(1.1);
         }
       }
+    }
+
+    .progress-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 0%;
+      height: 100%;
+      background-color: rgba($color-white, 0.7);
+      color: $color-primary;
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: $border-radius-sm;
+      transition: width 0.3s ease;
+      z-index: 1;
+    }
+  }
+
+  [data-theme="dark"] & {
+    th, td {
+      background-color: #222;
+      color: #eee;
+      border-color: #444;
+    }
+
+    .progress-overlay {
+      background-color: rgba(224, 224, 224, 0.8);
+      color: #111;
+    }
+
+    .total-row {
+      background-color: #2b2b2b;
     }
   }
 }
 
-// Group-specific styling
-.group-1 {
-  .fa-star { color: #FFD700; } // Gold
-  .shards-per-step, .per-star, .overall { background-color: rgb(255, 241, 204); } // Light yellow
-}
-
-.group-2 {
-  .fa-star { color: #B7410E; } // Rust
-  .shards-per-step, .per-star, .overall { background-color: rgb(252, 228, 216); } // Light coral
-}
-
-.group-3 {
-  .fa-star { color: #C0C0C0; } // Silver
-  .shards-per-step, .per-star, .overall { background-color: rgb(217, 217, 217); } // Light gray
-}
-
-// Star container styling
+/* Star Styling */
 .star-container {
   display: flex;
   justify-content: center;
-  align-items: center;
-  gap: $spacing-xsmall;
+  gap: $spacing-xxs;
 
   .fa-star {
-    font-size: 1.5rem;
-  }
+    font-size: 1.25rem;
+    transition: transform 0.2s ease;
 
-  .fa-star.active {
-    border: 0.125rem solid $color-accent;
-    border-radius: 50%;
+    &.active {
+      border: 1px solid $color-accent;
+      border-radius: 50%;
+    }
   }
 }
 
-// Progress overlay styling
-.progress-overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  height: 100%;
-  width: 0%; // Initial width
-  background-color: rgba(255, 255, 255, $opacity-high);
-  z-index: $z-index-base;
-  transition: width $transition-duration $transition-ease;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: bold;
-  color: $color-primary;
-  font-size: 1.5rem;
-  border-radius: $border-radius-small;
-  user-select: none;
-}
+/* Group Backgrounds */
+.group-1 .fa-star { color: #FFD700; }
+.group-2 .fa-star { color: #B7410E; }
+.group-3 .fa-star { color: #C0C0C0; }
+
+.group-1 .shards-per-step,
+.group-1 .per-star,
+.group-1 .overall { background-color: #fff4db; }
+
+.group-2 .shards-per-step,
+.group-2 .per-star,
+.group-2 .overall { background-color: #fce7dd; }
+
+.group-3 .shards-per-step,
+.group-3 .per-star,
+.group-3 .overall { background-color: #e4e4e4; }
 
 .total-row {
-  background-color: #f0f0f0 !important;
+  background-color: #f7f7f7;
   font-weight: bold;
 }
 
-// Floating Shard Display
-.floating-shard-display {
-  position: fixed;
-  border-radius: $border-radius-medium;
-  padding: $spacing-small;
-  z-index: $z-index-header;
-  text-align: center;
-  font-family: $font-family-base;
-  transition: top 0s ease;
-
-  img {
-    width: 3rem;
-    height: auto;
-  }
-
-  p {
-    margin: $spacing-xsmall 0;
-    font-size: 2rem;
-    font-weight: bolder;
-    color: rgb(245 204 101) !important;
-  }
-
-  #result {
-    vertical-align: middle;
-  }
-}
-
-/* Dark mode adjustments */
-body.dark-mode .progress-overlay {
-  background-color: #1e1e1e;
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.4);
-}
-
-body.dark-mode .form-text {
-  color: #9e9e9e;
-}
-
-body.dark-mode .shard-chart th,
-body.dark-mode .shard-chart td {
-  background-color: #333333;
-  color: #e0e0e0;
-  border-color: #555555;
-}
-
-body.dark-mode .total-row {
-  background-color: #424242;
-}
-
-body.dark-mode .progress-overlay {
-  background-color: rgba(224, 224, 224, 0.8);
-  color: #1e1e1e;
-}
-
-body.dark-mode label {
-  color: #cccccc;
-}
-
-// Responsive adjustments
-@include respond(phone-sm, down) {
-  // Placeholder for smallest phones
-}
-
+/* Mobile Table Simplification */
 @include respond(phone-md, down) {
   .shard-chart table {
-    border: none;
+    th:not(.level-cell):not(.star-cell),
+    td:not(.level-cell):not(.star-cell) {
+      display: none;
+    }
+
+    .fa-star {
+      font-size: 1rem;
+    }
+
+    .progress-overlay {
+      font-size: 0.85rem;
+    }
+  }
+}
+
+
+.floating-shard-form {
+  position: absolute;
+  top: auto;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  transform: none;
+  z-index: $z-index-header + 1;
+  max-width: $container-max-width;
+  width: 90%;
+  background: rgba($color-white, 0.95);
+  border-radius: $border-radius-md;
+  backdrop-filter: blur(6px);
+  margin-bottom: none !important;
+
+  [data-theme="dark"] & {
+    background: rgba(30, 30, 30, 0.95);
+    box-shadow: $box-shadow-dark;
   }
 
-  .progress-overlay {
-    font-size: 1rem;
-  }
-
-  .fa-star {
-    font-size: 1.125rem;
-  }
-
-  .shard-chart th:not(.level-cell):not(.star-cell),
-  .shard-chart td:not(.level-cell):not(.star-cell) {
-      display: none; 
+  &.pinned {
+    position: fixed !important;
+    top: 72px; // 64px top bar + 8px spacing
+    width: 90%; // Responsive width with padding
+    max-width: $container-max-width;
   }
 }

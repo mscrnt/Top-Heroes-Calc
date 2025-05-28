@@ -1,20 +1,23 @@
 // _theme-toggle.scss
 .theme-toggle {
-    position: relative;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    font-size: 1.5rem;
-    cursor: pointer;
-    z-index: 5;
-  
-    i {
-      color: $color-primary;
-      transition: color 0.3s ease;
-  
-      body.dark-mode & {
-        color: lighten($color-primary, 20%);
-      }
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: $spacing-sm;
+  font-size: $font-size-xl;
+  cursor: pointer;
+  z-index: $z-index-header;
+
+  i {
+    color: $color-primary;
+    transition: color $transition-duration $transition-ease;
+
+    body.dark-mode & {
+      color: lighten($color-primary, 20%);
     }
   }
-  
+
+  &:hover i {
+    color: $color-accent;
+  }
+}

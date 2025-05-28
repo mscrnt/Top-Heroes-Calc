@@ -1,40 +1,42 @@
 // php\static\scss\themes\_dark-mode.scss
 
-body.dark-mode {
-  background-color: #000000d6;
+[data-theme="dark"] {
+  background-color: rgba(0, 0, 0, 0.84);
   background-image: url('/static/images/night-village.webp');
   background-repeat: no-repeat;
   background-position: center top;
   background-size: cover;
   background-blend-mode: overlay;
 
-  // General container adjustments
+  @include respond(phone-md, down) {
+    background-size: auto !important;
+  }
+
+  // Container
   .container {
+    background-color: rgba(30, 30, 30, 0.92);
     box-shadow: $box-shadow-dark;
     background-blend-mode: multiply;
   }
 
-  // Top bar (new)
-  .top-bar {
+  // Top Bar
+  .top-bar-wrapper {
     background-color: rgba(20, 20, 20, 0.9);
 
-    .title {
-      color: lighten($color-primary, 20%);
-    }
-
+    .title,
     .menu-icon,
     .theme-toggle {
       color: lighten($color-primary, 20%);
     }
   }
 
-  // Menu dropdown
+  // Dropdowns
   .menu-dropdown {
     background-color: #1e1e1e;
     border-color: #333;
 
     a {
-      color: lighten($color-secondary, 20%);
+      color: lighten($color-secondary, 15%);
 
       &:hover,
       &.active {
@@ -44,18 +46,63 @@ body.dark-mode {
     }
   }
 
-  // Typography adjustments
-  h2,
-  h3 {
-    color: lighten($color-danger, 20%);
+  // Typography
+  h2, h3 {
+    color: lighten($color-danger, 15%);
   }
 
   p {
-    color: lighten($color-white, 20%);
+    color: lighten($color-white, 10%);
   }
 
-  // Responsive
-  @include respond(phone-md, down) {
-    background-size: unset !important;
+  // Shard Form
+  .shard-form {
+    background-color: rgba(30, 30, 30, 0.92);
+    box-shadow: $box-shadow-dark;
+  }
+
+  label {
+    color: #ccc;
+  }
+
+  .form-text {
+    color: #aaa;
+  }
+
+  input[type="text"],
+  select {
+    background: rgba(255, 255, 255, 0.05);
+    color: $color-light;
+    border-color: $color-secondary;
+  }
+
+  // Floating Shard Display
+  .floating-shard-display {
+    background-color: rgba(40, 40, 40, 0.95);
+    box-shadow: $box-shadow-dark;
+
+    p {
+      color: rgb(245, 204, 101);
+    }
+  }
+
+  // Table styling
+  .shard-chart {
+    table {
+      th, td {
+        background-color: #222;
+        color: #eee;
+        border-color: #444;
+      }
+
+      .progress-overlay {
+        background-color: rgba(224, 224, 224, 0.8);
+        color: #111;
+      }
+
+      .total-row {
+        background-color: #2b2b2b;
+      }
+    }
   }
 }

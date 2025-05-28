@@ -1,25 +1,36 @@
 // php\static\scss\themes\_light-mode.scss
 
-body {
-  background-color: #ffffff;
+[data-theme="light"] {
+  background-color: $color-white;
   background-image: url('/static/images/village.webp');
   background-repeat: no-repeat;
   background-position: center top;
   background-size: cover;
+  background-blend-mode: normal;
 
-  .top-bar {
+  @include respond(phone-md, down) {
+    background-size: auto !important;
+  }
+
+  // Container
+  .container {
+    background-color: rgba($color-white, 0.95);
+    box-shadow: $box-shadow-light;
+  }
+
+  // Top Bar
+  .top-bar-wrapper {
     background-color: rgba($color-light, 0.95);
+    backdrop-filter: blur(6px);
 
-    .title {
-      color: $color-primary;
-    }
-
+    .title,
     .menu-icon,
     .theme-toggle {
       color: $color-primary;
     }
   }
 
+  // Dropdown Menus
   .menu-dropdown {
     background-color: $color-white;
 
@@ -34,16 +45,54 @@ body {
     }
   }
 
-  h2,
-  h3 {
+  // Typography
+  h2, h3 {
     color: $color-danger;
   }
 
   p {
-    color: lighten($color-white, 20%);
+    color: lighten($color-dark, 10%);
   }
 
-  @include respond(phone-md, down) {
-    background-size: unset !important;
+  // Shard Form
+  .shard-form {
+    background-color: rgba($color-white, 0.95);
+    box-shadow: $box-shadow-light;
+  }
+
+  label {
+    color: $color-dark;
+  }
+
+  .form-text {
+    color: $color-muted;
+  }
+
+  input[type="text"],
+  select {
+    background: $color-white;
+    color: $color-dark;
+    border-color: $color-secondary;
+  }
+
+  // Floating Shard Display
+  .floating-shard-display {
+    background-color: rgba($color-white, 0.96);
+    box-shadow: $box-shadow-md;
+
+    p {
+      color: rgb(245, 204, 101);
+    }
+  }
+
+  // Table styling
+  .shard-chart {
+    table {
+      th, td {
+        background-color: $color-white;
+        color: $color-dark;
+        border-color: #ddd;
+      }
+    }
   }
 }

@@ -1,42 +1,30 @@
 // php\static\scss\layout\_page-layout.scss
 
-// Layout Styles
 .page-layout {
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh; // Ensure it takes up full height
-    align-items: center;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  flex: 1 0 auto;
+}
 
-    // Responsive adjustments
-    @include respond(phone-md, down) {
-      min-height: auto; // Let it adapt to smaller screens
-    }
-  }
-  
-  .content-wrapper {
-    display: flex;
-    flex-direction: column;
-    flex-wrap: wrap;
-    align-items: stretch; 
-    padding: $spacing-medium;
-  
-    max-width: max-content; // Allow content to expand
-    width: 100%; // Fluid on smaller screens
+/* Handles the max-width and padding of the main content container */
+.content-wrapper {
+  width: 95%;
+  max-width: $container-max-width;
+  margin: 0 auto;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding-top: 0rem !important; 
+  padding: $spacing-xl;
 
-  
-    // Responsive adjustments
-    @include respond(desktop-lg, down) {
-      padding: $spacing-medium;
-    }
-  
-    @include respond(tablet-md, down) {
-      padding: $spacing-small;
-    }
-  
-    @include respond(phone-lg, down) {
-      padding: $spacing-xsmall;
-      align-items: stretch; // Allow more fluid layouts on smaller screens
-      max-width: max-content; // Allow content to expand
-    }
+  @include respond(tablet-md, down) {
+    padding: $spacing-md;
   }
-  
+
+  @include respond(phone-md, down) {
+    padding: $spacing-sm;
+  }
+}
