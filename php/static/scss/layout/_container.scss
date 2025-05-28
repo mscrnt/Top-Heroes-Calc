@@ -17,6 +17,7 @@
   @include respond(phone-md, down) {
     margin: $spacing-sm;
     padding: $spacing-sm;
+    margin-bottom: 4rem;
   }
 
   [data-theme="dark"] & {

@@ -146,7 +146,7 @@ select {
 
 /* Chart Table */
 .shard-chart {
-  margin-top: $spacing-lg;
+  margin-top: 4rem;
   overflow-x: auto;
 
   table {
@@ -283,7 +283,7 @@ select {
   right: 0;
   margin: 0 auto;
   transform: none;
-  z-index: $z-index-header + 1;
+  z-index: 499;
   max-width: $container-max-width;
   width: 90%;
   background: rgba($color-white, 0.95);

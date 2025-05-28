@@ -49,17 +49,22 @@ include 'includes/header.php';
     </div>
   </div>
 
-  <nav class="bottom-nav">
-    <a href="?page=shard_calc" class="<?= $page === 'shard_calc' ? 'active' : '' ?>" title="Shard Calculator">
-      <i class="fa fa-chart-bar"></i>
-    </a>
-    <a href="?page=heroes" class="<?= $page === 'heroes' ? 'active' : '' ?>" title="Hero Info">
-      <i class="fa fa-users"></i>
-    </a>
-    <a href="?page=hero_leveling" class="<?= $page === 'hero_leveling' ? 'active' : '' ?>" title="Level Calculator">
-      <i class="fa fa-level-up-alt"></i>
-    </a>
-  </nav>
+<!-- Ads go here -->
+<div class="ad-wrapper">
+  <!-- Left Ad (desktop only) -->
+  <div class="ad-slot ad-left">
+    <?php include 'includes/ad-left.php'; ?>
+  </div>
+
+  <!-- Right Ad (desktop only) -->
+  <div class="ad-slot ad-right">
+    <?php include 'includes/ad-right.php'; ?>
+  </div>
+
+  <!-- Bottom Ad (mobile only) -->
+  <div class="ad-slot ad-bottom">
+    <?php include 'includes/ad-bottom.php'; ?>
+  </div>
 </div>
 
 <?php include 'includes/footer.php'; ?>
