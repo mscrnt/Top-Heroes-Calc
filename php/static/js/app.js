@@ -34,6 +34,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function applyTheme(mode) {
         root.setAttribute("data-theme", mode);
-        themeToggleIcon.className = mode === "dark" ? "fa fa-moon" : "fa fa-sun";
+        themeToggleIcon.className = mode === "dark" ? "fa fa-sun" : "fa fa-moon";
     }
 });
