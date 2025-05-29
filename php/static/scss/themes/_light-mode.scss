@@ -88,11 +88,31 @@
   // Table styling
   .shard-chart {
     table {
-      th, td {
-        background-color: $color-white;
+      th {
+        background-color: $color-primary;
+        color: $color-white;
+        border-color: #ddd;
+      }
+
+      td {
         color: $color-dark;
         border-color: #ddd;
       }
+
+      // td:not(.shards-per-step):not(.per-star):not(.overall):not(.level-cell):not(.star-cell) {
+      //   background-color: $color-white;
+      // }
+
+      // ✅ Add this
+      .level-cell,
+      .star-cell {
+        background-color: $color-primary;
+        color: $color-white;
+      }
+
+      // .group-1 td { background-color: #fff4db; }
+      // .group-2 td { background-color: #fce7dd; }
+      // .group-3 td { background-color: #e4e4e4; }
     }
   }
 }

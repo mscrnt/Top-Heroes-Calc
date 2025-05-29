@@ -2,8 +2,9 @@ function handleFloatingShardForm() {
     const floatingForm = document.querySelector('.floating-shard-form');
     const container = document.querySelector('.container');
 
-    const fixedTopDistance = 64; // Matches top-bar height
-    const spacing = 8;           // Space below top bar
+    const fixedTopDistance = 64;
+    const spacing = 8;
+    const mobileBreakpoint = 768;
 
     let isPinned = false;
 
@@ -12,42 +13,63 @@ function handleFloatingShardForm() {
     function updateFormPosition() {
         const containerRect = container.getBoundingClientRect();
         const scrollY = window.scrollY || document.documentElement.scrollTop;
-
         const containerTop = containerRect.top + scrollY;
+        const containerWidth = container.offsetWidth;
+
+        const topPos = containerTop + spacing;
         const formShouldPin = scrollY >= containerTop - fixedTopDistance - spacing;
+        const isDesktop = window.innerWidth >= mobileBreakpoint;
 
         if (formShouldPin && !isPinned) {
             floatingForm.classList.add('pinned');
-            floatingForm.style.top = ''; // Reset inline styles when pinned
+            floatingForm.style.top = '';
             floatingForm.style.left = '';
-            floatingForm.style.width = '';
+            if (isDesktop) {
+                floatingForm.style.width = `${containerWidth * 0.95}px`;
+            }
             isPinned = true;
+
         } else if (!formShouldPin && isPinned) {
             floatingForm.classList.remove('pinned');
-            const topPos = containerTop + spacing;
             floatingForm.style.position = 'absolute';
             floatingForm.style.top = `${topPos}px`;
             floatingForm.style.left = '';
-            floatingForm.style.width = '';
+            if (isDesktop) {
+                floatingForm.style.width = `${containerWidth * 0.95}px`;
+            } else {
+                floatingForm.style.width = '';
+            }
             isPinned = false;
+
         } else if (!isPinned) {
-            const topPos = containerTop + spacing;
             floatingForm.style.top = `${topPos}px`;
+            if (isDesktop) {
+                floatingForm.style.width = `${containerWidth * 0.95}px`;
+            } else {
+                floatingForm.style.width = '';
+            }
         }
     }
 
     function initializeFormPosition() {
         const containerRect = container.getBoundingClientRect();
         const scrollY = window.scrollY || document.documentElement.scrollTop;
-
+        const containerWidth = container.offsetWidth;
         const topPos = containerRect.top + scrollY + spacing;
+        const isDesktop = window.innerWidth >= mobileBreakpoint;
+
         floatingForm.classList.remove('pinned');
         floatingForm.style.position = 'absolute';
         floatingForm.style.top = `${topPos}px`;
         floatingForm.style.left = '';
-        floatingForm.style.width = '';
         floatingForm.style.transform = '';
         isPinned = false;
+
+        if (isDesktop) {
+            floatingForm.style.width = `${containerWidth * 0.95}px`;
+        } else {
+            floatingForm.style.width = '';
+        }
     }
 
     initializeFormPosition();

@@ -22,7 +22,6 @@ h3 {
 
 /* Form Layout */
 form {
-  margin-bottom: $spacing-lg;
   padding: $spacing-md;
   background-color: rgba($color-white, 0.95);
   border-radius: $border-radius-md;
@@ -122,14 +121,15 @@ select {
   position: fixed;
   bottom: 1rem;
   right: 1rem;
-  padding: $spacing-sm;
+  padding: 0.5rem;
   background: $color-white;
   border-radius: $border-radius-md;
   box-shadow: $box-shadow-lg;
   z-index: $z-index-tooltip;
   text-align: center;
   font-family: $font-family-base;
-  margin-bottom: 1rem;
+  display: inline-flex;
+  align-items: center;
 
   img {
     width: 3rem;
@@ -155,7 +155,8 @@ select {
     font-size: $font-size-sm;
     box-shadow: $box-shadow-sm;
 
-    th, td {
+    th,
+    td {
       padding: $spacing-xs;
       border: 1px solid #ddd;
     }
@@ -176,6 +177,7 @@ select {
 
       &:hover {
         background-color: lighten($color-primary, 10%);
+
         .fa-star {
           transform: scale(1.1);
         }
@@ -198,10 +200,35 @@ select {
       transition: width 0.3s ease;
       z-index: 1;
     }
+
+    .total-row {
+      background-color: #f7f7f7;
+      font-weight: bold;
+    }
   }
 
+  /* Group Backgrounds (Light Mode) */
+  .group-1 td {
+    background-color: #fff4db;
+  }
+
+  .group-2 td {
+    background-color: #fce7dd;
+  }
+
+  .group-3 td {
+    background-color: #e4e4e4;
+  }
+
+  /* Star Colors */
+  .group-1 .fa-star { color: #FFD700; }
+  .group-2 .fa-star { color: #B7410E; }
+  .group-3 .fa-star { color: #C0C0C0; }
+
+  /* Dark Mode Group Backgrounds */
   [data-theme="dark"] & {
-    th, td {
+    th,
+    td {
       background-color: #222;
       color: #eee;
       border-color: #444;
@@ -214,6 +241,18 @@ select {
 
     .total-row {
       background-color: #2b2b2b;
+    }
+
+    .group-1 td {
+      background-color: #3a2f1d;
+    }
+
+    .group-2 td {
+      background-color: #402620;
+    }
+
+    .group-3 td {
+      background-color: #3c3c3c;
     }
   }
 }
@@ -235,30 +274,12 @@ select {
   }
 }
 
-/* Group Backgrounds */
-.group-1 .fa-star { color: #FFD700; }
-.group-2 .fa-star { color: #B7410E; }
-.group-3 .fa-star { color: #C0C0C0; }
-
-.group-1 .shards-per-step,
-.group-1 .per-star,
-.group-1 .overall { background-color: #fff4db; }
-
-.group-2 .shards-per-step,
-.group-2 .per-star,
-.group-2 .overall { background-color: #fce7dd; }
-
-.group-3 .shards-per-step,
-.group-3 .per-star,
-.group-3 .overall { background-color: #e4e4e4; }
-
-.total-row {
-  background-color: #f7f7f7;
-  font-weight: bold;
-}
-
 /* Mobile Table Simplification */
 @include respond(phone-md, down) {
+  .shard-chart {
+    margin-top: 10rem;
+  }
+  
   .shard-chart table {
     th:not(.level-cell):not(.star-cell),
     td:not(.level-cell):not(.star-cell) {

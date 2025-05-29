@@ -5,10 +5,8 @@
 <script src="/static/js/shard_form_float.js" defer></script>
 
 <section class="shard-intro">
-  <p>
-    This tool helps you figure out exactly how many shards you’ll need to max out your legendary and mythic heroes in <strong>Top Heroes</strong>.
-    Click on a star level or enter your hero level to calculate the shards.
-  </p>
+<br>
+<br>
 </section>
 
 

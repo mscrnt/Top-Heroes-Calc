@@ -101,6 +101,9 @@
   margin: 1rem auto;
   padding: 1rem;
   background-color: rgba(255, 255, 255, 0.95);
+  background-image: url("/static/images/wood_texture.jpg");
+  background-repeat: repeat;
+  background-size: cover;
   border-radius: 0.5rem;
   box-shadow: 0rem 0.125rem 1.25rem 1.25rem rgba(0, 0, 0, 0.1), -0.0625rem 0rem 1.25rem 1.25rem rgba(0, 0, 0, 0.15), 0.0625rem 0rem 2.5rem 1.25rem rgba(0, 0, 0, 0.2);
   overflow-x: hidden;
@@ -119,6 +122,7 @@
 }
 [data-theme=dark] .container {
   background-color: rgba(30, 30, 30, 0.92);
+  background-image: none;
   box-shadow: 0 0.25rem 0.625rem rgba(0, 0, 0, 0.4);
   background-blend-mode: multiply;
 }
@@ -353,10 +357,19 @@ body.dark-mode .theme-toggle i {
 [data-theme=light] .floating-shard-display p {
   color: rgb(245, 204, 101);
 }
-[data-theme=light] .shard-chart table th, [data-theme=light] .shard-chart table td {
-  background-color: #ffffff;
+[data-theme=light] .shard-chart table th {
+  background-color: rgb(47, 85, 150);
+  color: #ffffff;
+  border-color: #ddd;
+}
+[data-theme=light] .shard-chart table td {
   color: rgba(47, 44, 44, 0.5098039216);
   border-color: #ddd;
+}
+[data-theme=light] .shard-chart table .level-cell,
+[data-theme=light] .shard-chart table .star-cell {
+  background-color: rgb(47, 85, 150);
+  color: #ffffff;
 }
 
 [data-theme=dark] {
@@ -448,7 +461,6 @@ body {
   min-height: 100vh;
   overflow-x: hidden;
   overflow-y: auto;
-  background: url("/static/images/village.webp") no-repeat center top;
   background-size: cover;
   background-attachment: fixed;
   -webkit-font-smoothing: antialiased;
@@ -544,7 +556,6 @@ h3 {
 
 /* Form Layout */
 form {
-  margin-bottom: 1.5rem;
   padding: 1rem;
   background-color: rgba(255, 255, 255, 0.95);
   border-radius: 0.5rem;
@@ -643,14 +654,15 @@ select:focus {
   position: fixed;
   bottom: 1rem;
   right: 1rem;
-  padding: 0.75rem;
+  padding: 0.5rem;
   background: #ffffff;
   border-radius: 0.5rem;
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
   z-index: 1100;
   text-align: center;
   font-family: "Inter", "Arial", sans-serif;
-  margin-bottom: 1rem;
+  display: inline-flex;
+  align-items: center;
 }
 .floating-shard-display img {
   width: 3rem;
@@ -667,6 +679,9 @@ select:focus {
 .shard-chart {
   margin-top: 4rem;
   overflow-x: auto;
+  /* Group Backgrounds (Light Mode) */
+  /* Star Colors */
+  /* Dark Mode Group Backgrounds */
 }
 .shard-chart table {
   width: 100%;
@@ -674,7 +689,8 @@ select:focus {
   font-size: 0.875rem;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
 }
-.shard-chart table th, .shard-chart table td {
+.shard-chart table th,
+.shard-chart table td {
   padding: 0.5rem;
   border: 1px solid #ddd;
 }
@@ -715,7 +731,30 @@ select:focus {
   transition: width 0.3s ease;
   z-index: 1;
 }
-[data-theme=dark] .shard-chart th, [data-theme=dark] .shard-chart td {
+.shard-chart table .total-row {
+  background-color: #f7f7f7;
+  font-weight: bold;
+}
+.shard-chart .group-1 td {
+  background-color: #fff4db;
+}
+.shard-chart .group-2 td {
+  background-color: #fce7dd;
+}
+.shard-chart .group-3 td {
+  background-color: #e4e4e4;
+}
+.shard-chart .group-1 .fa-star {
+  color: #FFD700;
+}
+.shard-chart .group-2 .fa-star {
+  color: #B7410E;
+}
+.shard-chart .group-3 .fa-star {
+  color: #C0C0C0;
+}
+[data-theme=dark] .shard-chart th,
+[data-theme=dark] .shard-chart td {
   background-color: #222;
   color: #eee;
   border-color: #444;
@@ -726,6 +765,15 @@ select:focus {
 }
 [data-theme=dark] .shard-chart .total-row {
   background-color: #2b2b2b;
+}
+[data-theme=dark] .shard-chart .group-1 td {
+  background-color: #3a2f1d;
+}
+[data-theme=dark] .shard-chart .group-2 td {
+  background-color: #402620;
+}
+[data-theme=dark] .shard-chart .group-3 td {
+  background-color: #3c3c3c;
 }
 
 /* Star Styling */
@@ -743,44 +791,11 @@ select:focus {
   border-radius: 50%;
 }
 
-/* Group Backgrounds */
-.group-1 .fa-star {
-  color: #FFD700;
-}
-
-.group-2 .fa-star {
-  color: #B7410E;
-}
-
-.group-3 .fa-star {
-  color: #C0C0C0;
-}
-
-.group-1 .shards-per-step,
-.group-1 .per-star,
-.group-1 .overall {
-  background-color: #fff4db;
-}
-
-.group-2 .shards-per-step,
-.group-2 .per-star,
-.group-2 .overall {
-  background-color: #fce7dd;
-}
-
-.group-3 .shards-per-step,
-.group-3 .per-star,
-.group-3 .overall {
-  background-color: #e4e4e4;
-}
-
-.total-row {
-  background-color: #f7f7f7;
-  font-weight: bold;
-}
-
 /* Mobile Table Simplification */
 @media (max-width: 480px) {
+  .shard-chart {
+    margin-top: 10rem;
+  }
   .shard-chart table th:not(.level-cell):not(.star-cell),
   .shard-chart table td:not(.level-cell):not(.star-cell) {
     display: none;
@@ -1350,8 +1365,7 @@ body.dark-mode .roles-table .role-description-cell strong {
 
 /* Result Section */
 #result {
-  background-color: rgba(0, 0, 0, 0.5098039216);
-  border-radius: 15px;
+  font-size: 2rem;
 }
 #result img {
   width: 3rem;

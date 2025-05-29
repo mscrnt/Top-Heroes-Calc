@@ -14,7 +14,7 @@
       <div class="form-group">
         <label for="currentLevel">Enter Current Hero Level:</label>
         <input type="text" class="form-control" id="currentLevel" placeholder="Example: 1.3" />
-        <small class="form-text">Format: Level.Step (Use '1.3' for level 1, step 3).</small>
+        <small class="form-text">Example: '1.3' for level 1, step 3</small>
       </div>
     </div>
 
