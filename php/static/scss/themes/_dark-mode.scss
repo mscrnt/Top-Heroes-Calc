@@ -76,6 +76,7 @@
     border-color: $color-secondary;
   }
 
+    // Floating Shard Display
   // Floating Shard Display
   .floating-shard-display {
     background-color: rgba(40, 40, 40, 0.95);
@@ -84,7 +85,12 @@
     p {
       color: rgb(245, 204, 101);
     }
+
+    #result {
+      color: rgb(245, 204, 101); 
+    }
   }
+
 
   // Table styling
   .shard-chart {

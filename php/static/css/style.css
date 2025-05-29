@@ -335,11 +335,11 @@ body.dark-mode .theme-toggle i {
   color: rgba(73, 69, 69, 0.5098039216);
 }
 [data-theme=light] .shard-form {
-  background-color: rgba(255, 255, 255, 0.95);
+  background-color: rgba(255, 255, 255, 0.8);
   box-shadow: 0rem 0.125rem 1.25rem 1.25rem rgba(0, 0, 0, 0.1), -0.0625rem 0rem 1.25rem 1.25rem rgba(0, 0, 0, 0.15), 0.0625rem 0rem 2.5rem 1.25rem rgba(0, 0, 0, 0.2);
 }
 [data-theme=light] label {
-  color: rgba(47, 44, 44, 0.5098039216);
+  color: #000000;
 }
 [data-theme=light] .form-text {
   color: #777777;
@@ -356,6 +356,9 @@ body.dark-mode .theme-toggle i {
 }
 [data-theme=light] .floating-shard-display p {
   color: rgb(245, 204, 101);
+}
+[data-theme=light] .floating-shard-display #result {
+  color: #917251;
 }
 [data-theme=light] .shard-chart table th {
   background-color: rgb(47, 85, 150);
@@ -436,6 +439,9 @@ body.dark-mode .theme-toggle i {
   box-shadow: 0 0.25rem 0.625rem rgba(0, 0, 0, 0.4);
 }
 [data-theme=dark] .floating-shard-display p {
+  color: rgb(245, 204, 101);
+}
+[data-theme=dark] .floating-shard-display #result {
   color: rgb(245, 204, 101);
 }
 [data-theme=dark] .shard-chart table th, [data-theme=dark] .shard-chart table td {
@@ -817,7 +823,6 @@ select:focus {
   z-index: 499;
   max-width: 1200px;
   width: 90%;
-  background: rgba(255, 255, 255, 0.95);
   border-radius: 0.5rem;
   -webkit-backdrop-filter: blur(6px);
           backdrop-filter: blur(6px);
