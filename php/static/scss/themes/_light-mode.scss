@@ -1,6 +1,14 @@
-// php\static\scss\themes\_light-mode.scss
+// php/static/scss/themes/_light-mode.scss
+
+@import "../base/variables";
+@import "../base/mixins";
 
 [data-theme="light"] {
+  // make the <body> fill the viewport and get the backdrop
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+
   background-color: $color-white;
   background-image: url('/static/images/village.webp');
   background-repeat: no-repeat;
@@ -8,9 +16,12 @@
   background-size: cover;
   background-blend-mode: normal;
 
+  // switch to scroll on mobile so the background doesn’t clip
   @include respond(phone-md, down) {
-    background-size: auto !important;
+    background-attachment: scroll;
+    background-size: cover !important;
   }
+
 
   // Container
   .container {

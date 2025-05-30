@@ -1,4 +1,4 @@
-// php\static\scss\base\_typography.scss
+// php/static/scss/base/_typography.scss
 
 // ==============================
 // ✒️ TYPOGRAPHY BASE
@@ -18,14 +18,6 @@ body {
   background-attachment: fixed;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
-
-  // Dark mode override using data attribute
-  &[data-theme="dark"] {
-    background-image: url('/static/images/night-village.webp');
-    background-color: rgba($color-black, 0.84);
-    background-blend-mode: overlay;
-    color: $color-light;
-  }
 }
 
 // ==============================
@@ -47,19 +39,11 @@ h3 {
 h2 {
   font-size: $font-size-xl;
   color: $color-danger;
-
-  [data-theme="dark"] & {
-    color: lighten($color-danger, 10%);
-  }
 }
 
 h3 {
   font-size: $font-size-lg;
   color: $color-warning;
-
-  [data-theme="dark"] & {
-    color: lighten($color-warning, 10%);
-  }
 }
 
 // ==============================
@@ -71,8 +55,4 @@ p {
   margin-bottom: $spacing-md;
   color: $color-dark;
   line-height: 1.75;
-
-  [data-theme="dark"] & {
-    color: lighten($color-light, 10%);
-  }
 }
