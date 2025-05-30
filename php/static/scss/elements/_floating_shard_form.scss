@@ -1,0 +1,166 @@
+// php/static/scss/elements/_floating_shard_form.scss
+
+@import "../base/variables";
+@import "../base/mixins";
+
+/* Floating Shard Form + Display */
+.floating-shard-form {
+  // ensure high‐contrast text in light mode
+  color: $color-black;
+
+  position: absolute;
+  top: auto;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  z-index: 499;
+  max-width: $container-max-width;
+  width: 90%;
+  border-radius: $border-radius-md;
+  backdrop-filter: blur(10px);
+  padding-top: 1rem;
+
+  [data-theme="dark"] & {
+    background: rgba(30, 30, 30, 0.95);
+    box-shadow: $box-shadow-dark;
+
+    input,
+    select {
+      background: rgba(255, 255, 255, 0.05);
+      color: #eee;
+      border-color: $color-secondary;
+    }
+
+    label {
+      color: #ccc;
+    }
+  }
+
+  .shard-form {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-sm;
+
+    /* Inputs side-by-side, bottom-aligned */
+    .form-row {
+      display: flex;
+      flex-direction: row;
+      align-items: flex-end;
+      gap: $spacing-md;
+      flex-wrap: nowrap;
+
+      .form-group {
+        flex: 1 1 50%;
+        min-width: 0;
+        display: flex;
+        flex-direction: column;
+
+        label {
+          font-weight: 600;
+          font-size: $font-size-sm;
+          margin-bottom: $spacing-xxs;
+          color: $color-black;       // darker label
+        }
+
+        input,
+        select {
+          padding: $spacing-sm;
+          border: 1px solid $color-secondary;
+          border-radius: $border-radius-sm;
+          font-size: $font-size-sm;
+          background-color: $color-white;
+          color: $color-black;       // high-contrast input text
+          transition: border-color $transition-duration;
+
+          &::placeholder {
+            color: $color-secondary; // medium-grey placeholder
+            opacity: 1;
+          }
+
+          &:focus {
+            border-color: $color-accent;
+            outline: none;
+          }
+        }
+
+        .form-text {
+          font-size: 0.75rem;
+          color: $color-muted;        // subdued hint text
+          margin-top: $spacing-xxs;
+        }
+      }
+    }
+
+    /* Display on left, buttons on right */
+    .form-actions {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: $spacing-sm;
+
+      /* shard display (left) */
+      .floating-shard-display {
+        display: flex;
+        align-items: center;
+        flex-shrink: 0;
+
+        img {
+          width: 3rem;
+          margin-right: $spacing-xs;
+        }
+
+        #result {
+          font-size: 2rem;
+          font-weight: bold;
+          color: #917251;
+          [data-theme="dark"] & {
+            color: rgb(245, 204, 101);
+          }
+        }
+      }
+
+      /* button group (right) */
+      .button-group {
+        display: flex;
+        gap: $spacing-xs;
+
+        button {
+          flex: 0 0 auto;
+          padding: $spacing-xs $spacing-sm;
+          font-weight: 600;
+          border-radius: $border-radius-sm;
+          border: none;
+          cursor: pointer;
+          transition: background-color $transition-duration;
+
+          &.btn-primary {
+            background-color: $color-primary;
+            color: $color-white;
+            &:hover {
+              background-color: darken($color-primary, 10%);
+            }
+          }
+
+          &.btn-secondary {
+            background-color: $color-secondary;
+            color: $color-black;
+            &:hover {
+              background-color: darken($color-secondary, 10%);
+            }
+          }
+        }
+      }
+    }
+  }
+
+  &.pinned {
+    position: fixed !important;
+    top: 72px;
+    max-width: $container-max-width;
+    width: 90%;
+  }
+
+  @include respond(phone-md, down) {
+    padding-top: $spacing-sm;
+  }
+}

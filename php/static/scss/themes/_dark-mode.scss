@@ -1,4 +1,7 @@
-// php\static\scss\themes\_dark-mode.scss
+// php/static/scss/themes/_dark-mode.scss
+
+@import "../base/variables";
+@import "../base/mixins";
 
 [data-theme="dark"] {
   background-color: rgba(0, 0, 0, 0.84);
@@ -14,7 +17,7 @@
 
   // Container
   .container {
-    background-color: rgba(30, 30, 30, 0.92);
+    background-color: rgb(30 30 30 / 50%);
     box-shadow: $box-shadow-dark;
     background-blend-mode: multiply;
   }
@@ -26,8 +29,19 @@
     .title,
     .menu-icon,
     .theme-toggle {
-      color: lighten($color-primary, 20%);
+      color: lighten($color-danger, 15%) !important;
     }
+  }
+
+  // Hamburger / Theme-toggle icon overrides
+  .hamburger-menu .menu-icon i,
+  .theme-toggle i {
+    color: lighten($color-danger, 15%) !important;
+    transition: color $transition-duration $transition-ease;
+  }
+  .hamburger-menu .menu-icon i:hover,
+  .theme-toggle:hover i {
+    color: lighten($color-danger, 20%) !important;
   }
 
   // Dropdowns
@@ -40,8 +54,8 @@
 
       &:hover,
       &.active {
-        background-color: $color-accent;
-        color: $color-white;
+        background-color: rgb(0 0 0 / 50%);
+        color: lighten($color-danger, 15%);
       }
     }
   }
@@ -76,38 +90,77 @@
     border-color: $color-secondary;
   }
 
-    // Floating Shard Display
-  // Floating Shard Display
-  .floating-shard-display {
-    background-color: rgba(40, 40, 40, 0.95);
+  // Floating Shard Form wrapper + inner form
+  .floating-shard-form {
+    background-color: rgba(30, 30, 30, 0.92);
     box-shadow: $box-shadow-dark;
+    backdrop-filter: none;
+
+    .shard-form {
+      background: transparent;
+      box-shadow: none;
+    }
+
+    label {
+      color: #ccc !important;
+    }
+
+    .form-text {
+      color: #aaa;
+    }
+
+    input[type="text"],
+    select {
+      background: rgba(255, 255, 255, 0.05);
+      color: $color-light;
+      border-color: $color-secondary;
+    }
+  }
+
+  // Floating Shard Display (unchanged)
+  .floating-shard-display {
 
     p {
       color: rgb(245, 204, 101);
     }
 
     #result {
-      color: rgb(245, 204, 101); 
+      color: rgb(245, 204, 101);
     }
   }
 
-
-  // Table styling
+  // Chart Table
   .shard-chart {
+    background-color: rgba(30, 30, 30, 0.92);
+
+    p {
+      color: rgba(255, 255, 255, 0.9);
+    }
+
+    h3 {
+      color: lighten($color-danger, 15%);
+    }
+
     table {
       th, td {
-        background-color: #222;
-        color: #eee;
+        background-color: #222 !important;
+        color: #eee !important;
         border-color: #444;
       }
 
       .progress-overlay {
-        background-color: rgba(224, 224, 224, 0.8);
+        background-color: rgba(255, 255, 255, 0.3);
         color: #111;
       }
 
       .total-row {
         background-color: #2b2b2b;
+      }
+
+      // Dark‐mode hover override
+      .level-cell:hover,
+      .star-cell:hover {
+        background-color: rgba(255, 255, 255, 0.1);
       }
     }
   }

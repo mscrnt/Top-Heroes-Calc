@@ -1,4 +1,5 @@
 // _theme-toggle.scss
+
 .theme-toggle {
   position: relative;
   display: flex;
@@ -11,10 +12,6 @@
   i {
     color: $color-primary;
     transition: color $transition-duration $transition-ease;
-
-    body.dark-mode & {
-      color: lighten($color-primary, 20%);
-    }
   }
 
   &:hover i {

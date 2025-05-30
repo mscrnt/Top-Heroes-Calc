@@ -44,6 +44,7 @@ foreach ($shardData as $type => $data) {
     $displayStyle = $type === 'legendary' ? 'block' : 'none';
     echo "<div id='{$type}Chart' class='shard-chart' style='display: {$displayStyle};'>";
     echo "<h3>{$data['title']}</h3>";
+    echo "<p>Click on the stars to fill the progress bar. It takes 5 steps to fill a star, and each step requires a specific number of shards.</p>";
     echo "<table>";
     echo "<tr><th>Level</th><th>Star</th><th>Shard per Step</th><th>Per Star</th><th>Overall</th></tr>";
 

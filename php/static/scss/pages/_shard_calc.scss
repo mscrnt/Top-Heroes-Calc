@@ -16,8 +16,9 @@ h2 {
 
 h3 {
   font-size: $font-size-lg;
-  margin-top: $spacing-xl;
+  margin-top: $spacing-medium; 
   color: $color-accent;
+  padding: 0;
 }
 
 /* Form Layout */
@@ -49,11 +50,11 @@ form {
 }
 
 label {
+  display: block;
   font-weight: 500;
   font-size: $font-size-sm;
   margin-bottom: $spacing-xxs;
   color: $color-dark;
-  display: block;
 
   [data-theme="dark"] & {
     color: #ccc;
@@ -116,71 +117,70 @@ select {
   }
 }
 
-/* Floating Shard Display */
-.floating-shard-display {
-  position: fixed;
-  bottom: 1rem;
-  right: 1rem;
-  padding: 0.5rem;
-  background: $color-white;
-  border-radius: $border-radius-md;
-  box-shadow: $box-shadow-lg;
-  z-index: $z-index-tooltip;
-  text-align: center;
-  font-family: $font-family-base;
-  display: inline-flex;
-  align-items: center;
-
-  img {
-    width: 3rem;
-    height: auto;
-  }
-
-  p {
-    margin: $spacing-xxs 0;
-    font-size: 2rem;
-    font-weight: bold;
-    color: rgb(245, 204, 101);
-  }
-}
-
 /* Chart Table */
 .shard-chart {
-  margin-top: 4rem;
+  margin-top: 8rem !important;
   overflow-x: auto;
+  border-radius: $border-radius-md;
+  background: rgba($color-white, 0.80);
+  box-shadow: $box-shadow-md;
+  padding: $spacing-sm;
+  width: 85%;
+  margin: auto;
+
+  /* NEW: style the two explanatory <p> tags */
+  p {
+    font-size: $font-size-sm;      // make them smaller
+    color: rgba($color-black, 0.9); // use a semi-transparent black
+    text-align: center;            // center them
+    margin: $spacing-xs 0;         // small vertical spacing
+  }
+
+  h3 {
+    color: $color-accent;
+  }
 
   table {
-    width: 100%;
-    border-collapse: collapse;
+    width: 80%;
+    margin: auto;
+    border-collapse: separate;
     font-size: $font-size-sm;
-    box-shadow: $box-shadow-sm;
-
-    th,
-    td {
-      padding: $spacing-xs;
-      border: 1px solid #ddd;
-    }
 
     th {
       background-color: $color-primary;
       color: $color-white;
-      font-weight: 600;
+      padding: $spacing-sm $spacing-md;
+      text-align: left;
+      border-radius: $border-radius-sm 0 0 $border-radius-sm;
+
+      &:last-child {
+        border-radius: 0 $border-radius-sm $border-radius-sm 0;
+      }
+    }
+
+    td {
+      background-color: $color-light;
+      padding: $spacing-sm $spacing-md;
+      color: darken($color-dark, 25%);
+      box-shadow: inset 0 0 0 1px lighten($color-secondary, 20%);
+      transition: transform 0.2s ease;
+
+      &:hover {
+        transform: scale(1.02);
+        z-index: 1;
+      }
     }
 
     .level-cell,
     .star-cell {
       background-color: $color-primary;
       color: $color-white;
+      font-weight: bold;
       cursor: pointer;
       position: relative;
-      transition: background-color 0.3s ease;
 
       &:hover {
         background-color: lighten($color-primary, 10%);
-
-        .fa-star {
-          transform: scale(1.1);
-        }
       }
     }
 
@@ -202,57 +202,68 @@ select {
     }
 
     .total-row {
-      background-color: #f7f7f7;
+      background-color: darken($color-accent, 5%);
+      color: $color-white;
       font-weight: bold;
+
+      td {
+        border-top: 2px solid $color-primary;
+        background-color: lighten($color-accent, 5%);
+      }
+    }
+
+    .star-container {
+      display: flex;
+      justify-content: center;
+      gap: $spacing-xxs;
+    }
+
+    /* Group-Specific Shard Cell Backgrounds */
+    tr.group-1 {
+      .shards-per-step,
+      .per-star {
+        background-color: #fff4db;
+        color: darken(#8a6d00, 15%);
+      }
+    }
+
+    tr.group-2 {
+      .shards-per-step,
+      .per-star {
+        background-color: #fce7dd;
+        color: darken(#a9451e, 10%);
+      }
+    }
+
+    tr.group-3 {
+      .shards-per-step,
+      .per-star {
+        background-color: #e4e4e4;
+        color: darken(#5e5e5e, 10%);
+      }
     }
   }
 
-  /* Group Backgrounds (Light Mode) */
-  .group-1 td {
-    background-color: #fff4db;
-  }
-
-  .group-2 td {
-    background-color: #fce7dd;
-  }
-
-  .group-3 td {
-    background-color: #e4e4e4;
-  }
-
-  /* Star Colors */
+  /* Group-Specific Star Colors */
   .group-1 .fa-star { color: #FFD700; }
   .group-2 .fa-star { color: #B7410E; }
   .group-3 .fa-star { color: #C0C0C0; }
 
-  /* Dark Mode Group Backgrounds */
-  [data-theme="dark"] & {
-    th,
-    td {
-      background-color: #222;
-      color: #eee;
-      border-color: #444;
-    }
+  /* Mobile Simplification */
+  @include respond(phone-md, down) {
+    margin-top: 9rem !important;
+    width: 95%;
 
-    .progress-overlay {
-      background-color: rgba(224, 224, 224, 0.8);
-      color: #111;
-    }
+    table {
+      width: 100%;
 
-    .total-row {
-      background-color: #2b2b2b;
-    }
+      th:not(.level-cell):not(.star-cell),
+      td:not(.level-cell):not(.star-cell) {
+        display: none;
+      }
 
-    .group-1 td {
-      background-color: #3a2f1d;
-    }
-
-    .group-2 td {
-      background-color: #402620;
-    }
-
-    .group-3 td {
-      background-color: #3c3c3c;
+      .fa-star { font-size: 1rem; }
+      .progress-overlay { font-size: 0.85rem; }
     }
   }
 }
@@ -271,55 +282,5 @@ select {
       border: 1px solid $color-accent;
       border-radius: 50%;
     }
-  }
-}
-
-/* Mobile Table Simplification */
-@include respond(phone-md, down) {
-  .shard-chart {
-    margin-top: 10rem;
-  }
-  
-  .shard-chart table {
-    th:not(.level-cell):not(.star-cell),
-    td:not(.level-cell):not(.star-cell) {
-      display: none;
-    }
-
-    .fa-star {
-      font-size: 1rem;
-    }
-
-    .progress-overlay {
-      font-size: 0.85rem;
-    }
-  }
-}
-
-
-.floating-shard-form {
-  position: absolute;
-  top: auto;
-  left: 0;
-  right: 0;
-  margin: 0 auto;
-  transform: none;
-  z-index: 499;
-  max-width: $container-max-width;
-  width: 90%;
-  border-radius: $border-radius-md;
-  backdrop-filter: blur(6px);
-  margin-bottom: none !important;
-
-  [data-theme="dark"] & {
-    background: rgba(30, 30, 30, 0.95);
-    box-shadow: $box-shadow-dark;
-  }
-
-  &.pinned {
-    position: fixed !important;
-    top: 72px; // 64px top bar + 8px spacing
-    width: 90%; // Responsive width with padding
-    max-width: $container-max-width;
   }
 }

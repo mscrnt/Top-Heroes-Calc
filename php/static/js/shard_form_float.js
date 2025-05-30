@@ -25,7 +25,7 @@ function handleFloatingShardForm() {
             floatingForm.style.top = '';
             floatingForm.style.left = '';
             if (isDesktop) {
-                floatingForm.style.width = `${containerWidth * 0.95}px`;
+                floatingForm.style.width = `${containerWidth * 0.85}px`;
             }
             isPinned = true;
 
@@ -35,7 +35,7 @@ function handleFloatingShardForm() {
             floatingForm.style.top = `${topPos}px`;
             floatingForm.style.left = '';
             if (isDesktop) {
-                floatingForm.style.width = `${containerWidth * 0.95}px`;
+                floatingForm.style.width = `${containerWidth * 0.85}px`;
             } else {
                 floatingForm.style.width = '';
             }
@@ -44,7 +44,7 @@ function handleFloatingShardForm() {
         } else if (!isPinned) {
             floatingForm.style.top = `${topPos}px`;
             if (isDesktop) {
-                floatingForm.style.width = `${containerWidth * 0.95}px`;
+                floatingForm.style.width = `${containerWidth * 0.85}px`;
             } else {
                 floatingForm.style.width = '';
             }
@@ -66,7 +66,7 @@ function handleFloatingShardForm() {
         isPinned = false;
 
         if (isDesktop) {
-            floatingForm.style.width = `${containerWidth * 0.95}px`;
+            floatingForm.style.width = `${containerWidth * 0.85}px`;
         } else {
             floatingForm.style.width = '';
         }

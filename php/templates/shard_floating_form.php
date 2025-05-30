@@ -13,19 +13,39 @@
 
       <div class="form-group">
         <label for="currentLevel">Enter Current Hero Level:</label>
-        <input type="text" class="form-control" id="currentLevel" placeholder="Example: 1.3" />
-        <small class="form-text">Example: '1.3' for level 1, step 3</small>
+        <input
+          type="text"
+          class="form-control"
+          id="currentLevel"
+          placeholder="Example: 1.3"
+        />
       </div>
     </div>
 
     <div class="form-actions">
-      <button type="button" class="btn btn-primary" id="calculateButton">Calculate</button>
-      <button type="button" class="btn btn-secondary" id="resetButton">Reset</button>
+      <!-- left-aligned display -->
+      <div class="floating-shard-display" aria-label="Shard Display">
+        <img src="/static/images/resources/shard.webp" alt="Shard Icon" />
+        <strong><span id="result">500</span></strong>
+      </div>
+
+      <!-- right-aligned button group -->
+      <div class="button-group">
+        <button
+          type="button"
+          class="btn btn-primary"
+          id="calculateButton"
+        >
+          Calculate
+        </button>
+        <button
+          type="button"
+          class="btn btn-secondary"
+          id="resetButton"
+        >
+          Reset
+        </button>
+      </div>
     </div>
   </form>
-
-  <div class="floating-shard-display" aria-label="Shard Display">
-    <img src="/static/images/resources/shard.webp" alt="Shard Icon" />
-    <strong><span id="result">500</span></strong>
-  </div>
 </div>

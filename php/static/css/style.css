@@ -153,6 +153,178 @@
   --font-family-heading: Montserrat, Helvetica, sans-serif;
 }
 
+:root {
+  --color-primary: rgb(47, 85, 150);
+  --color-secondary: #cccccc;
+  --color-dark: rgba(47, 44, 44, 0.5098039216);
+  --color-light: rgb(230, 230, 230);
+  --color-accent: #234e96;
+  --color-danger: rgb(234, 85, 60);
+  --color-warning: rgb(248, 121, 64);
+  --font-family-base: Inter, Arial, sans-serif;
+  --font-family-heading: Montserrat, Helvetica, sans-serif;
+}
+
+/* Floating Shard Form + Display */
+.floating-shard-form {
+  color: #000000;
+  position: absolute;
+  top: auto;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  z-index: 499;
+  max-width: 1200px;
+  width: 90%;
+  border-radius: 0.5rem;
+  -webkit-backdrop-filter: blur(10px);
+          backdrop-filter: blur(10px);
+  padding-top: 1rem;
+}
+[data-theme=dark] .floating-shard-form {
+  background: rgba(30, 30, 30, 0.95);
+  box-shadow: 0 0.25rem 0.625rem rgba(0, 0, 0, 0.4);
+}
+[data-theme=dark] .floating-shard-form input,
+[data-theme=dark] .floating-shard-form select {
+  background: rgba(255, 255, 255, 0.05);
+  color: #eee;
+  border-color: #cccccc;
+}
+[data-theme=dark] .floating-shard-form label {
+  color: #ccc;
+}
+.floating-shard-form .shard-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  /* Inputs side-by-side, bottom-aligned */
+  /* Display on left, buttons on right */
+}
+.floating-shard-form .shard-form .form-row {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  gap: 1rem;
+  flex-wrap: nowrap;
+}
+.floating-shard-form .shard-form .form-row .form-group {
+  flex: 1 1 50%;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+.floating-shard-form .shard-form .form-row .form-group label {
+  font-weight: 600;
+  font-size: 0.875rem;
+  margin-bottom: 0.25rem;
+  color: #000000;
+}
+.floating-shard-form .shard-form .form-row .form-group input,
+.floating-shard-form .shard-form .form-row .form-group select {
+  padding: 0.75rem;
+  border: 1px solid #cccccc;
+  border-radius: 0.3125rem;
+  font-size: 0.875rem;
+  background-color: #ffffff;
+  color: #000000;
+  transition: border-color 0.3s;
+}
+.floating-shard-form .shard-form .form-row .form-group input::-moz-placeholder, .floating-shard-form .shard-form .form-row .form-group select::-moz-placeholder {
+  color: #cccccc;
+  opacity: 1;
+}
+.floating-shard-form .shard-form .form-row .form-group input::placeholder,
+.floating-shard-form .shard-form .form-row .form-group select::placeholder {
+  color: #cccccc;
+  opacity: 1;
+}
+.floating-shard-form .shard-form .form-row .form-group input:focus,
+.floating-shard-form .shard-form .form-row .form-group select:focus {
+  border-color: #234e96;
+  outline: none;
+}
+.floating-shard-form .shard-form .form-row .form-group .form-text {
+  font-size: 0.75rem;
+  color: #777777;
+  margin-top: 0.25rem;
+}
+.floating-shard-form .shard-form .form-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  /* shard display (left) */
+  /* button group (right) */
+}
+.floating-shard-form .shard-form .form-actions .floating-shard-display {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+.floating-shard-form .shard-form .form-actions .floating-shard-display img {
+  width: 3rem;
+  margin-right: 0.5rem;
+}
+.floating-shard-form .shard-form .form-actions .floating-shard-display #result {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #917251;
+}
+[data-theme=dark] .floating-shard-form .shard-form .form-actions .floating-shard-display #result {
+  color: rgb(245, 204, 101);
+}
+.floating-shard-form .shard-form .form-actions .button-group {
+  display: flex;
+  gap: 0.5rem;
+}
+.floating-shard-form .shard-form .form-actions .button-group button {
+  flex: 0 0 auto;
+  padding: 0.5rem 0.75rem;
+  font-weight: 600;
+  border-radius: 0.3125rem;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+.floating-shard-form .shard-form .form-actions .button-group button.btn-primary {
+  background-color: rgb(47, 85, 150);
+  color: #ffffff;
+}
+.floating-shard-form .shard-form .form-actions .button-group button.btn-primary:hover {
+  background-color: #233f6f;
+}
+.floating-shard-form .shard-form .form-actions .button-group button.btn-secondary {
+  background-color: #cccccc;
+  color: #000000;
+}
+.floating-shard-form .shard-form .form-actions .button-group button.btn-secondary:hover {
+  background-color: #b3b3b3;
+}
+.floating-shard-form.pinned {
+  position: fixed !important;
+  top: 72px;
+  max-width: 1200px;
+  width: 90%;
+}
+@media (max-width: 480px) {
+  .floating-shard-form {
+    padding-top: 0.75rem;
+  }
+}
+
+:root {
+  --color-primary: rgb(47, 85, 150);
+  --color-secondary: #cccccc;
+  --color-dark: rgba(47, 44, 44, 0.5098039216);
+  --color-light: rgb(230, 230, 230);
+  --color-accent: #234e96;
+  --color-danger: rgb(234, 85, 60);
+  --color-warning: rgb(248, 121, 64);
+  --font-family-base: Inter, Arial, sans-serif;
+  --font-family-heading: Montserrat, Helvetica, sans-serif;
+}
+
 .top-bar {
   width: 100%;
   height: 64px;
@@ -223,9 +395,6 @@
 .hamburger-menu .menu-icon i:hover {
   color: #234e96;
 }
-body.dark-mode .hamburger-menu .menu-icon i {
-  color: #5e87cd;
-}
 .hamburger-menu .menu-dropdown {
   display: none;
   opacity: 0;
@@ -260,16 +429,6 @@ body.dark-mode .hamburger-menu .menu-icon i {
   background-color: #234e96;
   color: #ffffff;
 }
-body.dark-mode .hamburger-menu .menu-dropdown {
-  background-color: rgba(47, 44, 44, 0.5098039216);
-}
-body.dark-mode .hamburger-menu .menu-dropdown a {
-  color: #e6e6e6;
-}
-body.dark-mode .hamburger-menu .menu-dropdown a:hover, body.dark-mode .hamburger-menu .menu-dropdown a.active {
-  background-color: #2d64bf;
-  color: #ffffff;
-}
 
 .theme-toggle {
   position: relative;
@@ -283,9 +442,6 @@ body.dark-mode .hamburger-menu .menu-dropdown a:hover, body.dark-mode .hamburger
 .theme-toggle i {
   color: rgb(47, 85, 150);
   transition: color 0.3s ease-in-out;
-}
-body.dark-mode .theme-toggle i {
-  color: #5e87cd;
 }
 .theme-toggle:hover i {
   color: #234e96;
@@ -350,10 +506,6 @@ body.dark-mode .theme-toggle i {
   color: rgba(47, 44, 44, 0.5098039216);
   border-color: #cccccc;
 }
-[data-theme=light] .floating-shard-display {
-  background-color: rgba(255, 255, 255, 0.96);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
 [data-theme=light] .floating-shard-display p {
   color: rgb(245, 204, 101);
 }
@@ -369,10 +521,37 @@ body.dark-mode .theme-toggle i {
   color: rgba(47, 44, 44, 0.5098039216);
   border-color: #ddd;
 }
+[data-theme=light] .shard-chart table .total-row td {
+  color: #ffffff;
+}
 [data-theme=light] .shard-chart table .level-cell,
 [data-theme=light] .shard-chart table .star-cell {
   background-color: rgb(47, 85, 150);
   color: #ffffff;
+}
+
+:root {
+  --color-primary: rgb(47, 85, 150);
+  --color-secondary: #cccccc;
+  --color-dark: rgba(47, 44, 44, 0.5098039216);
+  --color-light: rgb(230, 230, 230);
+  --color-accent: #234e96;
+  --color-danger: rgb(234, 85, 60);
+  --color-warning: rgb(248, 121, 64);
+  --font-family-base: Inter, Arial, sans-serif;
+  --font-family-heading: Montserrat, Helvetica, sans-serif;
+}
+
+:root {
+  --color-primary: rgb(47, 85, 150);
+  --color-secondary: #cccccc;
+  --color-dark: rgba(47, 44, 44, 0.5098039216);
+  --color-light: rgb(230, 230, 230);
+  --color-accent: #234e96;
+  --color-danger: rgb(234, 85, 60);
+  --color-warning: rgb(248, 121, 64);
+  --font-family-base: Inter, Arial, sans-serif;
+  --font-family-heading: Montserrat, Helvetica, sans-serif;
 }
 
 [data-theme=dark] {
@@ -389,7 +568,7 @@ body.dark-mode .theme-toggle i {
   }
 }
 [data-theme=dark] .container {
-  background-color: rgba(30, 30, 30, 0.92);
+  background-color: rgba(30, 30, 30, 0.5);
   box-shadow: 0 0.25rem 0.625rem rgba(0, 0, 0, 0.4);
   background-blend-mode: multiply;
 }
@@ -399,7 +578,16 @@ body.dark-mode .theme-toggle i {
 [data-theme=dark] .top-bar-wrapper .title,
 [data-theme=dark] .top-bar-wrapper .menu-icon,
 [data-theme=dark] .top-bar-wrapper .theme-toggle {
-  color: #5e87cd;
+  color: #f19181 !important;
+}
+[data-theme=dark] .hamburger-menu .menu-icon i,
+[data-theme=dark] .theme-toggle i {
+  color: #f19181 !important;
+  transition: color 0.3s ease-in-out;
+}
+[data-theme=dark] .hamburger-menu .menu-icon i:hover,
+[data-theme=dark] .theme-toggle:hover i {
+  color: #f4a598 !important;
 }
 [data-theme=dark] .menu-dropdown {
   background-color: #1e1e1e;
@@ -409,8 +597,8 @@ body.dark-mode .theme-toggle i {
   color: #f2f2f2;
 }
 [data-theme=dark] .menu-dropdown a:hover, [data-theme=dark] .menu-dropdown a.active {
-  background-color: #234e96;
-  color: #ffffff;
+  background-color: rgba(0, 0, 0, 0.5);
+  color: #f19181;
 }
 [data-theme=dark] h2, [data-theme=dark] h3 {
   color: #f19181;
@@ -434,9 +622,27 @@ body.dark-mode .theme-toggle i {
   color: rgb(230, 230, 230);
   border-color: #cccccc;
 }
-[data-theme=dark] .floating-shard-display {
-  background-color: rgba(40, 40, 40, 0.95);
+[data-theme=dark] .floating-shard-form {
+  background-color: rgba(30, 30, 30, 0.92);
   box-shadow: 0 0.25rem 0.625rem rgba(0, 0, 0, 0.4);
+  -webkit-backdrop-filter: none;
+          backdrop-filter: none;
+}
+[data-theme=dark] .floating-shard-form .shard-form {
+  background: transparent;
+  box-shadow: none;
+}
+[data-theme=dark] .floating-shard-form label {
+  color: #ccc !important;
+}
+[data-theme=dark] .floating-shard-form .form-text {
+  color: #aaa;
+}
+[data-theme=dark] .floating-shard-form input[type=text],
+[data-theme=dark] .floating-shard-form select {
+  background: rgba(255, 255, 255, 0.05);
+  color: rgb(230, 230, 230);
+  border-color: #cccccc;
 }
 [data-theme=dark] .floating-shard-display p {
   color: rgb(245, 204, 101);
@@ -444,17 +650,30 @@ body.dark-mode .theme-toggle i {
 [data-theme=dark] .floating-shard-display #result {
   color: rgb(245, 204, 101);
 }
+[data-theme=dark] .shard-chart {
+  background-color: rgba(30, 30, 30, 0.92);
+}
+[data-theme=dark] .shard-chart p {
+  color: rgba(255, 255, 255, 0.9);
+}
+[data-theme=dark] .shard-chart h3 {
+  color: #f19181;
+}
 [data-theme=dark] .shard-chart table th, [data-theme=dark] .shard-chart table td {
-  background-color: #222;
-  color: #eee;
+  background-color: #222 !important;
+  color: #eee !important;
   border-color: #444;
 }
 [data-theme=dark] .shard-chart table .progress-overlay {
-  background-color: rgba(224, 224, 224, 0.8);
+  background-color: rgba(255, 255, 255, 0.3);
   color: #111;
 }
 [data-theme=dark] .shard-chart table .total-row {
   background-color: #2b2b2b;
+}
+[data-theme=dark] .shard-chart table .level-cell:hover,
+[data-theme=dark] .shard-chart table .star-cell:hover {
+  background-color: rgba(255, 255, 255, 0.1);
 }
 
 body {
@@ -556,8 +775,9 @@ h2 {
 
 h3 {
   font-size: 1.25rem;
-  margin-top: 2rem;
+  margin-top: 1rem;
   color: #234e96;
+  padding: 0;
 }
 
 /* Form Layout */
@@ -590,11 +810,11 @@ form {
 }
 
 label {
+  display: block;
   font-weight: 500;
   font-size: 0.875rem;
   margin-bottom: 0.25rem;
   color: rgba(47, 44, 44, 0.5098039216);
-  display: block;
 }
 [data-theme=dark] label {
   color: #ccc;
@@ -655,71 +875,68 @@ select:focus {
   background-color: #b3b3b3;
 }
 
-/* Floating Shard Display */
-.floating-shard-display {
-  position: fixed;
-  bottom: 1rem;
-  right: 1rem;
-  padding: 0.5rem;
-  background: #ffffff;
-  border-radius: 0.5rem;
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
-  z-index: 1100;
-  text-align: center;
-  font-family: "Inter", "Arial", sans-serif;
-  display: inline-flex;
-  align-items: center;
-}
-.floating-shard-display img {
-  width: 3rem;
-  height: auto;
-}
-.floating-shard-display p {
-  margin: 0.25rem 0;
-  font-size: 2rem;
-  font-weight: bold;
-  color: rgb(245, 204, 101);
-}
-
 /* Chart Table */
 .shard-chart {
-  margin-top: 4rem;
+  margin-top: 8rem !important;
   overflow-x: auto;
-  /* Group Backgrounds (Light Mode) */
-  /* Star Colors */
-  /* Dark Mode Group Backgrounds */
+  border-radius: 0.5rem;
+  background: rgba(255, 255, 255, 0.8);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 0.75rem;
+  width: 85%;
+  margin: auto;
+  /* NEW: style the two explanatory <p> tags */
+  /* Group-Specific Star Colors */
+  /* Mobile Simplification */
+}
+.shard-chart p {
+  font-size: 0.875rem;
+  color: rgba(0, 0, 0, 0.9);
+  text-align: center;
+  margin: 0.5rem 0;
+}
+.shard-chart h3 {
+  color: #234e96;
 }
 .shard-chart table {
-  width: 100%;
-  border-collapse: collapse;
+  width: 80%;
+  margin: auto;
+  border-collapse: separate;
   font-size: 0.875rem;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
-}
-.shard-chart table th,
-.shard-chart table td {
-  padding: 0.5rem;
-  border: 1px solid #ddd;
+  /* Group-Specific Shard Cell Backgrounds */
 }
 .shard-chart table th {
   background-color: rgb(47, 85, 150);
   color: #ffffff;
-  font-weight: 600;
+  padding: 0.75rem 1rem;
+  text-align: left;
+  border-radius: 0.3125rem 0 0 0.3125rem;
+}
+.shard-chart table th:last-child {
+  border-radius: 0 0.3125rem 0.3125rem 0;
+}
+.shard-chart table td {
+  background-color: rgb(230, 230, 230);
+  padding: 0.75rem 1rem;
+  color: rgba(0, 0, 0, 0.5098039216);
+  box-shadow: inset 0 0 0 1px white;
+  transition: transform 0.2s ease;
+}
+.shard-chart table td:hover {
+  transform: scale(1.02);
+  z-index: 1;
 }
 .shard-chart table .level-cell,
 .shard-chart table .star-cell {
   background-color: rgb(47, 85, 150);
   color: #ffffff;
+  font-weight: bold;
   cursor: pointer;
   position: relative;
-  transition: background-color 0.3s ease;
 }
 .shard-chart table .level-cell:hover,
 .shard-chart table .star-cell:hover {
   background-color: #3b6bbd;
-}
-.shard-chart table .level-cell:hover .fa-star,
-.shard-chart table .star-cell:hover .fa-star {
-  transform: scale(1.1);
 }
 .shard-chart table .progress-overlay {
   position: absolute;
@@ -738,17 +955,33 @@ select:focus {
   z-index: 1;
 }
 .shard-chart table .total-row {
-  background-color: #f7f7f7;
+  background-color: #1e4381;
+  color: #ffffff;
   font-weight: bold;
 }
-.shard-chart .group-1 td {
+.shard-chart table .total-row td {
+  border-top: 2px solid rgb(47, 85, 150);
+  background-color: #2859ab;
+}
+.shard-chart table .star-container {
+  display: flex;
+  justify-content: center;
+  gap: 0.25rem;
+}
+.shard-chart table tr.group-1 .shards-per-step,
+.shard-chart table tr.group-1 .per-star {
   background-color: #fff4db;
+  color: #3e3100;
 }
-.shard-chart .group-2 td {
+.shard-chart table tr.group-2 .shards-per-step,
+.shard-chart table tr.group-2 .per-star {
   background-color: #fce7dd;
+  color: #7e3316;
 }
-.shard-chart .group-3 td {
+.shard-chart table tr.group-3 .shards-per-step,
+.shard-chart table tr.group-3 .per-star {
   background-color: #e4e4e4;
+  color: #454545;
 }
 .shard-chart .group-1 .fa-star {
   color: #FFD700;
@@ -759,27 +992,24 @@ select:focus {
 .shard-chart .group-3 .fa-star {
   color: #C0C0C0;
 }
-[data-theme=dark] .shard-chart th,
-[data-theme=dark] .shard-chart td {
-  background-color: #222;
-  color: #eee;
-  border-color: #444;
-}
-[data-theme=dark] .shard-chart .progress-overlay {
-  background-color: rgba(224, 224, 224, 0.8);
-  color: #111;
-}
-[data-theme=dark] .shard-chart .total-row {
-  background-color: #2b2b2b;
-}
-[data-theme=dark] .shard-chart .group-1 td {
-  background-color: #3a2f1d;
-}
-[data-theme=dark] .shard-chart .group-2 td {
-  background-color: #402620;
-}
-[data-theme=dark] .shard-chart .group-3 td {
-  background-color: #3c3c3c;
+@media (max-width: 480px) {
+  .shard-chart {
+    margin-top: 9rem !important;
+    width: 95%;
+  }
+  .shard-chart table {
+    width: 100%;
+  }
+  .shard-chart table th:not(.level-cell):not(.star-cell),
+  .shard-chart table td:not(.level-cell):not(.star-cell) {
+    display: none;
+  }
+  .shard-chart table .fa-star {
+    font-size: 1rem;
+  }
+  .shard-chart table .progress-overlay {
+    font-size: 0.85rem;
+  }
 }
 
 /* Star Styling */
@@ -795,48 +1025,6 @@ select:focus {
 .star-container .fa-star.active {
   border: 1px solid #234e96;
   border-radius: 50%;
-}
-
-/* Mobile Table Simplification */
-@media (max-width: 480px) {
-  .shard-chart {
-    margin-top: 10rem;
-  }
-  .shard-chart table th:not(.level-cell):not(.star-cell),
-  .shard-chart table td:not(.level-cell):not(.star-cell) {
-    display: none;
-  }
-  .shard-chart table .fa-star {
-    font-size: 1rem;
-  }
-  .shard-chart table .progress-overlay {
-    font-size: 0.85rem;
-  }
-}
-.floating-shard-form {
-  position: absolute;
-  top: auto;
-  left: 0;
-  right: 0;
-  margin: 0 auto;
-  transform: none;
-  z-index: 499;
-  max-width: 1200px;
-  width: 90%;
-  border-radius: 0.5rem;
-  -webkit-backdrop-filter: blur(6px);
-          backdrop-filter: blur(6px);
-  margin-bottom: none !important;
-}
-[data-theme=dark] .floating-shard-form {
-  background: rgba(30, 30, 30, 0.95);
-  box-shadow: 0 0.25rem 0.625rem rgba(0, 0, 0, 0.4);
-}
-.floating-shard-form.pinned {
-  position: fixed !important;
-  top: 72px;
-  width: 90%;
-  max-width: 1200px;
 }
 
 :root {

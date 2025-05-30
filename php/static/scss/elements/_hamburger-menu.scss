@@ -21,10 +21,6 @@
         color: $color-accent;
       }
     }
-
-    body.dark-mode & i {
-      color: lighten($color-primary, 20%);
-    }
   }
 
   .menu-dropdown {
@@ -41,7 +37,8 @@
     z-index: $z-index-dropdown;
     min-width: 10rem;
     overflow: hidden;
-    transition: opacity $transition-duration $transition-ease, transform $transition-duration $transition-ease;
+    transition: opacity $transition-duration $transition-ease,
+                transform $transition-duration $transition-ease;
 
     &.show {
       display: block !important;
@@ -62,20 +59,6 @@
       &.active {
         background-color: $color-accent;
         color: $color-white;
-      }
-    }
-
-    body.dark-mode & {
-      background-color: $color-dark;
-
-      a {
-        color: lighten($color-secondary, 10%);
-
-        &:hover,
-        &.active {
-          background-color: lighten($color-accent, 10%);
-          color: $color-white;
-        }
       }
     }
   }

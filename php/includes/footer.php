@@ -19,7 +19,6 @@
         left: 0;
         width: 100%;
         background-color: rgba(47, 85, 150, 0.95); /* Dark blue with slight transparency */
-        color: white;
         z-index: 1000; /* Ensure it's on top */
         padding: 15px;
         box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.2);
@@ -45,6 +44,7 @@
     .footer-content p {
         margin: 0;
         font-size: 14px;
+        color: white !important;
         flex: 1; /* Allow p to take up remaining space */
     }
 
@@ -55,7 +55,7 @@
         font-size: 20px;
         font-weight: bold;
         cursor: pointer;
-        margin-left: 15px;
+        margin: 1rem;
         transition: color 0.3s ease;
     }
 
