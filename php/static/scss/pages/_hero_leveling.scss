@@ -1,229 +1,239 @@
-// Import variables and mixins
 @import '../base/variables';
 @import '../base/mixins';
 
-/* Result Section */
+/* =============================
+   🎯 Result Display
+============================= */
 #result {
-    font-size: 2rem;
-    
-    img {
-        width: 3rem; 
-        padding-left: 1rem;
-    }
+  font-size: 2rem;
+  text-align: center;
+  margin-bottom: $spacing-md;
 
-    h2 {
-        font-size: 2.2rem;
-        font-weight: bold;
-        display: flex;
-        margin-bottom: -10px;
-        justify-content: center;
-        align-items: center;
-        top: 0;
-    }
+  h2 {
+    font-size: 2.2rem;
+    font-weight: bold;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: $spacing-xs;
+    margin: 0;
+  }
+
+  img.meat-icon {
+    width: 2.5rem;
+    height: auto;
+    vertical-align: middle;
+  }
 }
 
-/* Form Section */
+/* =============================
+   🧮 Hero Leveling Form
+============================= */
 #hl_form {
+  padding: $spacing-md;
+  background-color: rgba($color-white, 0.95);
+  border-radius: $border-radius-md;
+  box-shadow: $box-shadow-light;
+  max-width: 600px;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-md;
+
+  label {
+    font-weight: 600;
+    font-size: $font-size-sm;
+    color: $color-dark;
+    text-align: center;
+    margin-bottom: $spacing-xxs;
+  }
+
+  .input-pair {
     display: flex;
-    flex-direction: column;
+    justify-content: center;
     align-items: center;
-    margin-top: $spacing-medium;
+    gap: $spacing-xs;
 
-    label {
-        margin-bottom: $spacing-xsmall;
-        @include text-style(1.25rem, 1.5, bold, $color-light);
-        text-align: center;
+    input[type="number"] {
+      width: 5rem;
+      height: 2rem;
+      text-align: center;
+      font-size: $font-size-sm;
+      border: 1px solid $color-secondary;
+      border-radius: $border-radius-sm;
+      background-color: $color-white;
+      color: $color-dark;
     }
+  }
 
-    /* Button Styles */
-    button {
-        padding: 10px 20px;
-        font-size: 1rem;
-        color: #fff;
-        background-color: #4CAF50;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-        margin-bottom: 10px;
-    }
+  .slider-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+    width: 100%;
+    gap: $spacing-xs;
 
-    button:hover {
-        background-color: #45a049;
-    }
+    input[type="range"] {
+      flex-grow: 1;
+      height: 5px;
+      appearance: none;
+      background-color: #ddd;
+      border-radius: 5px;
+      outline: none;
+      margin: 0 10px;
 
-    /* Icon Styling */
-    img {
-        display: block;
-        max-width: 100px;
-        height: auto;
-        margin: 0 auto;
-    }
-
-    .meat-icon {
-        width: 50px;
-        height: auto; 
-        vertical-align: middle; 
-        margin-left: 5px;
-        margin-right: 5px;
-        position: relative;
-        bottom: 8px;
-    }
-
-    /* Input Pair Styling */
-    .input-pair {
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        gap: $spacing-xsmall; // Space between number input and slider
-        margin-bottom: $spacing-xsmall;
-        margin-top: $spacing-small;
-
-        input[type="number"] {
-            width: 5rem; // 80px
-            height: 2rem; // 30px
-            text-align: center;
-            @include text-style(1rem, 1.5, normal, $color-dark);
-            background-color: $color-light;
-            border: 1px solid $color-secondary;
-            border-radius: $border-radius-small;
-        }
-
-    }
-
-    /* Slider Container */
-    .slider-container {
-        position: relative;
-        width: 300px; /* Match the slider width */
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        margin-top: 10px;
-        margin-bottom: 15px;
-    }
-
-    /* Min and Max Labels */
-    .slider-container .slider-min,
-    .slider-container .slider-max {
-        font-size: 0.9rem;
-        color: #fff;
-        width: auto;
-        text-align: center;
-        cursor: pointer; /* Clickable feedback */
-        margin: 0 5px; /* Space around the labels */
-    }
-
-    /* Hover Effect for Min and Max Labels */
-    .slider-container .slider-min:hover,
-    .slider-container .slider-max:hover {
-        color: #ffd700; /* Highlight on hover */
-        text-decoration: underline; /* Optional underline */
-    }
-
-
-    /* Slider Styling */
-    .slider-container input[type="range"] {
-        flex-grow: 1;
-        margin: 0 10px; /* Space between slider and min/max labels */
+      /* ─── Default (light mode) thumb ─── */
+      &::-webkit-slider-thumb {
         appearance: none;
-        width: 100%; /* Full width within the container */
-        height: 5px;
-        background: #ddd;
-        border-radius: 5px;
-        outline: none;
-    }
-
-    .slider-container input[type="range"]::-webkit-slider-thumb {
-        -webkit-appearance: none;
         width: 20px;
         height: 20px;
+        background-color: $color-primary;
         border-radius: 50%;
-        background: #4CAF50;
         cursor: pointer;
-    }
+      }
 
-    .slider-container input[type="range"]::-moz-range-thumb {
+      &::-moz-range-thumb {
         width: 20px;
         height: 20px;
+        background-color: $color-primary;
         border-radius: 50%;
-        background: #4CAF50;
         cursor: pointer;
+      }
+
+      &::-ms-thumb {
+        width: 20px;
+        height: 20px;
+        background-color: $color-primary;
+        border-radius: 50%;
+        cursor: pointer;
+      }
+    }
+
+    .slider-min,
+    .slider-max {
+      font-size: 0.9rem;
+      color: $color-dark;
+      cursor: pointer;
+
+      &:hover {
+        color: $color-accent;
+        text-decoration: underline;
+      }
     }
 
     .lock-icon {
-        cursor: pointer;
-        margin-left: 10px;
-        color: #4CAF50;
-        font-size: 1.2rem;
-        vertical-align: middle;
+      font-size: 1.2rem;
+      color: $color-primary;
+      margin-left: $spacing-xs;
+      cursor: pointer;
+      transition: color $transition-duration;
+
+      &:hover {
+        color: darken($color-primary, 10%);
+      }
+
+      &.locked {
+        color: $color-danger;
+
+        &:hover {
+          color: darken($color-danger, 10%);
+        }
+      }
     }
-    
-    .lock-icon.locked {
-        color: #FF5722;
+  }
+
+  .notice {
+    font-size: 0.75rem;
+    color: $color-warning;
+    text-align: center;
+    margin-top: $spacing-xxs;
+    display: none;
+
+    &.pulse {
+      display: block;
+      animation: pulse 1s ease-in-out infinite;
     }
-    
-    .level-button {
-        background-color: #4CAF50; 
-        border: none; 
-        color: #fff; 
-        font-size: 1rem;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        width: 30px;
-        height: 30px;
-        cursor: pointer;
-        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-        transition: background-color 0.2s, transform 0.1s;
-        margin-bottom: 0;
+  }
+}
+
+/* =============================
+   🌙 Dark Mode Overrides
+============================= */
+[data-theme="dark"] {
+  #hl_form {
+    background-color: rgba(30, 30, 30, 0.5);
+    box-shadow: $box-shadow-dark;
+
+    label {
+      color: #ccc;
     }
-    
-    .level-button:hover {
-        background-color: #45a049; 
-        transform: scale(1.1); 
+
+    .input-pair {
+      input[type="number"] {
+        background-color: rgba(255, 255, 255, 0.05);
+        color: #eee;
+        border-color: $color-secondary;
+      }
     }
-    
-    .level-button:active {
-        background-color: #388e3c; 
-        transform: scale(0.95); 
+
+    .slider-container {
+      input[type="range"] {
+        background-color: darken($color-secondary, 10%);
+        outline: none;
+
+        /* ─── Dark‐mode thumb overrides ─── */
+        &::-webkit-slider-thumb {
+          background-color: lighten($color-danger, 15%);
+          /* optionally: border: 2px solid lighten($color-danger, 20%); */
+        }
+
+        &::-moz-range-thumb {
+          background-color: lighten($color-danger, 15%);
+        }
+
+        &::-ms-thumb {
+          background-color: lighten($color-danger, 15%);
+        }
+      }
+
+      .slider-min,
+      .slider-max {
+        color: #ccc;
+
+        &:hover {
+          color: lighten($color-danger, 15%);
+        }
+      }
+
+      .lock-icon {
+        color: #919191;
+
+        &:hover {
+          color: lighten($color-danger, 20%);
+        }
+
+        &.locked {
+          color: $color-danger;
+
+          &:hover {
+            color: lighten($color-danger, 10%);
+          }
+        }
+      }
     }
-    
-    .level-button i {
-        pointer-events: none;
-    }
-    
-    .locked.pulse {
-        animation: pulseGlow 1s infinite;
-        box-shadow: 0 0 10px rgba(255, 215, 0, 0.8);
-    }
-    
+
     .notice {
-        display: none; /* Hidden by default */
-        font-size: smaller;
-        color: rgba(255, 215, 0, 1);
-        position: absolute; /* Positioned relative to .slider-container */
-        top: 100%; /* Place directly below the container */
-        margin-top: 5px; /* Add 5px spacing */
-        left: 0;
-        width: 100%; /* Match the width of the container */
-        text-align: center;
-        pointer-events: none;
-        z-index: 1000; /* Ensure it appears above other elements */
+      color: $color-warning;
     }
-    
-    .notice.pulse {
-        display: contents; /* Show when pulsing */
-        animation: pulse 1s ease-in-out; /* Add pulse animation */
-    }
-    
-    @keyframes pulse {
-        0% {
-            opacity: 1;
-        }
-        50% {
-            opacity: 0.5;
-        }
-        100% {
-            opacity: 1;
-        }
-    }
+  }
+}
+
+/* =============================
+   💡 Animations
+============================= */
+@keyframes pulse {
+  0% { opacity: 1; }
+  50% { opacity: 0.5; }
+  100% { opacity: 1; }
 }

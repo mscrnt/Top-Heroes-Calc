@@ -1,22 +1,103 @@
-// Import variables and mixins
 @import '../base/variables';
 @import '../base/mixins';
 
-/* General Button Styles */
+/* ==============================
+   🎛️ General Button Styles
+============================== */
 button {
-  padding: 0.625rem 1rem; // Replace 10px 15px
+  padding: 0.625rem 1rem;
   border: none;
-  border-radius: 0.3125rem; // Replace 5px
-  font-size: 1rem; // Replace 14px
+  border-radius: $border-radius-sm;
+  font-size: $font-size-md;
   cursor: pointer;
   @include transition(background-color, 0.3s, ease);
 
   &:hover {
     @include box-shadow(0, 0.125rem, 0.3125rem, 0, rgba(0, 0, 0, 0.2));
   }
+
+  &:disabled {
+    background-color: lighten($color-dark, 40%);
+    color: lighten($color-dark, 60%);
+    cursor: not-allowed;
+    opacity: 0.6;
+  }
+
+  &.full-width {
+    width: 100%;
+  }
+
+  &.icon-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.5rem;
+    background-color: transparent;
+    border: none;
+    color: $color-accent;
+
+    &:hover {
+      color: darken($color-accent, 10%);
+    }
+
+    &:focus {
+      outline: none;
+      @include box-shadow(0, 0, 0.25rem, 0, rgba($color-accent, 0.4));
+    }
+
+    [data-theme="dark"] & {
+      color: lighten($color-danger, 15%);
+
+      &:hover {
+        color: lighten($color-danger, 20%);
+      }
+
+      &:focus {
+        @include box-shadow(0, 0, 0.25rem, 0, rgba($color-danger, 0.3));
+      }
+    }
+  }
+
+  /* 🔄 Shared "level-button"-style tweaks */
+  &.level-button {
+    width: 2rem;
+    height: 2rem;
+    font-size: $font-size-sm;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: $border-radius-sm;
+    background-color: $color-primary;
+    color: $color-white;
+    transition: background-color $transition-duration, transform 0.1s;
+
+    &:hover {
+      background-color: darken($color-primary, 10%);
+      transform: scale(1.05);
+    }
+
+    &:active {
+      transform: scale(0.95);
+    }
+
+    i {
+      pointer-events: none;
+    }
+
+    [data-theme="dark"] & {
+      background-color: lighten($color-danger, 15%);
+      color: $color-dark;
+
+      &:hover {
+        background-color: lighten($color-danger, 20%);
+      }
+    }
+  }
 }
 
-/* Primary Button */
+/* ==============================
+   🔵 Primary Button
+============================== */
 button.btn-primary {
   background-color: $color-primary;
   color: $color-white;
@@ -27,23 +108,29 @@ button.btn-primary {
 
   &:focus {
     outline: none;
-    @include box-shadow(0, 0, 0.25rem, 0, rgba(47, 85, 150, 0.5));
+    @include box-shadow(0, 0, 0.25rem, 0, rgba($color-primary, 0.5));
   }
 
-  body.dark-mode & {
-    background-color: lighten($color-primary, 10%);
+  [data-theme="dark"] & {
+    background-color: lighten($color-danger, 15%);
     color: $color-dark;
 
     &:hover {
-      background-color: lighten($color-primary, 20%);
+      background-color: lighten($color-danger, 20%);
+    }
+
+    &:focus {
+      @include box-shadow(0, 0, 0.25rem, 0, rgba($color-danger, 0.4));
     }
   }
 }
 
-/* Secondary Button */
+/* ==============================
+   ⚪ Secondary Button
+============================== */
 button.btn-secondary {
   background-color: $color-secondary;
-  color: darken($color-dark, 40%);
+  color: $color-accent;
 
   &:hover {
     background-color: darken($color-secondary, 10%);
@@ -51,68 +138,33 @@ button.btn-secondary {
 
   &:focus {
     outline: none;
-    @include box-shadow(0, 0, 0.25rem, 0, rgba(128, 128, 128, 0.5));
+    @include box-shadow(0, 0, 0.25rem, 0, rgba($color-secondary, 0.4));
   }
 
-  body.dark-mode & {
+  [data-theme="dark"] & {
     background-color: darken($color-secondary, 10%);
-    color: lighten($color-light, 40%);
+    color: lighten($color-danger, 15%);
 
     &:hover {
       background-color: darken($color-secondary, 20%);
     }
-  }
-}
 
-/* Disabled Button */
-button:disabled {
-  background-color: lighten($color-dark, 40%);
-  color: lighten($color-dark, 60%);
-  cursor: not-allowed;
-  opacity: 0.6;
-}
-
-/* Icon Button */
-button.icon-button {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0.5rem; // Replace 8px
-  background-color: transparent;
-  border: none;
-  color: $color-primary;
-
-  &:hover {
-    color: darken($color-primary, 10%);
-  }
-
-  &:focus {
-    outline: none;
-    @include box-shadow(0, 0, 0.25rem, 0, rgba(47, 85, 150, 0.5));
-  }
-
-  body.dark-mode & {
-    color: lighten($color-primary, 10%);
-
-    &:hover {
-      color: lighten($color-primary, 20%);
+    &:focus {
+      @include box-shadow(0, 0, 0.25rem, 0, rgba($color-danger, 0.3));
     }
   }
 }
 
-/* Full Width Button */
-button.full-width {
-  width: 100%;
-}
-
-/* Responsive Button Adjustments */
-@include respond(sm, down) {
+/* ==============================
+   📱 Responsive Adjustments
+============================== */
+@include respond(phone-md, down) {
   button {
-    font-size: 0.875rem; // Slightly smaller for smaller screens
-    padding: 0.5rem 0.875rem; // Adjust padding
+    font-size: $font-size-sm;
+    padding: 0.5rem 0.875rem;
   }
 
   button.full-width {
-    padding: 0.75rem; // Ensure buttons look good on mobile
+    padding: 0.75rem;
   }
 }

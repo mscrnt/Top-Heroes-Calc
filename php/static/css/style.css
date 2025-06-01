@@ -1,3 +1,4 @@
+@charset "UTF-8";
 :root {
   --color-primary: rgb(47, 85, 150);
   --color-secondary: #cccccc;
@@ -93,6 +94,14 @@
     background-color: #f8f8f8;
     z-index: 999;
     box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    padding-top: 5px;
+    box-sizing: border-box;
+  }
+  .ad-bottom ins.adsbygoogle {
+    width: 320px !important;
+    height: 50px !important;
+    display: inline-block;
   }
 }
 .container {
@@ -360,6 +369,171 @@ body.dark-mode .menu-dropdown a:hover, body.dark-mode .menu-dropdown a.active {
   transform: translateY(-0.5rem);
 }
 
+:root {
+  --color-primary: rgb(47, 85, 150);
+  --color-secondary: #cccccc;
+  --color-dark: rgba(47, 44, 44, 0.5098039216);
+  --color-light: rgb(230, 230, 230);
+  --color-accent: #234e96;
+  --color-danger: rgb(234, 85, 60);
+  --color-warning: rgb(248, 121, 64);
+  --font-family-base: Inter, Arial, sans-serif;
+  --font-family-heading: Montserrat, Helvetica, sans-serif;
+}
+
+:root {
+  --color-primary: rgb(47, 85, 150);
+  --color-secondary: #cccccc;
+  --color-dark: rgba(47, 44, 44, 0.5098039216);
+  --color-light: rgb(230, 230, 230);
+  --color-accent: #234e96;
+  --color-danger: rgb(234, 85, 60);
+  --color-warning: rgb(248, 121, 64);
+  --font-family-base: Inter, Arial, sans-serif;
+  --font-family-heading: Montserrat, Helvetica, sans-serif;
+}
+
+/* ==============================
+   🎛️ General Button Styles
+============================== */
+button {
+  padding: 0.625rem 1rem;
+  border: none;
+  border-radius: 0.3125rem;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  /* 🔄 Shared "level-button"-style tweaks */
+}
+button:hover {
+  box-shadow: 0 0.125rem 0.3125rem 0 rgba(0, 0, 0, 0.2);
+}
+button:disabled {
+  background-color: rgba(151, 144, 144, 0.5098039216);
+  color: rgba(200, 197, 197, 0.5098039216);
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+button.full-width {
+  width: 100%;
+}
+button.icon-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem;
+  background-color: transparent;
+  border: none;
+  color: #234e96;
+}
+button.icon-button:hover {
+  color: #19386d;
+}
+button.icon-button:focus {
+  outline: none;
+  box-shadow: 0 0 0.25rem 0 rgba(35, 78, 150, 0.4);
+}
+[data-theme=dark] button.icon-button {
+  color: #f19181;
+}
+[data-theme=dark] button.icon-button:hover {
+  color: #f4a598;
+}
+[data-theme=dark] button.icon-button:focus {
+  box-shadow: 0 0 0.25rem 0 rgba(234, 85, 60, 0.3);
+}
+button.level-button {
+  width: 2rem;
+  height: 2rem;
+  font-size: 0.875rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.3125rem;
+  background-color: rgb(47, 85, 150);
+  color: #ffffff;
+  transition: background-color 0.3s, transform 0.1s;
+}
+button.level-button:hover {
+  background-color: #233f6f;
+  transform: scale(1.05);
+}
+button.level-button:active {
+  transform: scale(0.95);
+}
+button.level-button i {
+  pointer-events: none;
+}
+[data-theme=dark] button.level-button {
+  background-color: #f19181;
+  color: rgba(47, 44, 44, 0.5098039216);
+}
+[data-theme=dark] button.level-button:hover {
+  background-color: #f4a598;
+}
+
+/* ==============================
+   🔵 Primary Button
+============================== */
+button.btn-primary {
+  background-color: rgb(47, 85, 150);
+  color: #ffffff;
+}
+button.btn-primary:hover {
+  background-color: #233f6f;
+}
+button.btn-primary:focus {
+  outline: none;
+  box-shadow: 0 0 0.25rem 0 rgba(47, 85, 150, 0.5);
+}
+[data-theme=dark] button.btn-primary {
+  background-color: #f19181;
+  color: rgba(47, 44, 44, 0.5098039216);
+}
+[data-theme=dark] button.btn-primary:hover {
+  background-color: #f4a598;
+}
+[data-theme=dark] button.btn-primary:focus {
+  box-shadow: 0 0 0.25rem 0 rgba(234, 85, 60, 0.4);
+}
+
+/* ==============================
+   ⚪ Secondary Button
+============================== */
+button.btn-secondary {
+  background-color: #cccccc;
+  color: #234e96;
+}
+button.btn-secondary:hover {
+  background-color: #b3b3b3;
+}
+button.btn-secondary:focus {
+  outline: none;
+  box-shadow: 0 0 0.25rem 0 rgba(204, 204, 204, 0.4);
+}
+[data-theme=dark] button.btn-secondary {
+  background-color: #b3b3b3;
+  color: #f19181;
+}
+[data-theme=dark] button.btn-secondary:hover {
+  background-color: #999999;
+}
+[data-theme=dark] button.btn-secondary:focus {
+  box-shadow: 0 0 0.25rem 0 rgba(234, 85, 60, 0.3);
+}
+
+/* ==============================
+   📱 Responsive Adjustments
+============================== */
+@media (max-width: 480px) {
+  button {
+    font-size: 0.875rem;
+    padding: 0.5rem 0.875rem;
+  }
+  button.full-width {
+    padding: 0.75rem;
+  }
+}
 :root {
   --color-primary: rgb(47, 85, 150);
   --color-secondary: #cccccc;
@@ -1620,201 +1794,205 @@ body.dark-mode .roles-table .role-description-cell strong {
   --font-family-heading: Montserrat, Helvetica, sans-serif;
 }
 
-/* Result Section */
+/* =============================
+   🎯 Result Display
+============================= */
 #result {
   font-size: 2rem;
-}
-#result img {
-  width: 3rem;
-  padding-left: 1rem;
+  text-align: center;
+  margin-bottom: 1rem;
 }
 #result h2 {
   font-size: 2.2rem;
   font-weight: bold;
-  display: flex;
-  margin-bottom: -10px;
+  display: inline-flex;
+  align-items: center;
   justify-content: center;
-  align-items: center;
-  top: 0;
+  gap: 0.5rem;
+  margin: 0;
 }
-
-/* Form Section */
-#hl_form {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-top: 1rem;
-  /* Button Styles */
-  /* Icon Styling */
-  /* Input Pair Styling */
-  /* Slider Container */
-  /* Min and Max Labels */
-  /* Hover Effect for Min and Max Labels */
-  /* Slider Styling */
-}
-#hl_form label {
-  margin-bottom: 0.25rem;
-  font-size: 1.25rem;
-  line-height: 1.5;
-  font-weight: bold;
-  color: rgb(230, 230, 230);
-  text-align: center;
-}
-#hl_form button {
-  padding: 10px 20px;
-  font-size: 1rem;
-  color: #fff;
-  background-color: #4CAF50;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  margin-bottom: 10px;
-}
-#hl_form button:hover {
-  background-color: #45a049;
-}
-#hl_form img {
-  display: block;
-  max-width: 100px;
-  height: auto;
-  margin: 0 auto;
-}
-#hl_form .meat-icon {
-  width: 50px;
+#result img.meat-icon {
+  width: 2.5rem;
   height: auto;
   vertical-align: middle;
-  margin-left: 5px;
-  margin-right: 5px;
-  position: relative;
-  bottom: 8px;
+}
+
+/* =============================
+   🧮 Hero Leveling Form
+============================= */
+#hl_form {
+  padding: 1rem;
+  background-color: rgba(255, 255, 255, 0.95);
+  border-radius: 0.5rem;
+  box-shadow: 0rem 0.125rem 1.25rem 1.25rem rgba(0, 0, 0, 0.1), -0.0625rem 0rem 1.25rem 1.25rem rgba(0, 0, 0, 0.15), 0.0625rem 0rem 2.5rem 1.25rem rgba(0, 0, 0, 0.2);
+  max-width: 600px;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+#hl_form label {
+  font-weight: 600;
+  font-size: 0.875rem;
+  color: rgba(47, 44, 44, 0.5098039216);
+  text-align: center;
+  margin-bottom: 0.25rem;
 }
 #hl_form .input-pair {
   display: flex;
-  flex-direction: row;
+  justify-content: center;
   align-items: center;
-  gap: 0.25rem;
-  margin-bottom: 0.25rem;
-  margin-top: 0.5rem;
+  gap: 0.5rem;
 }
 #hl_form .input-pair input[type=number] {
   width: 5rem;
   height: 2rem;
   text-align: center;
-  font-size: 1rem;
-  line-height: 1.5;
-  font-weight: normal;
-  color: rgba(47, 44, 44, 0.5098039216);
-  background-color: rgb(230, 230, 230);
+  font-size: 0.875rem;
   border: 1px solid #cccccc;
   border-radius: 0.3125rem;
+  background-color: #ffffff;
+  color: rgba(47, 44, 44, 0.5098039216);
 }
 #hl_form .slider-container {
-  position: relative;
-  width: 300px; /* Match the slider width */
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-top: 10px;
-  margin-bottom: 15px;
-}
-#hl_form .slider-container .slider-min,
-#hl_form .slider-container .slider-max {
-  font-size: 0.9rem;
-  color: #fff;
-  width: auto;
-  text-align: center;
-  cursor: pointer; /* Clickable feedback */
-  margin: 0 5px; /* Space around the labels */
-}
-#hl_form .slider-container .slider-min:hover,
-#hl_form .slider-container .slider-max:hover {
-  color: #ffd700; /* Highlight on hover */
-  text-decoration: underline; /* Optional underline */
+  position: relative;
+  width: 100%;
+  gap: 0.5rem;
 }
 #hl_form .slider-container input[type=range] {
   flex-grow: 1;
-  margin: 0 10px; /* Space between slider and min/max labels */
+  height: 5px;
   -webkit-appearance: none;
      -moz-appearance: none;
           appearance: none;
-  width: 100%; /* Full width within the container */
-  height: 5px;
-  background: #ddd;
+  background-color: #ddd;
   border-radius: 5px;
   outline: none;
+  margin: 0 10px;
+  /* ─── Default (light mode) thumb ─── */
 }
 #hl_form .slider-container input[type=range]::-webkit-slider-thumb {
   -webkit-appearance: none;
+          appearance: none;
   width: 20px;
   height: 20px;
+  background-color: rgb(47, 85, 150);
   border-radius: 50%;
-  background: #4CAF50;
   cursor: pointer;
 }
 #hl_form .slider-container input[type=range]::-moz-range-thumb {
   width: 20px;
   height: 20px;
+  background-color: rgb(47, 85, 150);
   border-radius: 50%;
-  background: #4CAF50;
   cursor: pointer;
 }
-#hl_form .lock-icon {
+#hl_form .slider-container input[type=range]::-ms-thumb {
+  width: 20px;
+  height: 20px;
+  background-color: rgb(47, 85, 150);
+  border-radius: 50%;
   cursor: pointer;
-  margin-left: 10px;
-  color: #4CAF50;
+}
+#hl_form .slider-container .slider-min,
+#hl_form .slider-container .slider-max {
+  font-size: 0.9rem;
+  color: rgba(47, 44, 44, 0.5098039216);
+  cursor: pointer;
+}
+#hl_form .slider-container .slider-min:hover,
+#hl_form .slider-container .slider-max:hover {
+  color: #234e96;
+  text-decoration: underline;
+}
+#hl_form .slider-container .lock-icon {
   font-size: 1.2rem;
-  vertical-align: middle;
-}
-#hl_form .lock-icon.locked {
-  color: #FF5722;
-}
-#hl_form .level-button {
-  background-color: #4CAF50;
-  border: none;
-  color: #fff;
-  font-size: 1rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 30px;
-  height: 30px;
+  color: rgb(47, 85, 150);
+  margin-left: 0.5rem;
   cursor: pointer;
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-  transition: background-color 0.2s, transform 0.1s;
-  margin-bottom: 0;
+  transition: color 0.3s;
 }
-#hl_form .level-button:hover {
-  background-color: #45a049;
-  transform: scale(1.1);
+#hl_form .slider-container .lock-icon:hover {
+  color: #233f6f;
 }
-#hl_form .level-button:active {
-  background-color: #388e3c;
-  transform: scale(0.95);
+#hl_form .slider-container .lock-icon.locked {
+  color: rgb(234, 85, 60);
 }
-#hl_form .level-button i {
-  pointer-events: none;
-}
-#hl_form .locked.pulse {
-  animation: pulseGlow 1s infinite;
-  box-shadow: 0 0 10px rgba(255, 215, 0, 0.8);
+#hl_form .slider-container .lock-icon.locked:hover {
+  color: #db3418;
 }
 #hl_form .notice {
-  display: none; /* Hidden by default */
-  font-size: smaller;
-  color: rgb(255, 215, 0);
-  position: absolute; /* Positioned relative to .slider-container */
-  top: 100%; /* Place directly below the container */
-  margin-top: 5px; /* Add 5px spacing */
-  left: 0;
-  width: 100%; /* Match the width of the container */
+  font-size: 0.75rem;
+  color: rgb(248, 121, 64);
   text-align: center;
-  pointer-events: none;
-  z-index: 1000; /* Ensure it appears above other elements */
+  margin-top: 0.25rem;
+  display: none;
 }
 #hl_form .notice.pulse {
-  display: contents; /* Show when pulsing */
-  animation: pulse 1s ease-in-out; /* Add pulse animation */
+  display: block;
+  animation: pulse 1s ease-in-out infinite;
 }
+
+/* =============================
+   🌙 Dark Mode Overrides
+============================= */
+[data-theme=dark] #hl_form {
+  background-color: rgba(30, 30, 30, 0.5);
+  box-shadow: 0 0.25rem 0.625rem rgba(0, 0, 0, 0.4);
+}
+[data-theme=dark] #hl_form label {
+  color: #ccc;
+}
+[data-theme=dark] #hl_form .input-pair input[type=number] {
+  background-color: rgba(255, 255, 255, 0.05);
+  color: #eee;
+  border-color: #cccccc;
+}
+[data-theme=dark] #hl_form .slider-container input[type=range] {
+  background-color: #b3b3b3;
+  outline: none;
+  /* ─── Dark‐mode thumb overrides ─── */
+}
+[data-theme=dark] #hl_form .slider-container input[type=range]::-webkit-slider-thumb {
+  background-color: #f19181;
+  /* optionally: border: 2px solid lighten($color-danger, 20%); */
+}
+[data-theme=dark] #hl_form .slider-container input[type=range]::-moz-range-thumb {
+  background-color: #f19181;
+}
+[data-theme=dark] #hl_form .slider-container input[type=range]::-ms-thumb {
+  background-color: #f19181;
+}
+[data-theme=dark] #hl_form .slider-container .slider-min,
+[data-theme=dark] #hl_form .slider-container .slider-max {
+  color: #ccc;
+}
+[data-theme=dark] #hl_form .slider-container .slider-min:hover,
+[data-theme=dark] #hl_form .slider-container .slider-max:hover {
+  color: #f19181;
+}
+[data-theme=dark] #hl_form .slider-container .lock-icon {
+  color: #919191;
+}
+[data-theme=dark] #hl_form .slider-container .lock-icon:hover {
+  color: #f4a598;
+}
+[data-theme=dark] #hl_form .slider-container .lock-icon.locked {
+  color: rgb(234, 85, 60);
+}
+[data-theme=dark] #hl_form .slider-container .lock-icon.locked:hover {
+  color: #ef7d6a;
+}
+[data-theme=dark] #hl_form .notice {
+  color: rgb(248, 121, 64);
+}
+
+/* =============================
+   💡 Animations
+============================= */
 @keyframes pulse {
   0% {
     opacity: 1;
