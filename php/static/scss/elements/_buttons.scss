@@ -68,7 +68,7 @@ button {
     justify-content: center;
     border-radius: $border-radius-sm;
     background-color: $color-primary;
-    color: $color-white;
+    color: $color-white; /* ensure icon/text stays white */
     transition: background-color $transition-duration, transform 0.1s;
 
     &:hover {
@@ -86,7 +86,6 @@ button {
 
     [data-theme="dark"] & {
       background-color: lighten($color-danger, 15%);
-      color: $color-dark;
 
       &:hover {
         background-color: lighten($color-danger, 20%);

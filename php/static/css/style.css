@@ -451,7 +451,7 @@ button.level-button {
   justify-content: center;
   border-radius: 0.3125rem;
   background-color: rgb(47, 85, 150);
-  color: #ffffff;
+  color: #ffffff; /* ensure icon/text stays white */
   transition: background-color 0.3s, transform 0.1s;
 }
 button.level-button:hover {
@@ -466,7 +466,6 @@ button.level-button i {
 }
 [data-theme=dark] button.level-button {
   background-color: #f19181;
-  color: rgba(47, 44, 44, 0.5098039216);
 }
 [data-theme=dark] button.level-button:hover {
   background-color: #f4a598;
@@ -488,6 +487,7 @@ button.btn-primary:focus {
 }
 [data-theme=dark] button.btn-primary {
   background-color: #f19181;
+  color: rgba(47, 44, 44, 0.5098039216);
 }
 [data-theme=dark] button.btn-primary:hover {
   background-color: #f4a598;
