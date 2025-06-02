@@ -2,10 +2,9 @@
 @import '../base/mixins';
 
 /* =============================
-   🎯 Meat Result Display (renamed to #meat-result)
+   🎯 Meat Result Display (#meat-result)
 ============================= */
 #meat-result {
-  /* Include padding in the element’s total width, so it won’t overflow on mobile */
   box-sizing: border-box;
   width: 100%;
   max-width: 600px;
@@ -16,7 +15,6 @@
   padding: $spacing-lg;
   text-align: center;
 
-  /* On small screens, reduce padding so it never extends past the viewport */
   @include respond(phone-md, down) {
     padding: $spacing-md;
     margin: $spacing-md auto;
@@ -44,9 +42,10 @@
   }
 
   .required-label {
-    font-size: $font-size-xl; 
+    font-size: $font-size-xl;
     font-weight: 600;
-    color: $color-dark;
+    /* In light-mode, use a true black instead of $color-dark (if $color-dark was a medium gray) */
+    color: $color-black;
 
     [data-theme="dark"] & {
       color: $color-white;
@@ -56,16 +55,24 @@
   .required-number {
     font-size: 2.5rem;
     font-weight: 700;
-    color: $color-primary;
-
+    color: #917251; /* e.g. gold/yellow */
     [data-theme="dark"] & {
       color: rgb(245, 204, 101);
+    }
+  }
+
+  /* If you have any <p> or <h3> inside #meat-result, force them darker: */
+  h3,
+  p {
+    color: $color-black;
+    [data-theme="dark"] & {
+      color: $color-white;
     }
   }
 }
 
 /* =============================
-   🧮 Hero Leveling Form (unchanged selector #hl_form)
+   🧮 Hero Leveling Form (#hl_form)
 ============================= */
 #hl_form {
   box-sizing: border-box;
@@ -73,6 +80,7 @@
   max-width: 600px;
   margin: auto;
   padding: $spacing-lg;
+  /* Use a nearly-opaque white, but ensure text is pure black */
   background-color: rgba($color-white, 0.95);
   border-radius: $border-radius-md;
   box-shadow: $box-shadow-light;
@@ -87,11 +95,13 @@
     gap: $spacing-md;
   }
 
+  /* ── Labels ── */
   label {
     display: block;
     font-weight: 500;
     font-size: $font-size-sm;
-    color: $color-dark;
+    /* Switch from $color-dark (if that was too light) to pure black */
+    color: $color-black;
     text-align: center;
     margin-bottom: $spacing-xxs;
 
@@ -100,6 +110,7 @@
     }
   }
 
+  /* ── Input Pairs ── */
   .input-pair {
     display: flex;
     justify-content: center;
@@ -115,7 +126,8 @@
       border: 1px solid $color-secondary;
       border-radius: $border-radius-sm;
       background-color: $color-white;
-      color: $color-dark;
+      /* Pure black for text */
+      color: $color-black;
       @include transition(border-color, $transition-duration, $transition-ease);
 
       &:focus {
@@ -132,8 +144,10 @@
     }
   }
 
+  /* ── Notice (e.g. warnings) ── */
   .notice {
     font-size: 0.75rem;
+    /* Keep warnings as $color-warning */
     color: $color-warning;
     text-align: center;
     margin-top: $spacing-xxs;
@@ -168,7 +182,8 @@
     h3 {
       font-size: $font-size-lg;
       font-weight: 600;
-      color: $color-dark;
+      /* Pure black for headings in light mode */
+      color: $color-black;
       margin: 0;
       text-align: center;
 
@@ -179,7 +194,8 @@
 
     p {
       font-size: $font-size-sm;
-      color: $color-dark;
+      /* Use a 90%-opaque black to match shard calc style */
+      color: rgba($color-black, 0.9);
       line-height: 1.5;
       margin: 0;
 
@@ -195,7 +211,7 @@
 
       li {
         font-size: $font-size-sm;
-        color: $color-dark;
+        color: $color-black;
         margin-bottom: $spacing-xxs;
 
         &:last-child {
