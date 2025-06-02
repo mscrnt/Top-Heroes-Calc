@@ -103,9 +103,11 @@ document.addEventListener("DOMContentLoaded", function () {
 
         // Trigger pulse for a given element
         function triggerGlow(element) {
+            // Show the notice (in case CSS initially hides it)
+            element.style.display = ""; // allow CSS to position/size it
             if (!element.classList.contains("pulse")) {
                 element.classList.add("pulse");
-                setTimeout(() => element.classList.remove("pulse"), 3000); // Remove pulse after 1 second
+                setTimeout(() => element.classList.remove("pulse"), 3000);
             }
         }
 
@@ -113,12 +115,12 @@ document.addEventListener("DOMContentLoaded", function () {
             if (source === "current" && currentLevel >= desiredLevel) {
                 currentLevelSlider.value = desiredLevel - 1;
                 triggerGlow(desiredLevelLock);
-                triggerGlow(currentLevelNotice); // Show notice for current level
+                triggerGlow(currentLevelNotice);
             }
             if (source === "desired" && desiredLevel <= currentLevel) {
                 desiredLevelSlider.value = currentLevel + 1;
                 triggerGlow(currentLevelLock);
-                triggerGlow(desiredLevelNotice); // Show notice for desired level
+                triggerGlow(desiredLevelNotice);
             }
         } else if (currentLevelLocked && !desiredLevelLocked) {
             if (source === "current" && currentLevel >= desiredLevel) {
@@ -126,7 +128,7 @@ document.addEventListener("DOMContentLoaded", function () {
             } else if (source === "desired" && desiredLevel <= currentLevel) {
                 desiredLevelSlider.value = currentLevel + 1;
                 triggerGlow(currentLevelLock);
-                triggerGlow(desiredLevelNotice); // Show notice for current level
+                triggerGlow(desiredLevelNotice);
             }
         } else if (desiredLevelLocked && !currentLevelLocked) {
             if (source === "desired" && desiredLevel <= currentLevel) {
@@ -134,15 +136,15 @@ document.addEventListener("DOMContentLoaded", function () {
             } else if (source === "current" && currentLevel >= desiredLevel) {
                 currentLevelSlider.value = desiredLevel - 1;
                 triggerGlow(desiredLevelLock);
-                triggerGlow(currentLevelNotice); // Show notice for desired level
+                triggerGlow(currentLevelNotice);
             }
         } else {
             if (source === "current" && currentLevel >= desiredLevel) {
                 desiredLevelSlider.value = currentLevel + 1;
-                            }
+            }
             if (source === "desired" && desiredLevel <= currentLevel) {
                 currentLevelSlider.value = desiredLevel - 1;
-                            }
+            }
         }
 
         updateValues();
@@ -164,12 +166,12 @@ document.addEventListener("DOMContentLoaded", function () {
                 totalMeatRequired += parseInt(entry.meat_required, 10) || 0;
             }
         });
-    
+
         if (isNaN(totalMeatRequired)) {
             resultContainer.innerHTML = `<p class="error">Error calculating meat requirements.</p>`;
             return;
         }
-    
+
         resultContainer.innerHTML = `
         <div class="result-content">
             <div class="required-header">
@@ -178,11 +180,7 @@ document.addEventListener("DOMContentLoaded", function () {
             </div>
             <div class="required-number">${totalMeatRequired.toLocaleString()}</div>
         </div>`;
-
     }
-
-    
-    
 
     function handleIncrementDecrement(input, slider, step) {
         const minValue = parseInt(input.min);
@@ -201,60 +199,51 @@ document.addEventListener("DOMContentLoaded", function () {
         let delay = 100; // Initial delay after acceleration starts
         const minDelay = 5; // Minimum delay for maximum speed
         const accelerationFactor = 0.9; // Factor to reduce delay (lower = faster acceleration)
-        let isHeld = false; // Tracks if the button is being held
-        let isMouseDown = false; // Tracks if the mouse is down (to avoid hover issues)
-    
+        let isHeld = false;
+        let isMouseDown = false;
+
         function performStep() {
             handleIncrementDecrement(input, slider, step);
-    
-            // Gradually decrease delay, but never go below minDelay
             delay = Math.max(minDelay, delay * accelerationFactor);
-    
-            // Schedule the next step
             timeoutId = setTimeout(performStep, delay);
         }
-    
+
         function startHold() {
             isHeld = false;
             isMouseDown = true;
             timeoutId = setTimeout(() => {
                 if (isMouseDown) {
                     isHeld = true;
-                    delay = 100; // Reset delay to the initial value for acceleration
-                    performStep(); // Start the acceleration
+                    delay = 100;
+                    performStep();
                 }
-            }, initialDelay); // Delay before treating it as a hold
+            }, initialDelay);
         }
-    
+
         function endHold() {
             isMouseDown = false;
             clearTimeout(timeoutId);
             if (!isHeld) {
-                // Single click behavior
                 handleIncrementDecrement(input, slider, step);
             }
         }
-    
-        // Mouse and touch event bindings
+
         button.addEventListener("mousedown", startHold);
         button.addEventListener("mouseup", endHold);
-    
-        // Prevent mouse hover issues by tracking mouse state
         button.addEventListener("mouseleave", () => {
             if (isMouseDown) {
                 endHold();
             }
         });
-    
+
         button.addEventListener("touchstart", (e) => {
-            e.preventDefault(); // Prevent long-press menu
+            e.preventDefault();
             startHold();
         });
         button.addEventListener("touchend", endHold);
         button.addEventListener("touchcancel", endHold);
     }
-    
-      
+
     enableHold(currentLevelDecrease, currentLevelNum, currentLevelSlider, -1);
     enableHold(currentLevelIncrease, currentLevelNum, currentLevelSlider, 1);
     enableHold(desiredLevelDecrease, desiredLevelNum, desiredLevelSlider, -1);
@@ -329,10 +318,6 @@ document.addEventListener("DOMContentLoaded", function () {
         enforceConstraints("desired");
         fetchMeatRequired();
     });
-
-    // Adjust notice positions on DOM load and resize
-    updateNoticePositions();
-    window.addEventListener("resize", updateNoticePositions);
 
     loadStoredValues();
     enforceConstraints("current");
