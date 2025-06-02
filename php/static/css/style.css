@@ -1932,10 +1932,9 @@ body.dark-mode .roles-table .role-description-cell strong {
 }
 
 /* =============================
-   🎯 Meat Result Display (renamed to #meat-result)
+   🎯 Meat Result Display (#meat-result)
 ============================= */
 #meat-result {
-  /* Include padding in the element’s total width, so it won’t overflow on mobile */
   box-sizing: border-box;
   width: 100%;
   max-width: 600px;
@@ -1945,8 +1944,8 @@ body.dark-mode .roles-table .role-description-cell strong {
   border-radius: 0.5rem;
   padding: 1.5rem;
   text-align: center;
-  /* On small screens, reduce padding so it never extends past the viewport */
   /* ── Icon + “Required:” on same row ── */
+  /* If you have any <p> or <h3> inside #meat-result, force them darker: */
 }
 @media (max-width: 480px) {
   #meat-result {
@@ -1974,7 +1973,8 @@ body.dark-mode .roles-table .role-description-cell strong {
 #meat-result .required-label {
   font-size: 1.5rem;
   font-weight: 600;
-  color: rgba(47, 44, 44, 0.5098039216);
+  /* In light-mode, use a true black instead of $color-dark (if $color-dark was a medium gray) */
+  color: #000000;
 }
 [data-theme=dark] #meat-result .required-label {
   color: #ffffff;
@@ -1982,14 +1982,22 @@ body.dark-mode .roles-table .role-description-cell strong {
 #meat-result .required-number {
   font-size: 2.5rem;
   font-weight: 700;
-  color: rgb(47, 85, 150);
+  color: #917251; /* e.g. gold/yellow */
 }
 [data-theme=dark] #meat-result .required-number {
   color: rgb(245, 204, 101);
 }
+#meat-result h3,
+#meat-result p {
+  color: #000000;
+}
+[data-theme=dark] #meat-result h3,
+[data-theme=dark] #meat-result p {
+  color: #ffffff;
+}
 
 /* =============================
-   🧮 Hero Leveling Form (unchanged selector #hl_form)
+   🧮 Hero Leveling Form (#hl_form)
 ============================= */
 #hl_form {
   box-sizing: border-box;
@@ -1997,6 +2005,7 @@ body.dark-mode .roles-table .role-description-cell strong {
   max-width: 600px;
   margin: auto;
   padding: 1.5rem;
+  /* Use a nearly-opaque white, but ensure text is pure black */
   background-color: rgba(255, 255, 255, 0.95);
   border-radius: 0.5rem;
   box-shadow: 0rem 0.125rem 1.25rem 1.25rem rgba(0, 0, 0, 0.1), -0.0625rem 0rem 1.25rem 1.25rem rgba(0, 0, 0, 0.15), 0.0625rem 0rem 2.5rem 1.25rem rgba(0, 0, 0, 0.2);
@@ -2005,6 +2014,9 @@ body.dark-mode .roles-table .role-description-cell strong {
   gap: 1.5rem;
   position: relative;
   transition: all 0.3s ease-in-out;
+  /* ── Labels ── */
+  /* ── Input Pairs ── */
+  /* ── Notice (e.g. warnings) ── */
   /* =============================
      💬 Explanation Section
   ============================= */
@@ -2019,7 +2031,8 @@ body.dark-mode .roles-table .role-description-cell strong {
   display: block;
   font-weight: 500;
   font-size: 0.875rem;
-  color: rgba(47, 44, 44, 0.5098039216);
+  /* Switch from $color-dark (if that was too light) to pure black */
+  color: #000000;
   text-align: center;
   margin-bottom: 0.25rem;
 }
@@ -2041,7 +2054,8 @@ body.dark-mode .roles-table .role-description-cell strong {
   border: 1px solid #cccccc;
   border-radius: 0.3125rem;
   background-color: #ffffff;
-  color: rgba(47, 44, 44, 0.5098039216);
+  /* Pure black for text */
+  color: #000000;
   transition: border-color 0.3s ease-in-out;
 }
 #hl_form .input-pair input[type=number]:focus {
@@ -2056,6 +2070,7 @@ body.dark-mode .roles-table .role-description-cell strong {
 }
 #hl_form .notice {
   font-size: 0.75rem;
+  /* Keep warnings as $color-warning */
   color: rgb(248, 121, 64);
   text-align: center;
   margin-top: 0.25rem;
@@ -2085,7 +2100,8 @@ body.dark-mode .roles-table .role-description-cell strong {
 #hl_form .explanation h3 {
   font-size: 1.25rem;
   font-weight: 600;
-  color: rgba(47, 44, 44, 0.5098039216);
+  /* Pure black for headings in light mode */
+  color: #000000;
   margin: 0;
   text-align: center;
 }
@@ -2094,7 +2110,8 @@ body.dark-mode .roles-table .role-description-cell strong {
 }
 #hl_form .explanation p {
   font-size: 0.875rem;
-  color: rgba(47, 44, 44, 0.5098039216);
+  /* Use a 90%-opaque black to match shard calc style */
+  color: rgba(0, 0, 0, 0.9);
   line-height: 1.5;
   margin: 0;
 }
@@ -2108,7 +2125,7 @@ body.dark-mode .roles-table .role-description-cell strong {
 }
 #hl_form .explanation ul li {
   font-size: 0.875rem;
-  color: rgba(47, 44, 44, 0.5098039216);
+  color: #000000;
   margin-bottom: 0.25rem;
 }
 #hl_form .explanation ul li:last-child {
