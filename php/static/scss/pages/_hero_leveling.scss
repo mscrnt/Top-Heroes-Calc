@@ -2,24 +2,38 @@
 @import '../base/mixins';
 
 /* =============================
-   🎯 Result Display (revised)
+   🎯 Meat Result Display (renamed to #meat-result)
 ============================= */
-#result {
+#meat-result {
+  /* Include padding in the element’s total width, so it won’t overflow on mobile */
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 600px;
+  margin: $spacing-lg auto;
+  background-color: rgba($color-white, 0.90);
+  box-shadow: $box-shadow-light;
+  border-radius: $border-radius-md;
+  padding: $spacing-lg;
   text-align: center;
-  margin-bottom: $spacing-md;
+
+  /* On small screens, reduce padding so it never extends past the viewport */
+  @include respond(phone-md, down) {
+    padding: $spacing-md;
+    margin: $spacing-md auto;
+  }
 
   .result-content {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: $spacing-xs;
+    gap: $spacing-sm;
   }
 
   /* ── Icon + “Required:” on same row ── */
   .required-header {
     display: flex;
     align-items: center;
-    gap: $spacing-xs;
+    gap: $spacing-sm;
     justify-content: center;
   }
 
@@ -33,129 +47,87 @@
     font-size: $font-size-md;
     font-weight: 600;
     color: $color-dark;
+
+    [data-theme="dark"] & {
+      color: $color-white;
+    }
   }
 
   .required-number {
-    font-size: 2.2rem;
-    font-weight: bold;
+    font-size: 2.5rem;
+    font-weight: 700;
     color: $color-primary;
+
+    [data-theme="dark"] & {
+      color: rgb(245, 204, 101);
+    }
   }
 }
 
 /* =============================
-   🧮 Hero Leveling Form
+   🧮 Hero Leveling Form (unchanged selector #hl_form)
 ============================= */
 #hl_form {
-  padding: $spacing-md;
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 600px;
+  margin: auto;
+  padding: $spacing-lg;
   background-color: rgba($color-white, 0.95);
   border-radius: $border-radius-md;
   box-shadow: $box-shadow-light;
-  max-width: 600px;
-  margin: auto;
   display: flex;
   flex-direction: column;
-  gap: $spacing-md;
+  gap: $spacing-lg;
   position: relative;
+  @include transition(all, $transition-duration, $transition-ease);
+
+  @include respond(phone-md, down) {
+    padding: $spacing-md;
+    gap: $spacing-md;
+  }
 
   label {
-    font-weight: 600;
+    display: block;
+    font-weight: 500;
     font-size: $font-size-sm;
     color: $color-dark;
     text-align: center;
     margin-bottom: $spacing-xxs;
+
+    [data-theme="dark"] & {
+      color: #ccc;
+    }
   }
 
   .input-pair {
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: $spacing-xs;
+    gap: $spacing-sm;
 
     input[type="number"] {
       width: 5rem;
       height: 2rem;
+      padding: $spacing-xxs;
       text-align: center;
       font-size: $font-size-sm;
       border: 1px solid $color-secondary;
       border-radius: $border-radius-sm;
       background-color: $color-white;
       color: $color-dark;
-    }
-  }
+      @include transition(border-color, $transition-duration, $transition-ease);
 
-  .slider-container {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    position: relative;
-    width: 100%;
-    gap: $spacing-xs;
-
-    input[type="range"] {
-      flex-grow: 1;
-      height: 5px;
-      appearance: none;
-      background-color: #ddd;
-      border-radius: 5px;
-      outline: none;
-      margin: 0 10px;
-
-      /* ─── Default (light mode) thumb ─── */
-      &::-webkit-slider-thumb {
-        appearance: none;
-        width: 20px;
-        height: 20px;
-        background-color: $color-primary;
-        border-radius: 50%;
-        cursor: pointer;
+      &:focus {
+        border-color: $color-accent;
+        @include box-shadow(0, 0, 0.25rem, 0, rgba($color-accent, 0.25));
+        outline: none;
       }
 
-      &::-moz-range-thumb {
-        width: 20px;
-        height: 20px;
-        background-color: $color-primary;
-        border-radius: 50%;
-        cursor: pointer;
-      }
-
-      &::-ms-thumb {
-        width: 20px;
-        height: 20px;
-        background-color: $color-primary;
-        border-radius: 50%;
-        cursor: pointer;
-      }
-    }
-
-    .slider-min,
-    .slider-max {
-      font-size: 0.9rem;
-      color: $color-dark;
-      cursor: pointer;
-
-      &:hover {
-        color: $color-accent;
-        text-decoration: underline;
-      }
-    }
-
-    .lock-icon {
-      font-size: 1.2rem;
-      color: $color-primary;
-      margin-left: $spacing-xs;
-      cursor: pointer;
-      transition: color $transition-duration;
-
-      &:hover {
-        color: darken($color-primary, 10%);
-      }
-
-      &.locked {
-        color: $color-danger;
-
-        &:hover {
-          color: darken($color-danger, 10%);
-        }
+      [data-theme="dark"] & {
+        background-color: rgba($color-white, 0.05);
+        color: #eee;
+        border-color: $color-secondary;
       }
     }
   }
@@ -171,6 +143,10 @@
       display: block;
       animation: pulse 1s ease-in-out infinite;
     }
+
+    [data-theme="dark"] & {
+      color: $color-warning;
+    }
   }
 
   /* =============================
@@ -179,24 +155,37 @@
   .explanation {
     background-color: rgba($color-secondary, 0.1);
     border-radius: $border-radius-md;
-    padding: $spacing-md;
+    padding: $spacing-lg;
     display: flex;
     flex-direction: column;
-    gap: $spacing-sm;
+    gap: $spacing-md;
+
+    @include respond(phone-md, down) {
+      padding: $spacing-md;
+      gap: $spacing-sm;
+    }
 
     h3 {
-      font-size: $font-size-md;
+      font-size: $font-size-lg;
       font-weight: 600;
       color: $color-dark;
       margin: 0;
       text-align: center;
+
+      [data-theme="dark"] & {
+        color: $color-white;
+      }
     }
 
     p {
       font-size: $font-size-sm;
       color: $color-dark;
-      line-height: 1.4;
+      line-height: 1.5;
       margin: 0;
+
+      [data-theme="dark"] & {
+        color: $color-white;
+      }
     }
 
     ul {
@@ -212,6 +201,13 @@
         &:last-child {
           margin-bottom: 0;
         }
+
+        [data-theme="dark"] & {
+          color: $color-white;
+          &:before {
+            color: $color-accent;
+          }
+        }
       }
     }
 
@@ -221,111 +217,31 @@
       font-style: italic;
       margin: 0;
       text-align: center;
+
+      [data-theme="dark"] & {
+        color: $color-secondary;
+      }
     }
   }
 }
 
 /* =============================
-   🌙 Dark Mode Overrides
+   🌙 Dark Mode Overrides for #meat-result + #hl_form
 ============================= */
 [data-theme="dark"] {
-  #result {
-    .required-label {
-      color: $color-white;
-    }
-    .required-number {
-      color: $color-accent;
-    }
+  body {
+    background-color: $color-dark;
+  }
+
+  #meat-result {
+    /* Match dark-mode card styling */
+    background-color: rgba(30, 30, 30, 0.75);
+    box-shadow: $box-shadow-dark;
   }
 
   #hl_form {
     background-color: rgba(30, 30, 30, 0.5);
     box-shadow: $box-shadow-dark;
-
-    label {
-      color: #ccc;
-    }
-
-    .input-pair {
-      input[type="number"] {
-        background-color: rgba(255, 255, 255, 0.05);
-        color: #eee;
-        border-color: $color-secondary;
-      }
-    }
-
-    .slider-container {
-      input[type="range"] {
-        background-color: darken($color-secondary, 10%);
-        outline: none;
-
-        /* ─── Dark-mode thumb overrides ─── */
-        &::-webkit-slider-thumb {
-          background-color: lighten($color-danger, 15%);
-        }
-
-        &::-moz-range-thumb {
-          background-color: lighten($color-danger, 15%);
-        }
-
-        &::-ms-thumb {
-          background-color: lighten($color-danger, 15%);
-        }
-      }
-
-      .slider-min,
-      .slider-max {
-        color: #ccc;
-
-        &:hover {
-          color: lighten($color-danger, 15%);
-        }
-      }
-
-      .lock-icon {
-        color: #919191;
-
-        &:hover {
-          color: lighten($color-danger, 20%);
-        }
-
-        &.locked {
-          color: $color-danger;
-
-          &:hover {
-            color: lighten($color-danger, 10%);
-          }
-        }
-      }
-    }
-
-    .notice {
-      color: $color-warning;
-    }
-
-    /* Dark-mode Explanation Section */
-    .explanation {
-      background-color: rgba($color-white, 0.05);
-
-      h3 {
-        color: $color-white;
-      }
-
-      p,
-      ul li {
-        color: $color-white;
-      }
-
-      ul li {
-        &:before {
-          color: $color-accent;
-        }
-      }
-
-      .note {
-        color: $color-secondary;
-      }
-    }
   }
 }
 

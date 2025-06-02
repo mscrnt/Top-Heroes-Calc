@@ -25,7 +25,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const currentLevelNotice = document.getElementById("current_level_notice");
     const desiredLevelNotice = document.getElementById("desired_level_notice");
 
-    const resultContainer = document.getElementById("result");
+    const resultContainer = document.getElementById("meat-result");
 
     let currentLevelLocked = false;
     let desiredLevelLocked = false;

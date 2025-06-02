@@ -57,7 +57,7 @@ if ($currentLevel && $desiredLevel && $currentLevel < $desiredLevel) {
 </head>
 <body>
   <!-- Calculation Result -->
-  <div id="result">
+  <div id="meat-result">
     <?php if ($currentLevel && $desiredLevel): ?>
       <?php if (isset($errorMessage)): ?>
         <p class="error"><?= htmlspecialchars($errorMessage) ?></p>

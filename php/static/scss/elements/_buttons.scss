@@ -168,3 +168,141 @@ button.btn-secondary {
     padding: 0.75rem;
   }
 }
+
+/* ==============================
+   🎚️ Range Slider Styling (from Hero Leveling)
+============================== */
+#hl_form .slider-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+  width: 100%;
+  gap: $spacing-xs;
+
+  input[type="range"] {
+    flex-grow: 1;
+    height: 5px;
+    appearance: none;          /* standard */
+    -webkit-appearance: none;  /* Chrome, Safari, Opera */
+    -moz-appearance: none;     /* Firefox */
+    background-color: #ddd;
+    border-radius: 5px;
+    outline: none;
+    margin: 0 10px;
+
+    /* ─── Default (light mode) thumb ─── */
+    &::-webkit-slider-thumb {
+      -webkit-appearance: none; /* remove native */
+      appearance: none;         /* standard */
+      width: 20px;
+      height: 20px;
+      background-color: $color-primary;
+      border-radius: 50%;
+      cursor: pointer;
+    }
+
+    &::-moz-range-thumb {
+      width: 20px;
+      height: 20px;
+      background-color: $color-primary;
+      border-radius: 50%;
+      cursor: pointer;
+    }
+
+    &::-ms-thumb {
+      width: 20px;
+      height: 20px;
+      background-color: $color-primary;
+      border-radius: 50%;
+      cursor: pointer;
+    }
+  }
+
+  .slider-min,
+  .slider-max {
+    font-size: 0.9rem;
+    color: $color-dark;
+    cursor: pointer;
+
+    &:hover {
+      color: $color-accent;
+      text-decoration: underline;
+    }
+  }
+
+  .lock-icon {
+    font-size: 1.2rem;
+    color: $color-primary;
+    margin-left: $spacing-xs;
+    cursor: pointer;
+    transition: color $transition-duration;
+
+    &:hover {
+      color: darken($color-primary, 10%);
+    }
+
+    &.locked {
+      color: $color-danger;
+
+      &:hover {
+        color: darken($color-danger, 10%);
+      }
+    }
+  }
+}
+
+/* ==============================
+   🌙 Dark Mode Overrides (for Hero Leveling section)
+============================== */
+[data-theme="dark"] {
+  #hl_form {
+    background-color: rgba(30, 30, 30, 0.5);
+    box-shadow: $box-shadow-dark;
+
+    .slider-container {
+      input[type="range"] {
+        background-color: darken($color-secondary, 10%);
+        outline: none;
+
+        /* ─── Dark-mode thumb overrides ─── */
+        &::-webkit-slider-thumb {
+          background-color: lighten($color-danger, 15%);
+        }
+
+        &::-moz-range-thumb {
+          background-color: lighten($color-danger, 15%);
+        }
+
+        &::-ms-thumb {
+          background-color: lighten($color-danger, 15%);
+        }
+      }
+
+      .slider-min,
+      .slider-max {
+        color: #ccc;
+
+        &:hover {
+          color: lighten($color-danger, 15%);
+        }
+      }
+
+      .lock-icon {
+        color: #919191;
+
+        &:hover {
+          color: lighten($color-danger, 20%);
+        }
+
+        &.locked {
+          color: $color-danger;
+
+          &:hover {
+            color: lighten($color-danger, 10%);
+          }
+        }
+      }
+    }
+  }
+}
