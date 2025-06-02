@@ -171,10 +171,14 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     
         resultContainer.innerHTML = `
-            <h2>
-                ${totalMeatRequired.toLocaleString()}
-                <img src="${iconPath}" alt="Meat Icon" class="meat-icon">
-            </h2>`;
+        <div class="result-content">
+            <div class="required-header">
+            <img src="${iconPath}" alt="Meat Icon" class="meat-icon">
+            <div class="required-label">Required:</div>
+            </div>
+            <div class="required-number">${totalMeatRequired.toLocaleString()}</div>
+        </div>`;
+
     }
 
     
