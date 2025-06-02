@@ -34,7 +34,10 @@
     background-color: rgba($color-light, 0.95);
     backdrop-filter: blur(6px);
 
-    .title,
+    .title {
+      color: #000000;
+    }
+
     .menu-icon,
     .theme-toggle {
       color: $color-primary;

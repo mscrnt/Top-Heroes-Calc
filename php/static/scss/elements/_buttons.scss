@@ -179,6 +179,34 @@ button.btn-secondary {
   width: 100%;
   gap: $spacing-xs;
 
+  /* ─── Min/Max labels styled as slider thumb ─── */
+  .slider-min,
+  .slider-max {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    font-size: $font-size-sm;
+    font-weight: 600;
+    color: $color-primary;
+    border-radius: 50%;
+    cursor: pointer;
+    @include transition(background-color, $transition-duration, $transition-ease);
+
+    &:hover {
+      color: darken($color-primary, 10%);
+    }
+
+    [data-theme="dark"] & {
+      color: lighten($color-danger, 15%);
+
+      &:hover {
+        color: lighten($color-danger, 20%);
+      }
+    }
+  }
+
   input[type="range"] {
     flex-grow: 1;
     height: 5px;
@@ -218,24 +246,12 @@ button.btn-secondary {
     }
   }
 
-  .slider-min,
-  .slider-max {
-    font-size: 0.9rem;
-    color: $color-dark;
-    cursor: pointer;
-
-    &:hover {
-      color: $color-accent;
-      text-decoration: underline;
-    }
-  }
-
   .lock-icon {
     font-size: 1.2rem;
-    color: $color-primary;
+    color: #919191;
     margin-left: $spacing-xs;
     cursor: pointer;
-    transition: color $transition-duration;
+    @include transition(color, $transition-duration);
 
     &:hover {
       color: darken($color-primary, 10%);
@@ -246,6 +262,22 @@ button.btn-secondary {
 
       &:hover {
         color: darken($color-danger, 10%);
+      }
+    }
+
+    [data-theme="dark"] & {
+      color: #919191;
+
+      &:hover {
+        color: lighten($color-danger, 20%);
+      }
+
+      &.locked {
+        color: $color-danger;
+
+        &:hover {
+          color: lighten($color-danger, 10%);
+        }
       }
     }
   }
@@ -278,14 +310,6 @@ button.btn-secondary {
         }
       }
 
-      .slider-min,
-      .slider-max {
-        color: #ccc;
-
-        &:hover {
-          color: lighten($color-danger, 15%);
-        }
-      }
 
       .lock-icon {
         color: #919191;
