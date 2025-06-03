@@ -153,12 +153,11 @@ if ($currentLevel && $desiredLevel && $currentLevel < $desiredLevel) {
     </div>
     <p class="notice" id="desired_level_notice">Unlock Current Level to decrease Target Level lesser.</p>
 
-    <!-- Explanation Section (replaces the Calculate button) -->
+    <!-- Explanation Section -->
     <div class="explanation">
-      <h3>How this page works</h3>
+      <h3><u>How This Page Works</u></h3>
       <p>
         Adjust your <strong>Current Level</strong> and <strong>Target Level</strong> using either the number inputs or the sliders.
-        There’s no “Calculate” button anymore—any valid change you make to those fields will automatically update the total Meat required and display it above.
       </p>
       <ul>
         <li>
@@ -168,16 +167,17 @@ if ($currentLevel && $desiredLevel && $currentLevel < $desiredLevel) {
           <strong>Target Level</strong>: choose the level you want to reach (between 2 and <code><?= $maxLevel ?></code>).
         </li>
         <li>
-          If you try to set Current &ge; Target (while both levels are “locked”), the sliders will automatically enforce a valid range and show a brief notice.
+          Click the numbers at the ends of a slider to jump directly to level 1 (for Current) or level <?= $maxLevel ?> (for Target).
         </li>
         <li>
-          As soon as both levels are valid (Current &lt; Target), the script calculates the sum of <code>meat_required</code> from <code>levelingData</code> and renders it with the Meat icon above.
+          The other slider will not be able to change the locked slider’s value. For example, if Target is set to 100 and locked, you won’t be able to slide Current beyond 99. If Current is locked at 100, Target cannot be moved below 101.
+        </li>
+        <li>
+          The total Meat required to level up from your Current Level to the Target Level will be displayed above.
         </li>
       </ul>
-      <p class="note">
-        You can also click the “min” or “max” text under each slider to jump directly to level 1 (for Current) or level <?= $maxLevel ?> (for Target).
-      </p>
     </div>
+
   </form>
 </body>
 </html>
