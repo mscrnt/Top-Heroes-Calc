@@ -112,7 +112,7 @@ button.btn-primary {
 
   [data-theme="dark"] & {
     background-color: lighten($color-danger, 15%);
-    color: $color-dark;
+    color: rgb(255 255 255);
 
     &:hover {
       background-color: lighten($color-danger, 20%);
@@ -128,8 +128,8 @@ button.btn-primary {
    ⚪ Secondary Button
 ============================== */
 button.btn-secondary {
-  background-color: $color-secondary;
-  color: $color-accent;
+  background-color: #bbbbbb;
+  color: #ffffff;
 
   &:hover {
     background-color: darken($color-secondary, 10%);
@@ -142,7 +142,6 @@ button.btn-secondary {
 
   [data-theme="dark"] & {
     background-color: darken($color-secondary, 10%);
-    color: lighten($color-danger, 15%);
 
     &:hover {
       background-color: darken($color-secondary, 20%);

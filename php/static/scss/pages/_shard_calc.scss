@@ -16,7 +16,7 @@ h2 {
 
 h3 {
   font-size: $font-size-lg;
-  margin-top: $spacing-medium; 
+  margin-top: $spacing-medium;
   color: $color-accent;
   padding: 0;
 }
@@ -87,36 +87,6 @@ select {
   }
 }
 
-/* Buttons */
-#calculateButton,
-#resetButton {
-  margin-top: $spacing-sm;
-  padding: $spacing-sm $spacing-md;
-  font-size: $font-size-sm;
-  border: none;
-  border-radius: $border-radius-sm;
-  cursor: pointer;
-  @include transition(all, $transition-duration, $transition-ease);
-
-  &.btn-primary {
-    background-color: $color-primary;
-    color: $color-white;
-
-    &:hover {
-      background-color: darken($color-primary, 10%);
-    }
-  }
-
-  &.btn-secondary {
-    background-color: $color-secondary;
-    color: $color-black;
-
-    &:hover {
-      background-color: darken($color-secondary, 10%);
-    }
-  }
-}
-
 /* Chart Table */
 .shard-chart {
   margin-top: 8rem !important;
@@ -128,16 +98,16 @@ select {
   width: 85%;
   margin: auto;
 
-  /* NEW: style the two explanatory <p> tags */
+  /* Explanatory <p> tags */
   p {
-    font-size: $font-size-sm;      // make them smaller
-    color: rgba($color-black, 0.9); // use a semi-transparent black
-    text-align: center;            // center them
-    margin: $spacing-xs 0;         // small vertical spacing
+    font-size: $font-size-sm;
+    color: rgba($color-black, 0.9);
+    text-align: center;
+    margin: $spacing-xs 0;
   }
 
   h3 {
-    color: $color-accent;
+    color: #4d4d4d;
   }
 
   table {
@@ -146,11 +116,12 @@ select {
     border-collapse: separate;
     font-size: $font-size-sm;
 
+
     th {
       background-color: $color-primary;
       color: $color-white;
       padding: $spacing-sm $spacing-md;
-      text-align: left;
+      text-align: center;
       border-radius: $border-radius-sm 0 0 $border-radius-sm;
 
       &:last-child {
@@ -171,7 +142,20 @@ select {
       }
     }
 
-    .level-cell,
+    /* ─── Level‐Cell ─── */
+    .level-cell {
+      background-color: $color-primary;
+      color: $color-white;
+      font-weight: bold;
+      cursor: pointer;
+      position: relative;
+      text-align: center;
+
+      &:hover {
+        background-color: lighten($color-primary, 10%);
+      }
+    }
+
     .star-cell {
       background-color: $color-primary;
       color: $color-white;
@@ -218,7 +202,7 @@ select {
       gap: $spacing-xxs;
     }
 
-    /* Group-Specific Shard Cell Backgrounds */
+    /* Group‐Specific Shard Cell Backgrounds */
     tr.group-1 {
       .shards-per-step,
       .per-star {
@@ -244,7 +228,7 @@ select {
     }
   }
 
-  /* Group-Specific Star Colors */
+  /* Group‐Specific Star Colors */
   .group-1 .fa-star { color: #FFD700; }
   .group-2 .fa-star { color: #B7410E; }
   .group-3 .fa-star { color: #C0C0C0; }
@@ -281,6 +265,127 @@ select {
     &.active {
       border: 1px solid $color-accent;
       border-radius: 50%;
+    }
+  }
+}
+
+/* Dark‐Mode Overrides */
+[data-theme="dark"] {
+  /* Shard Form */
+  .shard-form {
+    background-color: rgba(30, 30, 30, 0.92);
+    box-shadow: $box-shadow-dark;
+  }
+
+  label {
+    color: #ccc;
+  }
+
+  .form-text {
+    color: #aaa;
+  }
+
+  input[type="text"],
+  select {
+    background: rgba(255, 255, 255, 0.05);
+    color: $color-light;
+    border-color: $color-secondary;
+  }
+
+  /* Shard-Chart Overrides */
+  .shard-chart {
+    background-color: rgba(30, 30, 30, 0.92);
+
+    p {
+      color: rgba(255, 255, 255, 0.9);
+    }
+
+    h3 {
+      color: #ededed;
+    }
+
+    table {
+      th, td {
+        background-color: #222 !important;
+        color: #eee !important;
+        border-color: #444;
+      }
+
+      .progress-overlay {
+        background-color: rgba(255, 255, 255, 0.3);
+        color: #111;
+      }
+
+      .total-row {
+        background-color: #2b2b2b;
+      }
+
+      /* Dark‐mode hover override */
+      .level-cell:hover,
+      .star-cell:hover {
+        background-color: rgba(255, 255, 255, 0.1);
+      }
+
+      /* Override text color of .level-cell */
+      .level-cell {
+        color: lighten($color-danger, 15%) !important;
+      }
+    }
+  }
+}
+
+/* Light‐Mode Overrides */
+[data-theme="light"] {
+  /* Shard Form */
+  .shard-form {
+    background-color: rgba($color-white, 0.80);
+    box-shadow: $box-shadow-light;
+  }
+
+  label {
+    color: $color-black;
+  }
+
+  .form-text {
+    color: $color-muted;
+  }
+
+  input[type="text"],
+  select {
+    background: $color-white;
+    color: $color-dark;
+    border-color: $color-secondary;
+  }
+
+  /* Shard-Chart Overrides */
+  .shard-chart {
+    table {
+      th {
+        background-color: $color-primary;
+        color: $color-white;
+        border-color: #ddd;
+      }
+
+      td {
+        color: $color-dark;
+        border-color: #ddd;
+      }
+
+      .total-row td {
+        color: $color-white;
+      }
+
+      .level-cell,
+      .star-cell {
+        background-color: $color-primary;
+        color: $color-white;
+      }
+
+      /* Optional: Uncomment to enable group row backgrounds in light mode
+      tr.group-1 td { background-color: #fff4db; }
+      tr.group-2 td { background-color: #fce7dd; }
+      tr.group-3 td { background-color: #e4e4e4; }
+      */
     }
   }
 }

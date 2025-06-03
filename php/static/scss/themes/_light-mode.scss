@@ -22,7 +22,6 @@
     background-size: cover !important;
   }
 
-
   // Container
   .container {
     background-color: rgba($color-white, 0.95);
@@ -35,7 +34,7 @@
     backdrop-filter: blur(6px);
 
     .title {
-      color: #000000;
+      color: #2b2b2b;
     }
 
     .menu-icon,
@@ -96,40 +95,7 @@
     }
 
     #result {
-      color: #917251; 
-    }
-  }
-
-  // Table styling
-  .shard-chart {
-    table {
-      th {
-        background-color: $color-primary;
-        color: $color-white;
-        border-color: #ddd;
-      }
-
-      td {
-        color: $color-dark;
-        border-color: #ddd;
-
-      }
-
-      .total-row td {
-        color: $color-white;
-      }
-
-      .level-cell,
-      .star-cell {
-        background-color: $color-primary;
-        color: $color-white;
-      }
-
-      // Optional: If you want different row backgrounds per group in light mode
-      // Uncomment if needed:
-      // .group-1 td { background-color: #fff4db; }
-      // .group-2 td { background-color: #fce7dd; }
-      // .group-3 td { background-color: #e4e4e4; }
+      color: #917251;
     }
   }
 }

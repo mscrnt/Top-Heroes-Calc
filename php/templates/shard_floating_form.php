@@ -4,7 +4,7 @@
   <form class="shard-form">
     <div class="form-row">
       <div class="form-group">
-        <label for="heroType">Select Hero Type:</label>
+        <label for="heroType">Hero Type:</label>
         <select class="form-control" id="heroType">
           <option value="legendary" selected>Legendary</option>
           <option value="mythic">Mythic</option>
@@ -12,7 +12,7 @@
       </div>
 
       <div class="form-group">
-        <label for="currentLevel">Enter Current Hero Level:</label>
+        <label for="currentLevel">Current Hero Level:</label>
         <input
           type="text"
           class="form-control"

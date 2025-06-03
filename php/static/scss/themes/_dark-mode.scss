@@ -31,7 +31,10 @@
   .top-bar-wrapper {
     background-color: rgba(20, 20, 20, 0.9);
 
-    .title,
+    .title {
+      color: #ebebeb;
+    }
+
     .menu-icon,
     .theme-toggle {
       color: #ffffff !important;
@@ -124,49 +127,12 @@
 
   // Floating Shard Display (unchanged)
   .floating-shard-display {
-
     p {
       color: rgb(245, 204, 101);
     }
 
     #result {
       color: rgb(245, 204, 101);
-    }
-  }
-
-  // Chart Table
-  .shard-chart {
-    background-color: rgba(30, 30, 30, 0.92);
-
-    p {
-      color: rgba(255, 255, 255, 0.9);
-    }
-
-    h3 {
-      color: lighten($color-danger, 15%);
-    }
-
-    table {
-      th, td {
-        background-color: #222 !important;
-        color: #eee !important;
-        border-color: #444;
-      }
-
-      .progress-overlay {
-        background-color: rgba(255, 255, 255, 0.3);
-        color: #111;
-      }
-
-      .total-row {
-        background-color: #2b2b2b;
-      }
-
-      // Dark‐mode hover override
-      .level-cell:hover,
-      .star-cell:hover {
-        background-color: rgba(255, 255, 255, 0.1);
-      }
     }
   }
 }

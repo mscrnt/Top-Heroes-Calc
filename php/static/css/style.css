@@ -189,19 +189,32 @@
   -webkit-backdrop-filter: blur(10px);
           backdrop-filter: blur(10px);
   padding-top: 1rem;
+  /* ─── Dark‐Mode Overrides ─── */
 }
 [data-theme=dark] .floating-shard-form {
-  background: rgba(30, 30, 30, 0.95);
+  background-color: rgba(30, 30, 30, 0.92);
   box-shadow: 0 0.25rem 0.625rem rgba(0, 0, 0, 0.4);
+  -webkit-backdrop-filter: none;
+          backdrop-filter: none;
+  /* Make inner form transparent */
+  /* Label / placeholder text */
+  /* Input / select */
 }
-[data-theme=dark] .floating-shard-form input,
-[data-theme=dark] .floating-shard-form select {
-  background: rgba(255, 255, 255, 0.05);
-  color: #eee;
-  border-color: #cccccc;
+[data-theme=dark] .floating-shard-form .shard-form {
+  background: transparent;
+  box-shadow: none;
 }
 [data-theme=dark] .floating-shard-form label {
-  color: #ccc;
+  color: #ccc !important;
+}
+[data-theme=dark] .floating-shard-form .form-text {
+  color: #aaa;
+}
+[data-theme=dark] .floating-shard-form input[type=text],
+[data-theme=dark] .floating-shard-form select {
+  background: rgba(255, 255, 255, 0.05);
+  color: rgb(230, 230, 230);
+  border-color: #cccccc;
 }
 .floating-shard-form .shard-form {
   display: flex;
@@ -263,8 +276,8 @@
   align-items: center;
   justify-content: space-between;
   gap: 0.75rem;
-  /* shard display (left) */
-  /* button group (right) */
+  /* Shard display (left) */
+  /* Button group (right) */
 }
 .floating-shard-form .shard-form .form-actions .floating-shard-display {
   display: flex;
@@ -279,6 +292,7 @@
   font-size: 2rem;
   font-weight: bold;
   color: #917251;
+  /* Dark-mode text override */
 }
 [data-theme=dark] .floating-shard-form .shard-form .form-actions .floating-shard-display #result {
   color: rgb(245, 204, 101);
@@ -286,29 +300,6 @@
 .floating-shard-form .shard-form .form-actions .button-group {
   display: flex;
   gap: 0.5rem;
-}
-.floating-shard-form .shard-form .form-actions .button-group button {
-  flex: 0 0 auto;
-  padding: 0.5rem 0.75rem;
-  font-weight: 600;
-  border-radius: 0.3125rem;
-  border: none;
-  cursor: pointer;
-  transition: background-color 0.3s;
-}
-.floating-shard-form .shard-form .form-actions .button-group button.btn-primary {
-  background-color: rgb(47, 85, 150);
-  color: #ffffff;
-}
-.floating-shard-form .shard-form .form-actions .button-group button.btn-primary:hover {
-  background-color: #233f6f;
-}
-.floating-shard-form .shard-form .form-actions .button-group button.btn-secondary {
-  background-color: #cccccc;
-  color: #000000;
-}
-.floating-shard-form .shard-form .form-actions .button-group button.btn-secondary:hover {
-  background-color: #b3b3b3;
 }
 .floating-shard-form.pinned {
   position: fixed !important;
@@ -320,6 +311,17 @@
   .floating-shard-form {
     padding-top: 0.75rem;
   }
+}
+
+/* ─── Floating Shard Display Additional Rules ─── */
+/* Dark-mode: ensure any <p> inside display is gold */
+[data-theme=dark] .floating-shard-display p {
+  color: rgb(245, 204, 101);
+}
+
+/* Light-mode: default <p> inside display */
+[data-theme=light] .floating-shard-display p {
+  color: rgb(245, 204, 101);
 }
 
 .menu-dropdown {
@@ -487,7 +489,7 @@ button.btn-primary:focus {
 }
 [data-theme=dark] button.btn-primary {
   background-color: #f19181;
-  color: rgba(47, 44, 44, 0.5098039216);
+  color: rgb(255, 255, 255);
 }
 [data-theme=dark] button.btn-primary:hover {
   background-color: #f4a598;
@@ -500,8 +502,8 @@ button.btn-primary:focus {
    ⚪ Secondary Button
 ============================== */
 button.btn-secondary {
-  background-color: #cccccc;
-  color: #234e96;
+  background-color: #bbbbbb;
+  color: #ffffff;
 }
 button.btn-secondary:hover {
   background-color: #b3b3b3;
@@ -512,7 +514,6 @@ button.btn-secondary:focus {
 }
 [data-theme=dark] button.btn-secondary {
   background-color: #b3b3b3;
-  color: #f19181;
 }
 [data-theme=dark] button.btn-secondary:hover {
   background-color: #999999;
@@ -854,7 +855,7 @@ button.btn-secondary:focus {
           backdrop-filter: blur(6px);
 }
 [data-theme=light] .top-bar-wrapper .title {
-  color: #000000;
+  color: #2b2b2b;
 }
 [data-theme=light] .top-bar-wrapper .menu-icon,
 [data-theme=light] .top-bar-wrapper .theme-toggle {
@@ -897,23 +898,6 @@ button.btn-secondary:focus {
 }
 [data-theme=light] .floating-shard-display #result {
   color: #917251;
-}
-[data-theme=light] .shard-chart table th {
-  background-color: rgb(47, 85, 150);
-  color: #ffffff;
-  border-color: #ddd;
-}
-[data-theme=light] .shard-chart table td {
-  color: rgba(47, 44, 44, 0.5098039216);
-  border-color: #ddd;
-}
-[data-theme=light] .shard-chart table .total-row td {
-  color: #ffffff;
-}
-[data-theme=light] .shard-chart table .level-cell,
-[data-theme=light] .shard-chart table .star-cell {
-  background-color: rgb(47, 85, 150);
-  color: #ffffff;
 }
 
 :root {
@@ -965,7 +949,9 @@ button.btn-secondary:focus {
 [data-theme=dark] .top-bar-wrapper {
   background-color: rgba(20, 20, 20, 0.9);
 }
-[data-theme=dark] .top-bar-wrapper .title,
+[data-theme=dark] .top-bar-wrapper .title {
+  color: #ebebeb;
+}
 [data-theme=dark] .top-bar-wrapper .menu-icon,
 [data-theme=dark] .top-bar-wrapper .theme-toggle {
   color: #ffffff !important;
@@ -1039,31 +1025,6 @@ button.btn-secondary:focus {
 }
 [data-theme=dark] .floating-shard-display #result {
   color: rgb(245, 204, 101);
-}
-[data-theme=dark] .shard-chart {
-  background-color: rgba(30, 30, 30, 0.92);
-}
-[data-theme=dark] .shard-chart p {
-  color: rgba(255, 255, 255, 0.9);
-}
-[data-theme=dark] .shard-chart h3 {
-  color: #f19181;
-}
-[data-theme=dark] .shard-chart table th, [data-theme=dark] .shard-chart table td {
-  background-color: #222 !important;
-  color: #eee !important;
-  border-color: #444;
-}
-[data-theme=dark] .shard-chart table .progress-overlay {
-  background-color: rgba(255, 255, 255, 0.3);
-  color: #111;
-}
-[data-theme=dark] .shard-chart table .total-row {
-  background-color: #2b2b2b;
-}
-[data-theme=dark] .shard-chart table .level-cell:hover,
-[data-theme=dark] .shard-chart table .star-cell:hover {
-  background-color: rgba(255, 255, 255, 0.1);
 }
 
 body {
@@ -1220,36 +1181,6 @@ select:focus {
   color: #aaa;
 }
 
-/* Buttons */
-#calculateButton,
-#resetButton {
-  margin-top: 0.75rem;
-  padding: 0.75rem 1rem;
-  font-size: 0.875rem;
-  border: none;
-  border-radius: 0.3125rem;
-  cursor: pointer;
-  transition: all 0.3s ease-in-out;
-}
-#calculateButton.btn-primary,
-#resetButton.btn-primary {
-  background-color: rgb(47, 85, 150);
-  color: #ffffff;
-}
-#calculateButton.btn-primary:hover,
-#resetButton.btn-primary:hover {
-  background-color: #233f6f;
-}
-#calculateButton.btn-secondary,
-#resetButton.btn-secondary {
-  background-color: #cccccc;
-  color: #000000;
-}
-#calculateButton.btn-secondary:hover,
-#resetButton.btn-secondary:hover {
-  background-color: #b3b3b3;
-}
-
 /* Chart Table */
 .shard-chart {
   margin-top: 8rem !important;
@@ -1260,8 +1191,8 @@ select:focus {
   padding: 0.75rem;
   width: 85%;
   margin: auto;
-  /* NEW: style the two explanatory <p> tags */
-  /* Group-Specific Star Colors */
+  /* Explanatory <p> tags */
+  /* Group‐Specific Star Colors */
   /* Mobile Simplification */
 }
 .shard-chart p {
@@ -1271,20 +1202,21 @@ select:focus {
   margin: 0.5rem 0;
 }
 .shard-chart h3 {
-  color: #234e96;
+  color: #4d4d4d;
 }
 .shard-chart table {
   width: 80%;
   margin: auto;
   border-collapse: separate;
   font-size: 0.875rem;
-  /* Group-Specific Shard Cell Backgrounds */
+  /* ─── Level‐Cell ─── */
+  /* Group‐Specific Shard Cell Backgrounds */
 }
 .shard-chart table th {
   background-color: rgb(47, 85, 150);
   color: #ffffff;
   padding: 0.75rem 1rem;
-  text-align: left;
+  text-align: center;
   border-radius: 0.3125rem 0 0 0.3125rem;
 }
 .shard-chart table th:last-child {
@@ -1301,7 +1233,17 @@ select:focus {
   transform: scale(1.02);
   z-index: 1;
 }
-.shard-chart table .level-cell,
+.shard-chart table .level-cell {
+  background-color: rgb(47, 85, 150);
+  color: #ffffff;
+  font-weight: bold;
+  cursor: pointer;
+  position: relative;
+  text-align: center;
+}
+.shard-chart table .level-cell:hover {
+  background-color: #3b6bbd;
+}
 .shard-chart table .star-cell {
   background-color: rgb(47, 85, 150);
   color: #ffffff;
@@ -1309,7 +1251,6 @@ select:focus {
   cursor: pointer;
   position: relative;
 }
-.shard-chart table .level-cell:hover,
 .shard-chart table .star-cell:hover {
   background-color: #3b6bbd;
 }
@@ -1400,6 +1341,106 @@ select:focus {
 .star-container .fa-star.active {
   border: 1px solid #234e96;
   border-radius: 50%;
+}
+
+/* Dark‐Mode Overrides */
+[data-theme=dark] {
+  /* Shard Form */
+  /* Shard-Chart Overrides */
+}
+[data-theme=dark] .shard-form {
+  background-color: rgba(30, 30, 30, 0.92);
+  box-shadow: 0 0.25rem 0.625rem rgba(0, 0, 0, 0.4);
+}
+[data-theme=dark] label {
+  color: #ccc;
+}
+[data-theme=dark] .form-text {
+  color: #aaa;
+}
+[data-theme=dark] input[type=text],
+[data-theme=dark] select {
+  background: rgba(255, 255, 255, 0.05);
+  color: rgb(230, 230, 230);
+  border-color: #cccccc;
+}
+[data-theme=dark] .shard-chart {
+  background-color: rgba(30, 30, 30, 0.92);
+}
+[data-theme=dark] .shard-chart p {
+  color: rgba(255, 255, 255, 0.9);
+}
+[data-theme=dark] .shard-chart h3 {
+  color: #ededed;
+}
+[data-theme=dark] .shard-chart table {
+  /* Dark‐mode hover override */
+  /* Override text color of .level-cell */
+}
+[data-theme=dark] .shard-chart table th, [data-theme=dark] .shard-chart table td {
+  background-color: #222 !important;
+  color: #eee !important;
+  border-color: #444;
+}
+[data-theme=dark] .shard-chart table .progress-overlay {
+  background-color: rgba(255, 255, 255, 0.3);
+  color: #111;
+}
+[data-theme=dark] .shard-chart table .total-row {
+  background-color: #2b2b2b;
+}
+[data-theme=dark] .shard-chart table .level-cell:hover,
+[data-theme=dark] .shard-chart table .star-cell:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+[data-theme=dark] .shard-chart table .level-cell {
+  color: #f19181 !important;
+}
+
+/* Light‐Mode Overrides */
+[data-theme=light] {
+  /* Shard Form */
+  /* Shard-Chart Overrides */
+}
+[data-theme=light] .shard-form {
+  background-color: rgba(255, 255, 255, 0.8);
+  box-shadow: 0rem 0.125rem 1.25rem 1.25rem rgba(0, 0, 0, 0.1), -0.0625rem 0rem 1.25rem 1.25rem rgba(0, 0, 0, 0.15), 0.0625rem 0rem 2.5rem 1.25rem rgba(0, 0, 0, 0.2);
+}
+[data-theme=light] label {
+  color: #000000;
+}
+[data-theme=light] .form-text {
+  color: #777777;
+}
+[data-theme=light] input[type=text],
+[data-theme=light] select {
+  background: #ffffff;
+  color: rgba(47, 44, 44, 0.5098039216);
+  border-color: #cccccc;
+}
+[data-theme=light] .shard-chart table {
+  /* Optional: Uncomment to enable group row backgrounds in light mode
+  tr.group-1 td { background-color: #fff4db; }
+  tr.group-2 td { background-color: #fce7dd; }
+  tr.group-3 td { background-color: #e4e4e4; }
+  */
+}
+[data-theme=light] .shard-chart table th {
+  background-color: rgb(47, 85, 150);
+  color: #ffffff;
+  border-color: #ddd;
+}
+[data-theme=light] .shard-chart table td {
+  color: rgba(47, 44, 44, 0.5098039216);
+  border-color: #ddd;
+}
+[data-theme=light] .shard-chart table .total-row td {
+  color: #ffffff;
+}
+[data-theme=light] .shard-chart table .level-cell,
+[data-theme=light] .shard-chart table .star-cell {
+  background-color: rgb(47, 85, 150);
+  color: #ffffff;
 }
 
 :root {

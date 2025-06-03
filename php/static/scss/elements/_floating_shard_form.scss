@@ -1,5 +1,3 @@
-// php/static/scss/elements/_floating_shard_form.scss
-
 @import "../base/variables";
 @import "../base/mixins";
 
@@ -20,19 +18,33 @@
   backdrop-filter: blur(10px);
   padding-top: 1rem;
 
+  /* ─── Dark‐Mode Overrides ─── */
   [data-theme="dark"] & {
-    background: rgba(30, 30, 30, 0.95);
+    background-color: rgba(30, 30, 30, 0.92);
     box-shadow: $box-shadow-dark;
+    backdrop-filter: none;
 
-    input,
-    select {
-      background: rgba(255, 255, 255, 0.05);
-      color: #eee;
-      border-color: $color-secondary;
+    /* Make inner form transparent */
+    .shard-form {
+      background: transparent;
+      box-shadow: none;
     }
 
+    /* Label / placeholder text */
     label {
-      color: #ccc;
+      color: #ccc !important;
+    }
+
+    .form-text {
+      color: #aaa;
+    }
+
+    /* Input / select */
+    input[type="text"],
+    select {
+      background: rgba(255, 255, 255, 0.05);
+      color: $color-light;
+      border-color: $color-secondary;
     }
   }
 
@@ -59,7 +71,7 @@
           font-weight: 600;
           font-size: $font-size-sm;
           margin-bottom: $spacing-xxs;
-          color: $color-black;       // darker label
+          color: $color-black; // default (light-mode) darker label
         }
 
         input,
@@ -69,7 +81,7 @@
           border-radius: $border-radius-sm;
           font-size: $font-size-sm;
           background-color: $color-white;
-          color: $color-black;       // high-contrast input text
+          color: $color-black; // default (light-mode) high-contrast input text
           transition: border-color $transition-duration;
 
           &::placeholder {
@@ -85,7 +97,7 @@
 
         .form-text {
           font-size: 0.75rem;
-          color: $color-muted;        // subdued hint text
+          color: $color-muted; // default light-mode hint text
           margin-top: $spacing-xxs;
         }
       }
@@ -98,7 +110,7 @@
       justify-content: space-between;
       gap: $spacing-sm;
 
-      /* shard display (left) */
+      /* Shard display (left) */
       .floating-shard-display {
         display: flex;
         align-items: center;
@@ -112,43 +124,19 @@
         #result {
           font-size: 2rem;
           font-weight: bold;
-          color: #917251;
+          color: #917251; // default light-mode result color
+
+          /* Dark-mode text override */
           [data-theme="dark"] & {
             color: rgb(245, 204, 101);
           }
         }
       }
 
-      /* button group (right) */
+      /* Button group (right) */
       .button-group {
         display: flex;
         gap: $spacing-xs;
-
-        button {
-          flex: 0 0 auto;
-          padding: $spacing-xs $spacing-sm;
-          font-weight: 600;
-          border-radius: $border-radius-sm;
-          border: none;
-          cursor: pointer;
-          transition: background-color $transition-duration;
-
-          &.btn-primary {
-            background-color: $color-primary;
-            color: $color-white;
-            &:hover {
-              background-color: darken($color-primary, 10%);
-            }
-          }
-
-          &.btn-secondary {
-            background-color: $color-secondary;
-            color: $color-black;
-            &:hover {
-              background-color: darken($color-secondary, 10%);
-            }
-          }
-        }
       }
     }
   }
@@ -162,5 +150,22 @@
 
   @include respond(phone-md, down) {
     padding-top: $spacing-sm;
+  }
+}
+
+
+/* ─── Floating Shard Display Additional Rules ─── */
+
+/* Dark-mode: ensure any <p> inside display is gold */
+[data-theme="dark"] .floating-shard-display {
+  p {
+    color: rgb(245, 204, 101);
+  }
+}
+
+/* Light-mode: default <p> inside display */
+[data-theme="light"] .floating-shard-display {
+  p {
+    color: rgb(245, 204, 101);
   }
 }
