@@ -1,13 +1,18 @@
+// ==============================================
+// heroes.scss (fully revised with integrated constraints)
+// ==============================================
+
 // Import variables and mixins
 @import '../base/variables';
 @import '../base/mixins';
 
-// General Page Styling
+// ==============================================
+// 🎨 General Page Styling
+// ==============================================
 body {
-  @include scrollbar($color-primary, lighten($color-light, 10%)); // Match scrollbar styling
+  @include scrollbar($color-primary, lighten($color-light, 10%));
 }
 
-// Headers
 h2, h3 {
   text-align: center;
   @include text-style($font-size: 1.25rem, $font-weight: bold, $color: $color-dark);
@@ -15,13 +20,11 @@ h2, h3 {
 
 p {
   color: $color-dark;
-
   body.dark-mode & {
     color: $color-light;
   }
 }
 
-// Images
 img {
   width: 6.25rem; // 100px
 }
@@ -34,17 +37,42 @@ img {
   width: 2rem; // 32px
 }
 
+// ==============================================
+// 🌟 Heroes Info Container (constrain to 800px)
+// ==============================================
 .heroes_info {
   display: flex;
   flex-direction: column;
   align-items: center;
+
+  // Clamp the entire block to your “content width.”
+  // Replace 800px with whatever max-content width you need.
+  max-width: 800px;
+  width: 100%;
+  margin: 0 auto;    // center horizontally
+  padding: $spacing-md;
+  box-sizing: border-box;
+
+  // Prevent any child from overflowing horizontally
+  overflow-x: hidden;
+
+  @include respond(phone-md, down) {
+    padding: $spacing-sm;
+    max-width: 100%;  // let it be full width on very small screens
+  }
 }
 
-// Dropdown Form
+// ==============================================
+// 📋 Dropdown Form
+// ==============================================
 .dropdown-form {
   text-align: center;
   margin-bottom: $spacing-medium;
   max-width: max-content;
+
+  @include respond(phone-md, down) {
+    margin-bottom: $spacing-sm;
+  }
 }
 
 select {
@@ -62,62 +90,48 @@ select {
   }
 }
 
-// Style for dropdown options with images
-#factionDropdown option {
-  background-repeat: no-repeat;
-  background-position: left center;
-  background-size: 20px 20px;
-  padding-left: 30px; // Space for the icon
-}
-
-// #factionDropdown option[value="all_heroes"] {
-//   background-image: url('/static/images/topheroes-all.png');
-// }
-
-#factionDropdown option[value="nature_heroes"] {
-  background-image: url('/static/images/topheroes-green.png');
-}
-
-#factionDropdown option[value="league_heroes"] {
-  background-image: url('/static/images/topheroes-blue.png');
-}
-
-#factionDropdown option[value="horde_heroes"] {
-  background-image: url('/static/images/topheroes-red.png');
-}
-
-// Mode Toggle Styling
+// ==============================================
+// 🔄 Mode Toggle Styling
+// ==============================================
 .mode-toggle {
-  text-align: center;
-  margin-bottom: $spacing-small;
   display: flex;
   justify-content: center;
   align-items: center;
   gap: $spacing-small;
   font-size: 1.75rem;
   color: $color-primary;
+  margin-bottom: $spacing-small;
+  text-align: center;
 
-  span {
-    font-weight: bold;
-  }
+  span { font-weight: bold; }
 
   i {
     font-size: 1.5rem;
     cursor: pointer;
     @include transition(transform, $transition-duration, $transition-ease);
 
-    &:hover {
-      transform: scale(1.1);
-    }
+    &:hover { transform: scale(1.1); }
+  }
+
+  @include respond(phone-md, down) {
+    font-size: 1.5rem;
+    gap: $spacing-xxs;
+    margin-bottom: $spacing-xxs;
   }
 }
 
-// Tile Mode
+// ==============================================
+// 💠 Tile Mode (Hero Grid)
+// ==============================================
 .hero-group {
   display: flex;
   flex-wrap: wrap;
   gap: $spacing-medium;
   justify-content: center;
+
+  @include respond(phone-md, down) {
+    gap: $spacing-small;
+  }
 }
 
 .hero-card {
@@ -141,16 +155,40 @@ select {
     margin: $spacing-small 0 0;
     font-weight: bold;
   }
+
+  @include respond(phone-md, down) {
+    width: 8rem; // 128px on mobile
+  }
 }
 
-// Preview Mode
+// Ensure the tile container never exceeds its parent’s width
+#heroContainer {
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+// ==============================================
+// 🔍 Preview Mode (Scrollable Row, exactly 100%)
+// ==============================================
 .preview-container {
+  width: 100%;            // fill parent’s width (max 800px as set above)
   display: flex;
-  overflow-x: auto;
   gap: $spacing-medium;
-  padding: $spacing-medium;
+  padding: 0;
   margin-bottom: $spacing-medium;
+  box-sizing: border-box;
+
+  overflow-x: auto;       // allow horizontal scroll, but never overflow the parent
+  -webkit-overflow-scrolling: touch; // smooth on iOS/Android
+  scroll-behavior: smooth;
+
   @include scrollbar($color-primary, $color-light);
+
+  @include respond(phone-md, down) {
+    gap: $spacing-small;
+    margin-bottom: $spacing-small;
+  }
 }
 
 .preview-card {
@@ -168,15 +206,29 @@ select {
     width: 100%;
     border-radius: $border-radius-medium;
   }
+
+  @include respond(phone-md, down) {
+    min-width: 8rem; // 128px on mobile
+  }
 }
 
-// Hidden Elements
+// Ensure the preview content wrapper itself never exceeds its parent
+#previewContent {
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+// ==============================================
+// 🚫 Hidden Elements
+// ==============================================
 .hidden {
   display: none;
 }
 
-// Hero Details Styling
-.hero-details,
+// ==============================================
+// 📝 Hero Details Panel
+// ==============================================
 #heroDetails {
   text-align: center;
   padding: $spacing-medium;
@@ -184,6 +236,8 @@ select {
   @include box-shadow($box-shadow-dark);
   background-color: rgba($color-light, $opacity-high);
   overflow: auto;
+  width: 100%;
+  box-sizing: border-box;
 
   body.dark-mode & {
     background-color: rgba($color-dark, $opacity-high);
@@ -203,9 +257,17 @@ select {
     margin: $spacing-xsmall 0;
     font-size: 1rem; // 16px
   }
+
+  @include respond(phone-md, down) {
+    padding: $spacing-small;
+    h3 { font-size: $font-size-md; }
+    p  { font-size: $font-size-sm; }
+  }
 }
 
-// Modal Styling
+// ==============================================
+// 🖼️ Modal Styling (unchanged)
+// ==============================================
 #heroModal {
   position: fixed;
   top: 0;
@@ -231,6 +293,11 @@ select {
     body.dark-mode & {
       background-color: rgba($color-dark, $opacity-high);
     }
+
+    @include respond(phone-md, down) {
+      width: 90%;
+      padding: $spacing-small;
+    }
   }
 
   .modal-close,
@@ -242,20 +309,14 @@ select {
     color: $color-light;
     cursor: pointer;
     z-index: $z-index-tooltip;
-
-    &:hover {
-      color: $color-primary;
-    }
+    &:hover { color: $color-primary; }
   }
 
   .modal-close {
     top: $spacing-xsmall;
     right: $spacing-xsmall;
     font-size: 2rem;
-
-    i {
-      pointer-events: none;
-    }
+    i { pointer-events: none; }
   }
 
   .modal-prev,
@@ -265,34 +326,31 @@ select {
     font-size: 1.5rem;
   }
 
-  .modal-prev {
-    left: $spacing-xsmall;
-  }
-
-  .modal-next {
-    right: $spacing-xsmall;
-  }
+  .modal-prev { left: $spacing-xsmall;  }
+  .modal-next { right: $spacing-xsmall; }
 }
 
-// Responsive Adjustments
-@include respond(phone-md, down) {
-  .hero-card {
-    width: 8rem; // Adjust width for smaller screens
+// ==============================================
+// 🌙 Dark Mode Overrides (unchanged)
+// ==============================================
+[data-theme="dark"] {
+  h2, h3 { color: $color-light; }
+
+  select {
+    background-color: rgba($color-white, 0.05);
+    color: $color-light;
+    border-color: $color-secondary;
+  }
+
+  .heroes_info {
+    background-color: rgba($color-dark, $opacity-medium);
   }
 
   .preview-container {
-    gap: $spacing-small;
-    padding: $spacing-small;
+    @include scrollbar($color-accent, darken($color-dark, 10%));
   }
 
-  #heroModal .modal-content {
-    padding: $spacing-small;
-    width: -webkit-fill-available;
-  }
-}
-
-@include respond(tablet-md, up) {
-  .hero-card {
-    width: 10rem; // Slightly larger for tablets
+  #heroDetails {
+    background-color: rgba($color-dark, $opacity-high);
   }
 }

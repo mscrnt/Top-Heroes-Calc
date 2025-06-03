@@ -7,8 +7,8 @@ require_once 'includes/db_functions.php';
 $heroes = [
     'nature_heroes' => [],
     'league_heroes' => [],
-    'horde_heroes' => [],
-    'all_heroes' => [],
+    'horde_heroes'  => [],
+    'all_heroes'    => [],
 ];
 
 // Fetch all heroes from the database
@@ -18,7 +18,7 @@ $allHeroes = getAllHeroes();
 $factionMap = [
     'Nature' => 'nature_heroes',
     'League' => 'league_heroes',
-    'Horde' => 'horde_heroes',
+    'Horde'  => 'horde_heroes',
 ];
 
 // Loop through each hero and group them by faction and rarity
@@ -27,59 +27,52 @@ foreach ($allHeroes as $hero) {
 
     // Add hero to all_heroes list
     $heroes['all_heroes'][] = [
-        'id' => $hero['id'],
-        'name' => $hero['name'],
-        'card' => $hero['card'] ?? null,
-        'rarity' => ucfirst(strtolower($hero['rarity'])), // Ensure proper capitalization (e.g., "Mythic")
+        'id'     => $hero['id'],
+        'name'   => $hero['name'],
+        'card'   => $hero['card'] ?? null,
+        'rarity' => ucfirst(strtolower($hero['rarity'])), // Ensure proper capitalization
     ];
 
     if ($factionKey) {
         $rarity = ucfirst(strtolower($hero['rarity']));
         if (!isset($heroes[$factionKey][$rarity])) {
-            $heroes[$factionKey][$rarity] = []; // Initialize rarity group if not exists
+            $heroes[$factionKey][$rarity] = []; // Initialize rarity group if it doesn’t exist
         }
 
-        // Add hero with card to the respective rarity group
+        // Add hero to the respective rarity group
         $heroes[$factionKey][$rarity][] = [
-            'id' => $hero['id'],
+            'id'   => $hero['id'],
             'name' => $hero['name'],
             'card' => $hero['card'] ?? null,
         ];
     }
 }
 ?>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-</head>
-<body>
-    <div class="heroes_info">
-        <div class="mode-toggle">
-            <span id="previewLabel">Tile</span>
-            <i class="fa-solid fa-toggle-off" id="modeToggleIcon"></i>
-            <span id="tileLabel">Preview</span>
-        </div> 
-        
-        <h2>Select Faction</h2>
-        <form class="dropdown-form">
-            <select name="faction" id="factionDropdown">
-                <option value="nature_heroes">Nature Heroes</option>
-                <option value="league_heroes">League Heroes</option>
-                <option value="horde_heroes">Horde Heroes</option> 
-                <option value="all_heroes">All Heroes</option>
-            </select>
-        </form>
-        <div id="heroContainer" class="tile-mode"></div>
-        <div id="previewContent" class="hidden"></div>
-        <div id="heroDetails" class="hidden"></div>
 
-        <!-- Embed heroesData as a JSON variable -->
-        <script>
-            const heroesData = <?= json_encode($heroes) ?>;
-        </script>
-        <script src="/static/js/heroes.js" defer></script>
+<div class="heroes_info">
+    <div class="mode-toggle">
+        <span id="previewLabel">Tile</span>
+        <i class="fa-solid fa-toggle-off" id="modeToggleIcon"></i>
+        <span id="tileLabel">Preview</span>
     </div>
-</body>
-</html>
+
+    <h2>Select Faction</h2>
+    <form class="dropdown-form">
+        <select name="faction" id="factionDropdown">
+            <option value="nature_heroes">Nature Heroes</option>
+            <option value="league_heroes">League Heroes</option>
+            <option value="horde_heroes">Horde Heroes</option>
+            <option value="all_heroes">All Heroes</option>
+        </select>
+    </form>
+
+    <div id="heroContainer" class="tile-mode"></div>
+    <div id="previewContent" class="hidden"></div>
+    <div id="heroDetails" class="hidden"></div>
+
+    <!-- Pass PHP-generated data into JavaScript -->
+    <script>
+        const heroesData = <?= json_encode($heroes, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) ?>;
+    </script>
+    <script src="/static/js/heroes.js" defer></script>
+</div>
