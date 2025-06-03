@@ -3,7 +3,7 @@
 
 $pageTitles = [
     'shard_calc' => 'Hero Shard Calculator',
-    'heroes' => 'Hero Info',
+    'heroes' => 'Hero Information',
     'hero_leveling' => 'Hero Level Calculator',
 ];
 
@@ -25,8 +25,8 @@ include 'includes/header.php';
           </button>
           <div id="menuDropdown" class="menu-dropdown">
             <a href="?page=shard_calc" class="<?= $page === 'shard_calc' ? 'active' : '' ?>">Shard Calculator</a>
-            <a href="?page=heroes" class="<?= $page === 'heroes' ? 'active' : '' ?>">Hero Info</a>
             <a href="?page=hero_leveling" class="<?= $page === 'hero_leveling' ? 'active' : '' ?>">Hero Level Calculator</a>
+            <a href="?page=heroes" class="<?= $page === 'heroes' ? 'active' : '' ?>">Hero Information</a>
           </div>
         </div>
 
