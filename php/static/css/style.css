@@ -1579,6 +1579,9 @@ img {
   border-radius: 0.5rem;
   overflow-x: hidden;
 }
+.heroes_info h2 {
+  color: #000;
+}
 [data-theme=dark] .heroes_info {
   background-color: rgba(47, 44, 44, 0.75);
   box-shadow: 0 0.25rem 0.625rem rgba(0, 0, 0, 0.4) 0 1rem 0 rgba(0, 0, 0, 0.1);

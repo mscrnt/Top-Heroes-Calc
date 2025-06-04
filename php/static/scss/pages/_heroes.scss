@@ -67,6 +67,11 @@ img {
   // Prevent horizontal overflow
   overflow-x: hidden;
 
+  h2 {
+    color: #000;
+  }
+
+
   [data-theme="dark"] & {
     background-color: rgba($color-dark, 0.75);
     @include box-shadow($box-shadow-dark);

@@ -4,21 +4,27 @@ document.addEventListener('DOMContentLoaded', () => {
     console.log('heroes:DOMContentLoaded');
 
     // Grab DOM elements
-    const factionDropdown = document.getElementById('factionDropdown');
-    const heroContainer = document.getElementById('heroContainer');
-    const previewContent = document.getElementById('previewContent');
-    const modeToggleIcon = document.getElementById('modeToggleIcon');
+    const factionDropdown   = document.getElementById('factionDropdown');
+    const heroContainer     = document.getElementById('heroContainer');
+    const previewContent     = document.getElementById('previewContent');
+    const modeToggleIcon     = document.getElementById('modeToggleIcon');
     const heroDetailsSection = document.getElementById('heroDetails');
+
+    // Grab the two label‐icons so they can be clicked directly
+    const previewLabel = document.getElementById('previewLabel');
+    const tileLabel    = document.getElementById('tileLabel');
 
     console.log('heroes:ElementsRetrieved', {
         factionDropdown,
         heroContainer,
         previewContent,
         modeToggleIcon,
-        heroDetailsSection
+        heroDetailsSection,
+        previewLabel,
+        tileLabel
     });
 
-    if (!factionDropdown || !heroContainer || !previewContent || !modeToggleIcon || !heroDetailsSection) {
+    if (!factionDropdown || !heroContainer || !previewContent || !modeToggleIcon || !heroDetailsSection || !previewLabel || !tileLabel) {
         console.error('heroes:MissingElements');
     }
 
@@ -63,6 +69,28 @@ document.addEventListener('DOMContentLoaded', () => {
         modeToggleIcon.classList.add('fa-toggle-on');
         console.log('heroes:SwitchedToPreviewMobile');
     }
+
+    // Add click listeners so the left icon forces preview mode
+    previewLabel.addEventListener('click', () => {
+        if (currentMode !== 'tile') {
+            modeToggleIcon.classList.remove('fa-toggle-on');
+            modeToggleIcon.classList.add('fa-toggle-off');
+            currentMode = 'tile';
+            console.log('heroes:SwitchedToPreviewViaIcon');
+            renderHeroes(factionDropdown.value);
+        }
+    });
+
+    // Add click listeners so the right icon forces tile mode
+    tileLabel.addEventListener('click', () => {
+        if (currentMode !== 'preview') {
+            modeToggleIcon.classList.remove('fa-toggle-off');
+            modeToggleIcon.classList.add('fa-toggle-on');
+            currentMode = 'preview';
+            console.log('heroes:SwitchedToTileViaIcon');
+            renderHeroes(factionDropdown.value);
+        }
+    });
 
     function renderHeroes(faction) {
         console.log(`heroes:renderHeroes:${faction}`);
@@ -242,9 +270,9 @@ document.addEventListener('DOMContentLoaded', () => {
         const previewContainer = previewContent.querySelector('.preview-container');
         const selectedCard = previewCards[selectedHeroIndex];
         if (selectedCard) {
-            const cardOffset = selectedCard.offsetLeft;
+            const cardOffset    = selectedCard.offsetLeft;
             const containerWidth = previewContainer.offsetWidth;
-            const cardWidth = selectedCard.offsetWidth;
+            const cardWidth      = selectedCard.offsetWidth;
             const scrollPosition = Math.max(
                 0,
                 cardOffset - containerWidth / 2 + cardWidth / 2
@@ -300,8 +328,8 @@ document.addEventListener('DOMContentLoaded', () => {
         fetchHeroPage(hero);
 
         heroModal.querySelector('.modal-close').onclick = closeHeroModal;
-        heroModal.querySelector('.modal-prev').onclick = () => navigateHero(-1);
-        heroModal.querySelector('.modal-next').onclick = () => navigateHero(1);
+        heroModal.querySelector('.modal-prev').onclick  = () => navigateHero(-1);
+        heroModal.querySelector('.modal-next').onclick  = () => navigateHero(1);
 
         document.addEventListener('keydown', handleModalKeyEvents); // Attach keydown listener
     }
