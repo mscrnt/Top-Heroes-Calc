@@ -1,5 +1,5 @@
 // ==============================================
-// heroes.scss (fully revised with integrated constraints)
+// heroes.scss (revised to match your site’s light/dark theming)
 // ==============================================
 
 // Import variables and mixins
@@ -11,17 +11,24 @@
 // ==============================================
 body {
   @include scrollbar($color-primary, lighten($color-light, 10%));
+  [data-theme="dark"] & {
+    background-color: $color-dark;
+  }
 }
 
 h2, h3 {
   text-align: center;
-  @include text-style($font-size: 1.25rem, $font-weight: bold, $color: $color-dark);
+  margin: auto;
+  @include text-style($font-size: 1.25rem, $font-weight: bold, $color: $color-black);
+  [data-theme="dark"] & {
+    color: $color-white;
+  }
 }
 
 p {
-  color: $color-dark;
-  body.dark-mode & {
-    color: $color-light;
+  color: $color-black;
+  [data-theme="dark"] & {
+    color: $color-white;
   }
 }
 
@@ -45,20 +52,30 @@ img {
   flex-direction: column;
   align-items: center;
 
-  // Clamp the entire block to your “content width.”
-  // Replace 800px with whatever max-content width you need.
+  // Content width clamp
   max-width: 800px;
   width: 100%;
-  margin: 0 auto;    // center horizontally
+  margin: 0 auto;
   padding: $spacing-md;
   box-sizing: border-box;
 
-  // Prevent any child from overflowing horizontally
+  // Light-mode background: nearly opaque white
+  background-color: rgba($color-white, 0.90);
+  @include box-shadow($box-shadow-light);
+  border-radius: $border-radius-md;
+
+  // Prevent horizontal overflow
   overflow-x: hidden;
+
+  [data-theme="dark"] & {
+    background-color: rgba($color-dark, 0.75);
+    @include box-shadow($box-shadow-dark);
+  }
 
   @include respond(phone-md, down) {
     padding: $spacing-sm;
-    max-width: 100%;  // let it be full width on very small screens
+    max-width: 100%;  // full width on small screens
+    margin: $spacing-sm auto;
   }
 }
 
@@ -69,6 +86,17 @@ img {
   text-align: center;
   margin-bottom: $spacing-medium;
   max-width: max-content;
+  background-color: rgb(255 255 255 / 0%);
+  box-shadow: none !important; 
+
+  #factionDropdown {
+    width: auto;
+  }
+
+  [data-theme="dark"] & {
+    background-color: rgba($color-dark, 0.50);
+    @include box-shadow($box-shadow-dark);
+  }
 
   @include respond(phone-md, down) {
     margin-bottom: $spacing-sm;
@@ -80,13 +108,21 @@ select {
   padding: $spacing-small;
   border-radius: $border-radius-sm;
   border: 1px solid $color-secondary;
-  color: $color-dark;
+  background-color: $color-white;
+  color: $color-black;
   box-sizing: border-box;
+  @include transition(border-color, $transition-duration, $transition-ease);
 
   &:focus {
     border-color: $color-primary;
     outline: none;
-    @include box-shadow(0, 0, 0.25rem, 0, rgba(47, 85, 150, 0.5));
+    @include box-shadow(0, 0, 0.25rem, 0, rgba($color-accent, 0.25));
+  }
+
+  [data-theme="dark"] & {
+    background-color: rgba($color-white, 0.05);
+    border-color: $color-secondary;
+    color: $color-white;
   }
 }
 
@@ -97,20 +133,33 @@ select {
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: $spacing-small;
+  gap: $spacing-medium;
   font-size: 1.75rem;
-  color: $color-primary;
+  color: $color-black;
   margin-bottom: $spacing-small;
   text-align: center;
 
-  span { font-weight: bold; }
+  #modeToggleIcon {
+    color: $color-primary;
+    margin: $spacing-medium;
+  }
+
+  [data-theme="dark"] & {
+    color: $color-white;
+  }
+
+  span {
+    font-weight: bold;
+  }
 
   i {
     font-size: 1.5rem;
     cursor: pointer;
     @include transition(transform, $transition-duration, $transition-ease);
 
-    &:hover { transform: scale(1.1); }
+    &:hover {
+      transform: scale(1.1);
+    }
   }
 
   @include respond(phone-md, down) {
@@ -138,8 +187,14 @@ select {
   text-align: center;
   width: 9.375rem; // 150px
   border-radius: $border-radius-medium;
+  background-color: $color-white;
   @include box-shadow($box-shadow-light);
-  @include transition(transform, $transition-duration, $transition-ease);
+  @include transition(all, $transition-duration, $transition-ease);
+
+  [data-theme="dark"] & {
+    background-color: rgba($color-dark, 0.50);
+    @include box-shadow($box-shadow-dark);
+  }
 
   &:hover {
     transform: translateY(-0.3125rem); // -5px
@@ -148,12 +203,17 @@ select {
 
   img {
     width: 100%;
-    border-radius: $border-radius-medium;
+    border-top-left-radius: $border-radius-medium;
+    border-top-right-radius: $border-radius-medium;
   }
 
   p {
     margin: $spacing-small 0 0;
     font-weight: bold;
+    color: $color-black;
+    [data-theme="dark"] & {
+      color: $color-white;
+    }
   }
 
   @include respond(phone-md, down) {
@@ -178,8 +238,9 @@ select {
   padding: 0;
   margin-bottom: $spacing-medium;
   box-sizing: border-box;
+  background-color: transparent;
 
-  overflow-x: auto;       // allow horizontal scroll, but never overflow the parent
+  overflow-x: auto;       // allow horizontal scroll
   -webkit-overflow-scrolling: touch; // smooth on iOS/Android
   scroll-behavior: smooth;
 
@@ -188,6 +249,10 @@ select {
   @include respond(phone-md, down) {
     gap: $spacing-small;
     margin-bottom: $spacing-small;
+  }
+
+  [data-theme="dark"] & {
+    @include scrollbar($color-accent, darken($color-dark, 10%));
   }
 }
 
@@ -233,19 +298,24 @@ select {
   text-align: center;
   padding: $spacing-medium;
   border-radius: $border-radius-medium;
+  background-color: rgba($color-white, 0.90);
   @include box-shadow($box-shadow-dark);
-  background-color: rgba($color-light, $opacity-high);
   overflow: auto;
   width: 100%;
   box-sizing: border-box;
 
-  body.dark-mode & {
-    background-color: rgba($color-dark, $opacity-high);
+  [data-theme="dark"] & {
+    background-color: rgba($color-dark, 0.75);
+    @include box-shadow($box-shadow-dark);
   }
 
   h3 {
     font-size: 1.25rem; // 20px
     margin-bottom: $spacing-xsmall;
+    color: $color-black;
+    [data-theme="dark"] & {
+      color: $color-white;
+    }
   }
 
   img {
@@ -256,6 +326,10 @@ select {
   p {
     margin: $spacing-xsmall 0;
     font-size: 1rem; // 16px
+    color: $color-black;
+    [data-theme="dark"] & {
+      color: $color-white;
+    }
   }
 
   @include respond(phone-md, down) {
@@ -266,7 +340,7 @@ select {
 }
 
 // ==============================================
-// 🖼️ Modal Styling (unchanged)
+// 🖼️ Modal Styling (unchanged layout, but color-matched)
 // ==============================================
 #heroModal {
   position: fixed;
@@ -288,10 +362,10 @@ select {
     max-height: 90%;
     overflow-y: auto;
     @include box-shadow($box-shadow-dark);
-    background-color: rgba($color-light, $opacity-high);
+    background-color: rgba($color-white, 0.95);
 
-    body.dark-mode & {
-      background-color: rgba($color-dark, $opacity-high);
+    [data-theme="dark"] & {
+      background-color: rgba($color-dark, 0.75);
     }
 
     @include respond(phone-md, down) {
@@ -306,18 +380,34 @@ select {
     position: absolute;
     background: transparent;
     border: none;
-    color: $color-light;
+    color: $color-primary;       // Light‐mode icon color
     cursor: pointer;
     z-index: $z-index-tooltip;
-    &:hover { color: $color-primary; }
+
+    &:hover {
+      color: $color-white;       // Hover turns white even in light mode
+    }
+
+    // Dark‐mode overrides: this entire block only applies when [data-theme="dark"] is on an ancestor
+    [data-theme="dark"] & {
+      color: lighten($color-danger, 15%);
+
+      &:hover {
+        color: $color-white;
+      }
+    }
   }
 
   .modal-close {
-    top: $spacing-xsmall;
-    right: $spacing-xsmall;
+    top: 3.25rem;
+    right: 1.25rem;
     font-size: 2rem;
-    i { pointer-events: none; }
+
+    i {
+      pointer-events: none;
+    }
   }
+
 
   .modal-prev,
   .modal-next {
@@ -331,19 +421,44 @@ select {
 }
 
 // ==============================================
-// 🌙 Dark Mode Overrides (unchanged)
+// 🌙 Dark Mode Overrides (already inlined above)
 // ==============================================
 [data-theme="dark"] {
-  h2, h3 { color: $color-light; }
+  body {
+    background-color: $color-dark;
+  }
 
-  select {
-    background-color: rgba($color-white, 0.05);
-    color: $color-light;
-    border-color: $color-secondary;
+  h2, h3 {
+    color: $color-white;
+  }
+
+  p {
+    color: $color-white;
   }
 
   .heroes_info {
-    background-color: rgba($color-dark, $opacity-medium);
+    background-color: rgba($color-dark, 0.75);
+    @include box-shadow($box-shadow-dark);
+  }
+
+
+  select {
+    background-color: rgba($color-white, 0.05);
+    border-color: lighten($color-danger, 15%);
+    color: lighten($color-danger, 15%);
+  }
+
+  .mode-toggle {
+    color: $color-white;
+
+    #modeToggleIcon {
+      color: lighten($color-danger, 15%)
+    }
+  }
+
+  .hero-card {
+    background-color: rgba($color-dark, 0.50);
+    @include box-shadow($box-shadow-dark);
   }
 
   .preview-container {
@@ -351,6 +466,7 @@ select {
   }
 
   #heroDetails {
-    background-color: rgba($color-dark, $opacity-high);
+    background-color: rgba($color-dark, 0.75);
+    @include box-shadow($box-shadow-dark);
   }
 }

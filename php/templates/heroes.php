@@ -51,9 +51,9 @@ foreach ($allHeroes as $hero) {
 
 <div class="heroes_info">
     <div class="mode-toggle">
-        <span id="previewLabel">Tile</span>
+        <span id="previewLabel"><i class="fa-solid fa-table-cells"></i></span>
         <i class="fa-solid fa-toggle-off" id="modeToggleIcon"></i>
-        <span id="tileLabel">Preview</span>
+        <span id="tileLabel"><i class="fa-solid fa-users-between-lines"></i></span>
     </div>
 
     <h2>Select Faction</h2>
