@@ -2,37 +2,16 @@
 // templates/shard_calc.php
 ?>
 <script src="/static/js/shard_calc.js" defer></script>
+<script src="/static/js/shard_form_float.js" defer></script>
 
-<center>
-    <p>This tool helps you figure out exactly how many shards you’ll need to max out your legendary and mythic heroes in <strong>Top Heroes</strong>. Click on a star level or enter your hero level to calculate the shards.</p>
-</center>    
-<form>
-    <div class="form-row">
-        <div class="form-group">
-            <label for="heroType">Select Hero Type:</label>
-            <select class="form-control" id="heroType">
-                <option value="legendary" selected>Legendary</option>
-                <option value="mythic">Mythic</option>
-            </select>
-        </div>
-        <div class="form-group">
-            <label for="currentLevel">Enter Current Hero Level:</label>
-            <input type="text" class="form-control" id="currentLevel" placeholder="Example: 1.3">
-            <small class="form-text">Format: Level.Step (Use '1.3' for level 1, step 3).</small>
-        </div>
-    </div>
-    <button type="button" class="btn btn-primary" id="calculateButton">Calculate</button>
-    <button type="button" class="btn btn-secondary" id="resetButton">Reset</button>
-</form>
+<section class="shard-intro">
+<br>
+<br>
+</section>
 
-<div class="floating-shard-display">
-    <p>
-        <img src="static/images/resources/shard.webp" alt="Shard Icon" style="vertical-align: middle;"><strong><span id="result"></span></strong>
-    </p>
-</div>
 
-<!-- PHP Logic to Generate Charts -->
 <?php
+// Helper to render star icons
 function generateStars($heroType, $level, $starCount, $shardPerStep, $groupClass) {
     $stars = '';
     for ($i = 1; $i <= $starCount; $i++) {
@@ -44,6 +23,7 @@ function generateStars($heroType, $level, $starCount, $shardPerStep, $groupClass
     return $stars;
 }
 
+// Shard Data Config
 $shardData = [
     'legendary' => [
         'title' => 'Legendary Shard Requirements',
@@ -59,10 +39,12 @@ $shardData = [
     ]
 ];
 
+// Render Chart Tables
 foreach ($shardData as $type => $data) {
     $displayStyle = $type === 'legendary' ? 'block' : 'none';
-    echo "<div id='{$type}Chart' class='shard-chart' style='display:{$displayStyle};'>";
+    echo "<div id='{$type}Chart' class='shard-chart' style='display: {$displayStyle};'>";
     echo "<h3>{$data['title']}</h3>";
+    echo "<p>Click on the stars to fill the progress bar. It takes 5 steps to fill a star, and each step requires a specific number of shards.</p>";
     echo "<table>";
     echo "<tr><th>Level</th><th>Star</th><th>Shard per Step</th><th>Per Star</th><th>Overall</th></tr>";
 
@@ -72,9 +54,8 @@ foreach ($shardData as $type => $data) {
     foreach ($data['groups'] as $groupIndex => $groupTotal) {
         $groupClass = "group-" . ($groupIndex + 1);
         $groupRows = "";
-        $levelsInGroup = 5;
 
-        for ($level = 1; $level <= $levelsInGroup; $level++) {
+        for ($level = 1; $level <= 5; $level++) {
             if ($levelIndex < count($data['Shard per Step'])) {
                 $shardPerStep = $data['Shard per Step'][$levelIndex];
                 $perStar = $data['Per star'][$levelIndex];
@@ -82,12 +63,9 @@ foreach ($shardData as $type => $data) {
 
                 $groupRows .= "<tr class='$groupClass'>";
                 $groupRows .= "<td class='level-cell'>" . ($levelIndex + 1) . "</td>";
-                
-                // Star cell with overlay
                 $groupRows .= "<td class='star-cell' data-level='" . ($levelIndex + 1) . "' data-shards='$shardPerStep'>";
                 $groupRows .= "<div class='progress-overlay' id='{$type}-progress-" . ($levelIndex + 1) . "'></div>";
                 $groupRows .= "<div class='star-container'>$stars</div></td>";
-                
                 $groupRows .= "<td class='shards-per-step'>{$shardPerStep}</td>";
                 $groupRows .= "<td class='per-star'>{$perStar}</td>";
                 $groupRows .= ($level === 1 ? "<td class='overall' rowspan='5'>{$groupTotal}</td>" : "");
@@ -105,7 +83,6 @@ foreach ($shardData as $type => $data) {
     echo "<td colspan='4'>Total</td>";
     echo "<td>$grandTotal</td>";
     echo "</tr>";
-
     echo "</table></div>";
 }
 ?>

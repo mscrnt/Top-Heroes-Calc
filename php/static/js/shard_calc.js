@@ -13,7 +13,6 @@ const defaultShards = {
 document.addEventListener("DOMContentLoaded", () => {
     resetForm();
     toggleChart();
-    handleFloatingShardDisplay();
 
     document.getElementById("heroType").addEventListener("change", handleChartSwitch);
     document.getElementById("calculateButton").addEventListener("click", () => {
@@ -198,93 +197,5 @@ function toggleChart() {
         legendaryChart.style.display = heroType === "legendary" ? "block" : "none";
         mythicChart.style.display = heroType === "legendary" ? "none" : "block";
     }
-}
-
-function handleFloatingShardDisplay() {
-    const floatingShard = document.querySelector('.floating-shard-display');
-    const heroTypeSelect = document.querySelector('#heroType');
-    const fixedTopDistance = 64; // Distance from the top of the viewport when pinned (0.5rem)
-    const offsetBelowHeroType = 8; // Distance below the #heroType element
-    let isPinned = false;
-
-    // Debugging utility
-    function logPositionDetails() {
-        const heroTypeRect = heroTypeSelect.getBoundingClientRect();
-        const floatingShardRect = floatingShard.getBoundingClientRect();
-
-        // console.log('[Debug] HeroType Element Position:', {
-        //     top: heroTypeRect.top,
-        //     bottom: heroTypeRect.bottom,
-        // });
-        // console.log('[Debug] Floating Shard Position:', {
-        //     top: floatingShardRect.top,
-        //     bottom: floatingShardRect.bottom,
-        // });
-    }
-
-    function updateFloatingShardPosition() {
-        const heroTypeRect = heroTypeSelect.getBoundingClientRect();
-        const scrollY = window.scrollY || document.documentElement.scrollTop;
-
-        if (heroTypeRect.bottom + offsetBelowHeroType <= fixedTopDistance && !isPinned) {
-            // Pin the shard to the top of the viewport
-            floatingShard.style.position = 'fixed';
-            floatingShard.style.top = `${fixedTopDistance}px`;
-            isPinned = true;
-            // console.log('[Debug] Floating shard pinned to viewport.');
-        } else if (heroTypeRect.bottom + offsetBelowHeroType > fixedTopDistance && isPinned) {
-            // Reposition the floating shard below the heroType element
-            floatingShard.style.position = 'absolute';
-            floatingShard.style.top = `${heroTypeRect.bottom + scrollY + offsetBelowHeroType}px`;
-            isPinned = false;
-            // console.log('[Debug] Floating shard unpinned and repositioned.');
-        } else if (!isPinned) {
-            // Update the floating shard's position dynamically below the heroType element
-            floatingShard.style.top = `${heroTypeRect.bottom + scrollY + offsetBelowHeroType}px`;
-        }
-
-        logPositionDetails();
-    }
-
-    function initializePosition() {
-        const heroTypeRect = heroTypeSelect.getBoundingClientRect();
-        const scrollY = window.scrollY || document.documentElement.scrollTop;
-
-        // Position the shard 8px below the heroType element
-        floatingShard.style.position = 'absolute';
-        floatingShard.style.top = `${heroTypeRect.bottom + scrollY + offsetBelowHeroType}px`;
-
-        // console.log('[Debug] Initializing floating shard position...');
-        logPositionDetails();
-    }
-
-    function detectScrollableContainer() {
-        let scrollContainer = window;
-
-        let parent = heroTypeSelect.parentElement;
-        while (parent) {
-            const overflowY = window.getComputedStyle(parent).overflowY;
-            if (overflowY === 'scroll' || overflowY === 'auto') {
-                scrollContainer = parent;
-                break;
-            }
-            parent = parent.parentElement;
-        }
-
-        return scrollContainer;
-    }
-
-    const scrollContainer = detectScrollableContainer();
-
-    // Initialize position and add listeners
-    initializePosition();
-
-    if (scrollContainer === window) {
-        window.addEventListener('scroll', updateFloatingShardPosition);
-    } else {
-        scrollContainer.addEventListener('scroll', updateFloatingShardPosition);
-    }
-
-    window.addEventListener('resize', initializePosition);
 }
 

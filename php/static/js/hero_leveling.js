@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
-    console.log("DOM fully loaded and parsed");
+    console.log("[Analytics] Page ready");
 
     const resourceName = "Meat";
 
@@ -25,44 +25,52 @@ document.addEventListener("DOMContentLoaded", function () {
     const currentLevelNotice = document.getElementById("current_level_notice");
     const desiredLevelNotice = document.getElementById("desired_level_notice");
 
-    const resultContainer = document.getElementById("result");
+    const resultContainer = document.getElementById("meat-result");
 
     let currentLevelLocked = false;
     let desiredLevelLocked = false;
 
-    // Dynamically position the notice below the slider container
+    // Position notices once on load and on resize/scroll
     function adjustNoticePosition(notice, container) {
-        const containerRect = container.getBoundingClientRect();
+        const rect = container.getBoundingClientRect();
         notice.style.position = "absolute";
-        notice.style.top = `${containerRect.bottom + window.scrollY}px`; // 5px below the container
-        notice.style.left = `${containerRect.left + window.scrollX}px`;
-        notice.style.width = `${containerRect.width}px`;
+        notice.style.top = `${rect.bottom + window.scrollY}px`;
+        notice.style.left = `${rect.left + window.scrollX}px`;
+        notice.style.width = `${rect.width}px`;
     }
 
-    // Update positions of notices dynamically
     function updateNoticePositions() {
-        adjustNoticePosition(currentLevelNotice, currentLevelSlider.closest(".slider-container"));
-        adjustNoticePosition(desiredLevelNotice, desiredLevelSlider.closest(".slider-container"));
+        adjustNoticePosition(
+            currentLevelNotice,
+            currentLevelSlider.closest(".slider-container")
+        );
+        adjustNoticePosition(
+            desiredLevelNotice,
+            desiredLevelSlider.closest(".slider-container")
+        );
     }
 
-
-    // Load stored values or set defaults
+    // Load stored values or defaults
     function loadStoredValues() {
-        const storedCurrentLevel = parseInt(localStorage.getItem("currentLevel")) || 1;
-        const storedDesiredLevel = parseInt(localStorage.getItem("desiredLevel")) || maxLevel;
+        const storedCurrent = parseInt(localStorage.getItem("currentLevel")) || 1;
+        const storedDesired = parseInt(localStorage.getItem("desiredLevel")) || maxLevel;
         currentLevelLocked = localStorage.getItem("currentLevelLocked") === "true";
         desiredLevelLocked = localStorage.getItem("desiredLevelLocked") === "true";
 
-        currentLevelSlider.value = storedCurrentLevel;
-        desiredLevelSlider.value = storedDesiredLevel;
-        currentLevelNum.value = storedCurrentLevel;
-        desiredLevelNum.value = storedDesiredLevel;
+        currentLevelSlider.value = storedCurrent;
+        desiredLevelSlider.value = storedDesired;
+        currentLevelNum.value = storedCurrent;
+        desiredLevelNum.value = storedDesired;
 
         updateLockState(currentLevelLock, currentLevelLocked);
         updateLockState(desiredLevelLock, desiredLevelLocked);
+
+        console.log(
+            `[Analytics] Loaded levels: current=${storedCurrent} (locked=${currentLevelLocked}), desired=${storedDesired} (locked=${desiredLevelLocked})`
+        );
     }
 
-    // Save values to local storage
+    // Save values to localStorage
     function saveValues() {
         localStorage.setItem("currentLevel", currentLevelSlider.value);
         localStorage.setItem("desiredLevel", desiredLevelSlider.value);
@@ -70,27 +78,35 @@ document.addEventListener("DOMContentLoaded", function () {
         localStorage.setItem("desiredLevelLocked", desiredLevelLocked);
     }
 
-    // Update the lock icon and class
-    function updateLockState(lockElement, isLocked) {
-        lockElement.classList.toggle("fa-lock", isLocked);
-        lockElement.classList.toggle("fa-lock-open", !isLocked);
-        lockElement.classList.toggle("locked", isLocked);
+    // Update lock icon
+    function updateLockState(lockElem, isLocked) {
+        lockElem.classList.toggle("fa-lock", isLocked);
+        lockElem.classList.toggle("fa-lock-open", !isLocked);
+        lockElem.classList.toggle("locked", isLocked);
     }
 
-    // Update lock states and save to local storage
     currentLevelLock.addEventListener("click", function () {
         currentLevelLocked = !currentLevelLocked;
         updateLockState(currentLevelLock, currentLevelLocked);
         saveValues();
+        console.log(
+            `[Analytics] currentLevelLock toggled → now ${
+                currentLevelLocked ? "locked" : "unlocked"
+            }`
+        );
     });
 
     desiredLevelLock.addEventListener("click", function () {
         desiredLevelLocked = !desiredLevelLocked;
         updateLockState(desiredLevelLock, desiredLevelLocked);
         saveValues();
+        console.log(
+            `[Analytics] desiredLevelLock toggled → now ${
+                desiredLevelLocked ? "locked" : "unlocked"
+            }`
+        );
     });
 
-    // Update values and enforce constraints
     function updateValues() {
         currentLevelNum.value = currentLevelSlider.value;
         desiredLevelNum.value = desiredLevelSlider.value;
@@ -98,175 +114,175 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     function enforceConstraints(source) {
-        let currentLevel = parseInt(currentLevelSlider.value);
-        let desiredLevel = parseInt(desiredLevelSlider.value);
+        let curr = parseInt(currentLevelSlider.value);
+        let des = parseInt(desiredLevelSlider.value);
 
-        // Trigger pulse for a given element
-        function triggerGlow(element) {
-            if (!element.classList.contains("pulse")) {
-                element.classList.add("pulse");
-                setTimeout(() => element.classList.remove("pulse"), 3000); // Remove pulse after 1 second
+        // Helper to show and pulse a notice or lock icon
+        function triggerGlow(elem) {
+            elem.style.display = "";
+            if (!elem.classList.contains("pulse")) {
+                elem.classList.add("pulse");
+                setTimeout(() => elem.classList.remove("pulse"), 3000);
             }
         }
 
         if (currentLevelLocked && desiredLevelLocked) {
-            if (source === "current" && currentLevel >= desiredLevel) {
-                currentLevelSlider.value = desiredLevel - 1;
+            if (source === "current" && curr >= des) {
+                currentLevelSlider.value = des - 1;
                 triggerGlow(desiredLevelLock);
-                triggerGlow(currentLevelNotice); // Show notice for current level
+                triggerGlow(currentLevelNotice);
             }
-            if (source === "desired" && desiredLevel <= currentLevel) {
-                desiredLevelSlider.value = currentLevel + 1;
+            if (source === "desired" && des <= curr) {
+                desiredLevelSlider.value = curr + 1;
                 triggerGlow(currentLevelLock);
-                triggerGlow(desiredLevelNotice); // Show notice for desired level
+                triggerGlow(desiredLevelNotice);
             }
         } else if (currentLevelLocked && !desiredLevelLocked) {
-            if (source === "current" && currentLevel >= desiredLevel) {
-                desiredLevelSlider.value = currentLevel + 1;
-            } else if (source === "desired" && desiredLevel <= currentLevel) {
-                desiredLevelSlider.value = currentLevel + 1;
+            if (source === "current" && curr >= des) {
+                desiredLevelSlider.value = curr + 1;
+                console.log(
+                    `[Analytics] Constraint: desiredLevel bumped to ${
+                        desiredLevelSlider.value
+                    }`
+                );
+            } else if (source === "desired" && des <= curr) {
+                desiredLevelSlider.value = curr + 1;
                 triggerGlow(currentLevelLock);
-                triggerGlow(desiredLevelNotice); // Show notice for current level
+                triggerGlow(desiredLevelNotice);
             }
         } else if (desiredLevelLocked && !currentLevelLocked) {
-            if (source === "desired" && desiredLevel <= currentLevel) {
-                currentLevelSlider.value = desiredLevel - 1;
-            } else if (source === "current" && currentLevel >= desiredLevel) {
-                currentLevelSlider.value = desiredLevel - 1;
+            if (source === "desired" && des <= curr) {
+                currentLevelSlider.value = des - 1;
+                console.log(
+                    `[Analytics] Constraint: currentLevel reduced to ${
+                        currentLevelSlider.value
+                    }`
+                );
+            } else if (source === "current" && curr >= des) {
+                currentLevelSlider.value = des - 1;
                 triggerGlow(desiredLevelLock);
-                triggerGlow(currentLevelNotice); // Show notice for desired level
+                triggerGlow(currentLevelNotice);
             }
         } else {
-            if (source === "current" && currentLevel >= desiredLevel) {
-                desiredLevelSlider.value = currentLevel + 1;
-                            }
-            if (source === "desired" && desiredLevel <= currentLevel) {
-                currentLevelSlider.value = desiredLevel - 1;
-                            }
+            if (source === "current" && curr >= des) {
+                desiredLevelSlider.value = curr + 1;
+                console.log(
+                    `[Analytics] Constraint: desiredLevel bumped to ${
+                        desiredLevelSlider.value
+                    }`
+                );
+            }
+            if (source === "desired" && des <= curr) {
+                currentLevelSlider.value = des - 1;
+                console.log(
+                    `[Analytics] Constraint: currentLevel reduced to ${
+                        currentLevelSlider.value
+                    }`
+                );
+            }
         }
 
         updateValues();
     }
 
-    // Calculate and display the meat required
     function fetchMeatRequired() {
-        const currentLevel = parseInt(currentLevelSlider.value);
-        const desiredLevel = parseInt(desiredLevelSlider.value);
-
-        if (currentLevel >= desiredLevel) {
+        const curr = parseInt(currentLevelSlider.value);
+        const des = parseInt(desiredLevelSlider.value);
+        if (curr >= des) {
             resultContainer.innerHTML = `<p class="error">Invalid levels. Current level must be less than desired level.</p>`;
             return;
         }
-
-        let totalMeatRequired = 0;
-        levelingData.forEach(entry => {
-            if (entry.level > currentLevel && entry.level <= desiredLevel) {
-                totalMeatRequired += parseInt(entry.meat_required, 10) || 0;
+        let total = 0;
+        levelingData.forEach((entry) => {
+            if (entry.level > curr && entry.level <= des) {
+                total += parseInt(entry.meat_required, 10) || 0;
             }
         });
-    
-        if (isNaN(totalMeatRequired)) {
-            resultContainer.innerHTML = `<p class="error">Error calculating meat requirements.</p>`;
-            return;
-        }
-    
         resultContainer.innerHTML = `
-            <h2>
-                ${totalMeatRequired.toLocaleString()}
-                <img src="${iconPath}" alt="Meat Icon" class="meat-icon">
-            </h2>`;
+            <div class="result-content">
+                <div class="required-header">
+                    <img src="${iconPath}" alt="Meat Icon" class="meat-icon">
+                    <div class="required-label">Required:</div>
+                </div>
+                <div class="required-number">${total.toLocaleString()}</div>
+            </div>`;
+        console.log(
+            `[Analytics] fetchMeatRequired: current=${curr}, desired=${des}, total=${total}`
+        );
     }
 
-    
-    
-
     function handleIncrementDecrement(input, slider, step) {
-        const minValue = parseInt(input.min);
-        const maxValue = parseInt(input.max);
-        let currentValue = parseInt(input.value);
-
-        if (currentValue + step >= minValue && currentValue + step <= maxValue) {
-            input.value = currentValue + step;
+        const min = parseInt(input.min);
+        const max = parseInt(input.max);
+        let val = parseInt(input.value);
+        if (val + step >= min && val + step <= max) {
+            input.value = val + step;
             syncInputToSlider(input, slider);
         }
     }
 
     function enableHold(button, input, slider, step) {
-        let timeoutId;
-        let initialDelay = 300; // Delay before acceleration starts
-        let delay = 100; // Initial delay after acceleration starts
-        const minDelay = 5; // Minimum delay for maximum speed
-        const accelerationFactor = 0.9; // Factor to reduce delay (lower = faster acceleration)
-        let isHeld = false; // Tracks if the button is being held
-        let isMouseDown = false; // Tracks if the mouse is down (to avoid hover issues)
-    
+        let timeoutId,
+            initialDelay = 300,
+            delay = 100,
+            minDelay = 5,
+            accel = 0.9,
+            isHeld = false,
+            isDown = false;
+
         function performStep() {
             handleIncrementDecrement(input, slider, step);
-    
-            // Gradually decrease delay, but never go below minDelay
-            delay = Math.max(minDelay, delay * accelerationFactor);
-    
-            // Schedule the next step
+            delay = Math.max(minDelay, delay * accel);
             timeoutId = setTimeout(performStep, delay);
         }
-    
+
         function startHold() {
             isHeld = false;
-            isMouseDown = true;
+            isDown = true;
             timeoutId = setTimeout(() => {
-                if (isMouseDown) {
+                if (isDown) {
                     isHeld = true;
-                    delay = 100; // Reset delay to the initial value for acceleration
-                    performStep(); // Start the acceleration
+                    delay = 100;
+                    performStep();
                 }
-            }, initialDelay); // Delay before treating it as a hold
+            }, initialDelay);
         }
-    
+
         function endHold() {
-            isMouseDown = false;
+            isDown = false;
             clearTimeout(timeoutId);
             if (!isHeld) {
-                // Single click behavior
                 handleIncrementDecrement(input, slider, step);
             }
         }
-    
-        // Mouse and touch event bindings
+
         button.addEventListener("mousedown", startHold);
         button.addEventListener("mouseup", endHold);
-    
-        // Prevent mouse hover issues by tracking mouse state
         button.addEventListener("mouseleave", () => {
-            if (isMouseDown) {
-                endHold();
-            }
+            if (isDown) endHold();
         });
-    
         button.addEventListener("touchstart", (e) => {
-            e.preventDefault(); // Prevent long-press menu
+            e.preventDefault();
             startHold();
         });
         button.addEventListener("touchend", endHold);
         button.addEventListener("touchcancel", endHold);
     }
-    
-      
+
     enableHold(currentLevelDecrease, currentLevelNum, currentLevelSlider, -1);
     enableHold(currentLevelIncrease, currentLevelNum, currentLevelSlider, 1);
     enableHold(desiredLevelDecrease, desiredLevelNum, desiredLevelSlider, -1);
     enableHold(desiredLevelIncrease, desiredLevelNum, desiredLevelSlider, 1);
 
     function syncInputToSlider(input, slider) {
-        const value = parseInt(input.value);
-        if (!isNaN(value)) {
-            slider.value = value;
-
+        const val = parseInt(input.value);
+        if (!isNaN(val)) {
+            slider.value = val;
             if (slider === currentLevelSlider) {
                 enforceConstraints("current");
-            } else if (slider === desiredLevelSlider) {
+            } else {
                 enforceConstraints("desired");
             }
-
             fetchMeatRequired();
         }
     }
@@ -277,60 +293,70 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
 
-    // Event listeners
-    currentLevelSlider.addEventListener("input", () => {
-        updateValues();
-    });
-
+    // Only log on "change" or button clicks, not on every "input"
     currentLevelSlider.addEventListener("change", () => {
+        console.log(
+            `[Analytics] currentLevelSlider changed → ${currentLevelSlider.value}`
+        );
         enforceConstraints("current");
         fetchMeatRequired();
     });
 
-    desiredLevelSlider.addEventListener("input", () => {
-        updateValues();
-    });
-
     desiredLevelSlider.addEventListener("change", () => {
+        console.log(
+            `[Analytics] desiredLevelSlider changed → ${desiredLevelSlider.value}`
+        );
         enforceConstraints("desired");
         fetchMeatRequired();
     });
 
-    currentLevelNum.addEventListener("blur", () => syncInputToSlider(currentLevelNum, currentLevelSlider));
-    currentLevelNum.addEventListener("keydown", (event) => handleEnterKey(currentLevelNum, currentLevelSlider, event));
+    currentLevelNum.addEventListener("blur", () =>
+        syncInputToSlider(currentLevelNum, currentLevelSlider)
+    );
+    currentLevelNum.addEventListener("keydown", (e) =>
+        handleEnterKey(currentLevelNum, currentLevelSlider, e)
+    );
 
-    desiredLevelNum.addEventListener("blur", () => syncInputToSlider(desiredLevelNum, desiredLevelSlider));
-    desiredLevelNum.addEventListener("keydown", (event) => handleEnterKey(desiredLevelNum, desiredLevelSlider, event));
+    desiredLevelNum.addEventListener("blur", () =>
+        syncInputToSlider(desiredLevelNum, desiredLevelSlider)
+    );
+    desiredLevelNum.addEventListener("keydown", (e) =>
+        handleEnterKey(desiredLevelNum, desiredLevelSlider, e)
+    );
 
     currentLevelMin.addEventListener("click", () => {
         currentLevelSlider.value = currentLevelSlider.min;
         enforceConstraints("current");
         fetchMeatRequired();
+        console.log("[Analytics] Set current to minimum");
     });
 
     currentLevelMax.addEventListener("click", () => {
         currentLevelSlider.value = currentLevelSlider.max;
         enforceConstraints("current");
         fetchMeatRequired();
+        console.log("[Analytics] Set current to maximum");
     });
 
     desiredLevelMin.addEventListener("click", () => {
         desiredLevelSlider.value = desiredLevelSlider.min;
         enforceConstraints("desired");
         fetchMeatRequired();
+        console.log("[Analytics] Set desired to minimum");
     });
 
     desiredLevelMax.addEventListener("click", () => {
         desiredLevelSlider.value = desiredLevelSlider.max;
         enforceConstraints("desired");
         fetchMeatRequired();
+        console.log("[Analytics] Set desired to maximum");
     });
-
-    // Adjust notice positions on DOM load and resize
-    updateNoticePositions();
-    window.addEventListener("resize", updateNoticePositions);
 
     loadStoredValues();
     enforceConstraints("current");
     fetchMeatRequired();
+
+    updateNoticePositions();
+    window.addEventListener("resize", updateNoticePositions);
+    window.addEventListener("scroll", updateNoticePositions);
 });

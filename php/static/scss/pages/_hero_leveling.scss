@@ -1,230 +1,271 @@
-// Import variables and mixins
 @import '../base/variables';
 @import '../base/mixins';
 
-/* Result Section */
-#result {
-    background-color: #00000082;
-    border-radius: 15px;
+/* =============================
+   🎯 Meat Result Display (#meat-result)
+============================= */
+#meat-result {
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 600px;
+  margin: $spacing-lg auto;
+  background-color: rgba($color-white, 0.90);
+  box-shadow: $box-shadow-light;
+  border-radius: $border-radius-md;
+  padding: $spacing-lg;
+  text-align: center;
 
-    img {
-        width: 3rem; 
-        padding-left: 1rem;
-    }
+  @include respond(phone-md, down) {
+    padding: $spacing-md;
+    margin: $spacing-md auto;
+  }
 
-    h2 {
-        font-size: 2.2rem;
-        font-weight: bold;
-        display: flex;
-        margin-bottom: -10px;
-        justify-content: center;
-        align-items: center;
-        top: 0;
-    }
-}
-
-/* Form Section */
-#hl_form {
+  .result-content {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-top: $spacing-medium;
+    gap: $spacing-sm;
+  }
 
-    label {
-        margin-bottom: $spacing-xsmall;
-        @include text-style(1.25rem, 1.5, bold, $color-light);
-        text-align: center;
+  /* ── Icon + “Required:” on same row ── */
+  .required-header {
+    display: flex;
+    align-items: center;
+    gap: $spacing-sm;
+    justify-content: center;
+  }
+
+  img.meat-icon {
+    width: 2.5rem;
+    height: auto;
+    vertical-align: middle;
+  }
+
+  .required-label {
+    font-size: $font-size-xl;
+    font-weight: 600;
+    /* In light-mode, use a true black instead of $color-dark (if $color-dark was a medium gray) */
+    color: $color-black;
+
+    [data-theme="dark"] & {
+      color: $color-white;
     }
+  }
 
-    /* Button Styles */
-    button {
-        padding: 10px 20px;
-        font-size: 1rem;
-        color: #fff;
-        background-color: #4CAF50;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-        margin-bottom: 10px;
+  .required-number {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #917251; /* e.g. gold/yellow */
+    [data-theme="dark"] & {
+      color: rgb(245, 204, 101);
     }
+  }
 
-    button:hover {
-        background-color: #45a049;
+  /* If you have any <p> or <h3> inside #meat-result, force them darker: */
+  h3,
+  p {
+    color: $color-black;
+    [data-theme="dark"] & {
+      color: $color-white;
     }
+  }
+}
 
-    /* Icon Styling */
-    img {
-        display: block;
-        max-width: 100px;
-        height: auto;
-        margin: 0 auto;
+/* =============================
+   🧮 Hero Leveling Form (#hl_form)
+============================= */
+#hl_form {
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 600px;
+  margin: auto;
+  padding: $spacing-lg;
+  /* Use a nearly-opaque white, but ensure text is pure black */
+  background-color: rgba($color-white, 0.95);
+  border-radius: $border-radius-md;
+  box-shadow: $box-shadow-light;
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-lg;
+  position: relative;
+  @include transition(all, $transition-duration, $transition-ease);
+
+  @include respond(phone-md, down) {
+    padding: $spacing-md;
+    gap: $spacing-md;
+  }
+
+  /* ── Labels ── */
+  label {
+    display: block;
+    font-weight: 500;
+    font-size: $font-size-sm;
+    /* Switch from $color-dark (if that was too light) to pure black */
+    color: $color-black;
+    text-align: center;
+    margin-bottom: $spacing-xxs;
+
+    [data-theme="dark"] & {
+      color: #ccc;
     }
+  }
 
-    .meat-icon {
-        width: 50px;
-        height: auto; 
-        vertical-align: middle; 
-        margin-left: 5px;
-        margin-right: 5px;
-        position: relative;
-        bottom: 8px;
-    }
+  /* ── Input Pairs ── */
+  .input-pair {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: $spacing-sm;
 
-    /* Input Pair Styling */
-    .input-pair {
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        gap: $spacing-xsmall; // Space between number input and slider
-        margin-bottom: $spacing-xsmall;
-        margin-top: $spacing-small;
+    input[type="number"] {
+      width: 5rem;
+      height: 2rem;
+      padding: $spacing-xxs;
+      text-align: center;
+      font-size: $font-size-sm;
+      border: 1px solid $color-secondary;
+      border-radius: $border-radius-sm;
+      background-color: $color-white;
+      /* Pure black for text */
+      color: $color-black;
+      @include transition(border-color, $transition-duration, $transition-ease);
 
-        input[type="number"] {
-            width: 5rem; // 80px
-            height: 2rem; // 30px
-            text-align: center;
-            @include text-style(1rem, 1.5, normal, $color-dark);
-            background-color: $color-light;
-            border: 1px solid $color-secondary;
-            border-radius: $border-radius-small;
-        }
-
-    }
-
-    /* Slider Container */
-    .slider-container {
-        position: relative;
-        width: 300px; /* Match the slider width */
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        margin-top: 10px;
-        margin-bottom: 15px;
-    }
-
-    /* Min and Max Labels */
-    .slider-container .slider-min,
-    .slider-container .slider-max {
-        font-size: 0.9rem;
-        color: #fff;
-        width: auto;
-        text-align: center;
-        cursor: pointer; /* Clickable feedback */
-        margin: 0 5px; /* Space around the labels */
-    }
-
-    /* Hover Effect for Min and Max Labels */
-    .slider-container .slider-min:hover,
-    .slider-container .slider-max:hover {
-        color: #ffd700; /* Highlight on hover */
-        text-decoration: underline; /* Optional underline */
-    }
-
-
-    /* Slider Styling */
-    .slider-container input[type="range"] {
-        flex-grow: 1;
-        margin: 0 10px; /* Space between slider and min/max labels */
-        appearance: none;
-        width: 100%; /* Full width within the container */
-        height: 5px;
-        background: #ddd;
-        border-radius: 5px;
+      &:focus {
+        border-color: $color-accent;
+        @include box-shadow(0, 0, 0.25rem, 0, rgba($color-accent, 0.25));
         outline: none;
+      }
+
+      [data-theme="dark"] & {
+        background-color: rgba($color-white, 0.05);
+        color: #eee;
+        border-color: $color-secondary;
+      }
+    }
+  }
+
+  /* ── Notice (e.g. warnings) ── */
+  .notice {
+    font-size: 0.75rem;
+    /* Keep warnings as $color-warning */
+    color: $color-warning;
+    text-align: center;
+    margin-top: $spacing-xxs;
+    display: none;
+
+    &.pulse {
+      display: block;
+      animation: pulse 1s ease-in-out infinite;
     }
 
-    .slider-container input[type="range"]::-webkit-slider-thumb {
-        -webkit-appearance: none;
-        width: 20px;
-        height: 20px;
-        border-radius: 50%;
-        background: #4CAF50;
-        cursor: pointer;
+    [data-theme="dark"] & {
+      color: $color-warning;
+    }
+  }
+
+  /* =============================
+     💬 Explanation Section
+  ============================= */
+  .explanation {
+    background-color: rgba($color-secondary, 0.1);
+    border-radius: $border-radius-md;
+    padding: $spacing-lg;
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-md;
+
+    @include respond(phone-md, down) {
+      padding: $spacing-md;
+      gap: $spacing-sm;
     }
 
-    .slider-container input[type="range"]::-moz-range-thumb {
-        width: 20px;
-        height: 20px;
-        border-radius: 50%;
-        background: #4CAF50;
-        cursor: pointer;
+    h3 {
+      font-size: $font-size-lg;
+      font-weight: 600;
+      /* Pure black for headings in light mode */
+      color: $color-black;
+      margin: 0;
+      text-align: center;
+
+      [data-theme="dark"] & {
+        color: $color-white;
+      }
     }
 
-    .lock-icon {
-        cursor: pointer;
-        margin-left: 10px;
-        color: #4CAF50;
-        font-size: 1.2rem;
-        vertical-align: middle;
+    p {
+      font-size: $font-size-sm;
+      /* Use a 90%-opaque black to match shard calc style */
+      color: rgba($color-black, 0.9);
+      line-height: 1.5;
+      margin: 0;
+
+      [data-theme="dark"] & {
+        color: $color-white;
+      }
     }
-    
-    .lock-icon.locked {
-        color: #FF5722;
-    }
-    
-    .level-button {
-        background-color: #4CAF50; 
-        border: none; 
-        color: #fff; 
-        font-size: 1rem;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        width: 30px;
-        height: 30px;
-        cursor: pointer;
-        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-        transition: background-color 0.2s, transform 0.1s;
-        margin-bottom: 0;
-    }
-    
-    .level-button:hover {
-        background-color: #45a049; 
-        transform: scale(1.1); 
-    }
-    
-    .level-button:active {
-        background-color: #388e3c; 
-        transform: scale(0.95); 
-    }
-    
-    .level-button i {
-        pointer-events: none;
-    }
-    
-    .locked.pulse {
-        animation: pulseGlow 1s infinite;
-        box-shadow: 0 0 10px rgba(255, 215, 0, 0.8);
-    }
-    
-    .notice {
-        display: none; /* Hidden by default */
-        font-size: smaller;
-        color: rgba(255, 215, 0, 1);
-        position: absolute; /* Positioned relative to .slider-container */
-        top: 100%; /* Place directly below the container */
-        margin-top: 5px; /* Add 5px spacing */
-        left: 0;
-        width: 100%; /* Match the width of the container */
-        text-align: center;
-        pointer-events: none;
-        z-index: 1000; /* Ensure it appears above other elements */
-    }
-    
-    .notice.pulse {
-        display: contents; /* Show when pulsing */
-        animation: pulse 1s ease-in-out; /* Add pulse animation */
-    }
-    
-    @keyframes pulse {
-        0% {
-            opacity: 1;
+
+    ul {
+      list-style-type: disc;
+      padding-left: $spacing-lg;
+      margin: 0;
+
+      li {
+        font-size: $font-size-sm;
+        color: $color-black;
+        margin-bottom: $spacing-xxs;
+
+        &:last-child {
+          margin-bottom: 0;
         }
-        50% {
-            opacity: 0.5;
+
+        [data-theme="dark"] & {
+          color: $color-white;
+          &:before {
+            color: $color-accent;
+          }
         }
-        100% {
-            opacity: 1;
-        }
+      }
     }
+
+    .note {
+      font-size: $font-size-sm;
+      color: $color-secondary;
+      font-style: italic;
+      margin: 0;
+      text-align: center;
+
+      [data-theme="dark"] & {
+        color: $color-secondary;
+      }
+    }
+  }
+}
+
+/* =============================
+   🌙 Dark Mode Overrides for #meat-result + #hl_form
+============================= */
+[data-theme="dark"] {
+  body {
+    background-color: $color-dark;
+  }
+
+  #meat-result {
+    /* Match dark-mode card styling */
+    background-color: rgba(30, 30, 30, 0.75);
+    box-shadow: $box-shadow-dark;
+  }
+
+  #hl_form {
+    background-color: rgba(30, 30, 30, 0.5);
+    box-shadow: $box-shadow-dark;
+  }
+}
+
+/* =============================
+   💡 Animations
+============================= */
+@keyframes pulse {
+  0%   { opacity: 1; }
+  50%  { opacity: 0.5; }
+  100% { opacity: 1; }
 }

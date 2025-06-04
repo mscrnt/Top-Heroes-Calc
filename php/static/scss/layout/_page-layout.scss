@@ -1,40 +1,131 @@
-// Layout Styles
+// php/static/scss/layout/_page-layout.scss
+
 .page-layout {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  flex: 1 0 auto;
+}
+
+/* Handles the max-width and padding of the main content container */
+.content-wrapper {
+  width: 95%;
+  max-width: $container-max-width;
+  margin: 0 auto;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding-top: 0 !important;
+  padding: $spacing-xl;
+
+  @include respond(tablet-md, down) {
+    padding: $spacing-md;
+  }
+  @include respond(phone-md, down) {
+    padding: $spacing-sm;
+  }
+}
+
+.ad-wrapper {
+  position: relative;
+  width: 100%;
+  z-index: 500;
+}
+
+.ad-slot {
+  display: none;
+}
+
+/*=========================================
+  Desktop Side Ads (≥1025px)
+=========================================*/
+@media (min-width: 1025px) {
+  .ad-left,
+  .ad-right {
+    display: block;
+    position: fixed;
+    top: 100px;
+    width: 160px;   // Sidebar ad width
+    height: 600px;  // Sidebar ad height
+    z-index: 999;
+
+    /* Center the <ins> placeholder within each fixed container */
     display: flex;
-    flex-direction: column;
-    min-height: 100vh; // Ensure it takes up full height
     align-items: center;
-
-    // Responsive adjustments
-    @include respond(phone-md, down) {
-      min-height: auto; // Let it adapt to smaller screens
-    }
+    justify-content: center;
   }
-  
-  .content-wrapper {
-    display: flex;
-    flex-direction: column;
-    flex-wrap: wrap;
-    align-items: stretch; 
-    padding: $spacing-medium;
-  
-    max-width: max-content; // Allow content to expand
-    width: 100%; // Fluid on smaller screens
 
-  
-    // Responsive adjustments
-    @include respond(desktop-lg, down) {
-      padding: $spacing-medium;
-    }
-  
-    @include respond(tablet-md, down) {
-      padding: $spacing-small;
-    }
-  
-    @include respond(phone-lg, down) {
-      padding: $spacing-xsmall;
-      align-items: stretch; // Allow more fluid layouts on smaller screens
-      max-width: max-content; // Allow content to expand
-    }
+  .ad-left {
+    left: 0;
   }
-  
+  .ad-right {
+    right: 0;
+  }
+
+  /* Force a visible placeholder on desktop side ads */
+  .ad-left ins.adsbygoogle,
+  .ad-right ins.adsbygoogle {
+    width: 160px !important;
+    height: 600px !important;
+    display: block !important;
+    background-color: #f8f8f8;
+    border: 1px solid #ccc;
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.1);
+  }
+}
+
+/*=========================================
+  Tablet Bottom Ad (769px–1024px)
+=========================================*/
+@media (min-width: 769px) and (max-width: 1024px) {
+  .ad-bottom {
+    display: block;
+    position: fixed;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 320px;        // Match the ad unit width exactly
+    height: 60px;        // Container height (ad + padding)
+    background-color: #f8f8f8;
+    z-index: 999;
+    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    padding-top: 5px;    // Vertically center the 50px-tall <ins>
+    box-sizing: border-box;
+  }
+
+  .ad-bottom ins.adsbygoogle {
+    width: 320px !important;
+    height: 50px !important;
+    display: inline-block;
+  }
+}
+
+/*=========================================
+  Mobile Bottom Ad (≤768px)
+=========================================*/
+@media (max-width: 768px) {
+  .ad-bottom {
+    display: block;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;       // Full‐width container
+    height: 60px;      // Container height (ad + padding)
+    background-color: #f8f8f8;
+    z-index: 999;
+    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    padding-top: 5px;  // Vertically center the 50px-tall <ins>
+    box-sizing: border-box;
+  }
+
+  .ad-bottom ins.adsbygoogle {
+    width: 100% !important;  // Stretch to fill container width
+    max-width: 320px !important;
+    height: 50px !important;
+    display: inline-block;
+  }
+}

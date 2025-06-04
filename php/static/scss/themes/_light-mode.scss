@@ -1,41 +1,101 @@
-body {
-    background-color: #ffffff;
-    background-image: url('/static/images/village.webp');
-    background-repeat: no-repeat;
-    background-position: center top;
-    background-size: cover; // Covers the entire viewport
-  
-    // Controls bar adjustments
-    .controls-bar {
-      color: $color-primary;
-    } 
-  
-    .controls-bar-title {
-      color: $color-primary;
-    }
-  
-    // Hamburger menu adjustments
-    .hamburger-menu i {
-      color: $color-primary;
-    }
-  
-    // Theme toggle adjustments
-    .theme-toggle i {
-      color: $color-primary;
-    }
-  
-    // Typography adjustments
-    h2, h3 {
-      color: $color-danger;
-    }
-  
-    p {
-      color: lighten($color-white, 20%);
+// php/static/scss/themes/_light-mode.scss
+
+@import "../base/variables";
+@import "../base/mixins";
+
+[data-theme="light"] {
+  // make the <body> fill the viewport and get the backdrop
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+
+  background-color: $color-white;
+  background-image: url('/static/images/village.webp');
+  background-repeat: no-repeat;
+  background-position: center top;
+  background-size: cover;
+  background-blend-mode: normal;
+
+  // switch to scroll on mobile so the background doesn’t clip
+  @include respond(phone-md, down) {
+    background-attachment: scroll;
+    background-size: cover !important;
+  }
+
+  // Container
+  .container {
+    background-color: rgba($color-white, 0.95);
+    box-shadow: $box-shadow-light;
+  }
+
+  // Top Bar
+  .top-bar-wrapper {
+    background-color: rgba($color-light, 0.95);
+    backdrop-filter: blur(6px);
+
+    .title {
+      color: #2b2b2b;
     }
 
-    // Responsive adjustments
-    @include respond(phone-md, down) {
-      background-size: unset !important;
+    .menu-icon,
+    .theme-toggle {
+      color: $color-primary;
     }
   }
-  
+
+  // Dropdown Menus
+  .menu-dropdown {
+    background-color: $color-white;
+
+    a {
+      color: darken($color-light, 50%);
+
+      &:hover,
+      &.active {
+        background-color: $color-accent;
+        color: $color-white;
+      }
+    }
+  }
+
+  // Typography
+  h2, h3 {
+    color: $color-danger;
+  }
+
+  p {
+    color: lighten($color-dark, 10%);
+  }
+
+  // Shard Form
+  .shard-form {
+    background-color: rgba($color-white, 0.80);
+    box-shadow: $box-shadow-light;
+  }
+
+  label {
+    color: $color-black;
+  }
+
+  .form-text {
+    color: $color-muted;
+  }
+
+  input[type="text"],
+  select {
+    background: $color-white;
+    color: $color-dark;
+    border-color: $color-secondary;
+  }
+
+  // Floating Shard Display
+  .floating-shard-display {
+    p {
+      color: rgb(245, 204, 101);
+    }
+
+    #result {
+      color: #917251;
+    }
+  }
+}

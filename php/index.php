@@ -1,63 +1,92 @@
 <?php
 // index.php
 
-// Define page titles
 $pageTitles = [
-    'shard_calc' => 'Hero Shard Calculator',
-    'heroes' => 'Hero Info',
-    'hero_leveling' => 'Hero Level Calculator',
+    'shard_calc'     => 'Hero Shard Calculator',
+    'heroes'         => 'Hero Information',
+    'hero_leveling'  => 'Hero Level Calculator',
 ];
 
-// Determine the current page and its title
-$page = isset($_GET['page']) ? $_GET['page'] : 'shard_calc';
-$allowed_pages = ['shard_calc', 'heroes', 'hero_leveling']; // Allowed pages
-if (!in_array($page, $allowed_pages)) {
-    $page = 'shard_calc'; // Fallback to default page
-}
-$pageTitle = isset($pageTitles[$page]) ? $pageTitles[$page] : 'Top Heroes'; // Fallback title
+$page = $_GET['page'] ?? 'shard_calc';
+$allowed_pages = array_keys($pageTitles);
+$page = in_array($page, $allowed_pages) ? $page : 'shard_calc';
+$pageTitle = $pageTitles[$page] ?? 'Top Heroes';
 
-// Include header with the dynamically set title
-include 'includes/header.php'; 
+include 'includes/header.php';
 ?>
+
+<!-- ───────────────────────────────────────────────────────────────────────────── -->
+<!-- 1) Pass current page slug + title into a global JS object before matomo.js  -->
+<script>
+  window.MATOMO_CONFIG = {
+    page:  <?= json_encode($page) ?>,
+    title: <?= json_encode($pageTitle) ?>
+  };
+</script>
+
+<!-- 2) Load our standalone matomo.js (which will read MATOMO_CONFIG) -->
+<script src="/static/js/matomo.js" defer></script>
+<!-- ───────────────────────────────────────────────────────────────────────────── -->
 
 <div class="page-layout">
-    <!-- Wrapper for controls and main content -->
-    <div class="content-wrapper">
-        <!-- Controls Bar -->
-        <div class="controls-bar">
-            <!-- Hamburger Menu -->
-            <div class="hamburger-menu">
-                <i class="fa fa-bars" id="hamburgerIcon"></i>
-                <div class="menu-dropdown" id="menuDropdown">
-                    <a href="index.php?page=shard_calc" <?php if ($page === 'shard_calc') echo 'class="active"'; ?>>Shard Calculator</a>
-                    <a href="index.php?page=heroes" <?php if ($page === 'heroes') echo 'class="active"'; ?>>Hero Info</a>
-                    <a href="index.php?page=hero_leveling" <?php if ($page === 'hero_leveling') echo 'class="active"'; ?>>Hero Level Calculator</a>
-                </div>
-            </div>
-
-            <!-- Page Title -->
-            <div class="controls-bar-title">
-                <?= htmlspecialchars($pageTitle) ?>
-            </div>
-
-            <!-- Light/Dark Mode Toggle -->
-            <div class="theme-toggle">
-                <i id="themeToggleIcon" class="fa-regular fa-sun"></i>
-            </div>
+  <header class="top-bar">
+    <div class="top-bar-wrapper">
+      <div class="top-bar-inner">
+        <div class="hamburger-menu">
+          <button id="hamburgerIcon" class="menu-icon" aria-label="Menu">
+            <i class="fa fa-bars"></i>
+          </button>
+          <div id="menuDropdown" class="menu-dropdown">
+            <a href="?page=shard_calc" class="<?= $page === 'shard_calc' ? 'active' : '' ?>">
+              Shard Calculator
+            </a>
+            <a href="?page=hero_leveling" class="<?= $page === 'hero_leveling' ? 'active' : '' ?>">
+              Hero Level Calculator
+            </a>
+            <a href="?page=heroes" class="<?= $page === 'heroes' ? 'active' : '' ?>">
+              Hero Information
+            </a>
+          </div>
         </div>
 
-        <!-- Main Content Area -->
-        <div class="container">
-            <div class="container-content">
-                <?php
-                // Dynamically include the selected page
-                include "templates/{$page}.php";
-                ?>
-            </div>
-        </div>
+        <h1 class="title"><?= htmlspecialchars($pageTitle) ?></h1>
+
+        <button id="themeToggle" class="theme-toggle" aria-label="Toggle Theme">
+          <i id="themeToggleIcon" class="fa fa-sun"></i>
+        </button>
+      </div> <!-- /.top-bar-inner -->
+    </div> <!-- /.top-bar-wrapper -->
+  </header>
+
+  <?php if ($page === 'shard_calc'): ?>
+    <?php include 'templates/shard_floating_form.php'; ?>
+  <?php endif; ?>
+
+  <div class="content-wrapper">
+    <div class="container">
+      <div class="container-content">
+        <?php include "templates/{$page}.php"; ?>
+      </div>
     </div>
+  </div>
+
+  <!-- Ads go here -->
+  <div class="ad-wrapper">
+    <!-- Left Ad (desktop only) -->
+    <div class="ad-slot ad-left">
+      <?php include 'includes/ad-left.php'; ?>
+    </div>
+
+    <!-- Right Ad (desktop only) -->
+    <div class="ad-slot ad-right">
+      <?php include 'includes/ad-right.php'; ?>
+    </div>
+
+    <!-- Bottom Ad (mobile only) -->
+    <div class="ad-slot ad-bottom">
+      <?php include 'includes/ad-bottom.php'; ?>
+    </div>
+  </div>
 </div>
 
-<?php
-include 'includes/footer.php'; // Closes </body> and </html>
-?>
+<?php include 'includes/footer.php'; ?>

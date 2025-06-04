@@ -1,74 +1,140 @@
-// Colors
-$color-primary: rgb(47, 85, 150);; // Primary action buttons and highlights
-$color-secondary: #cccccc; // Secondary text and borders
-$color-dark: #2f2c2c82; // Background for dark mode or dark elements
-$color-light: rgb(230, 230, 230); // Background for light mode or light elements
-$color-accent: #234e96; // Accent color for links or interactive elements
-$color-danger: rgb(234, 85, 60); // Alerts, errors
-$color-warning: rgb(248, 121, 64); // Warnings
-$color-white: #ffffff; // Default white for text or backgrounds
+// php\static\scss\base\_variables.scss
 
-// Typography
-$font-family-base: 'Arial', sans-serif; // Default font for text
-$font-family-heading: 'Helvetica', sans-serif; // Font for headings and titles
+// ==============================
+// 🎨 COLOR SYSTEM
+// ==============================
 
-// Spacing
-$spacing-xsmall: 0.25rem; // 4px
-$spacing-small: 0.5rem; // 8px
-$spacing-medium: 1rem; // 16px
-$spacing-large: 2rem; // 32px
-$spacing-xlarge: 4rem; // 64px
+// Primary palette
+$color-primary: rgb(47, 85, 150);     // Primary action buttons and highlights
+$color-accent: #234e96;              // Accent color for links or interactive elements
+$color-secondary: #cccccc;           // Secondary text and borders
+$color-success: #28a745;             // Success/confirm
+$color-warning: rgb(248, 121, 64);   // Warnings
+$color-danger: rgb(234, 85, 60);     // Alerts, errors
+$color-info: #3498db;                // Informational highlights
 
-// Borders
-$border-radius-small: 0.3125rem; // 5px - Small elements like buttons
-$border-radius-medium: 0.5rem; // 8px - Cards and panels
-$border-radius-large: 1rem; // 16px - Large elements like modals
+// Backgrounds
+$color-light: rgb(230, 230, 230);    // Light background
+$color-dark: #2f2c2c82;              // Dark background (semi-transparent)
 
-// Shadows
+// Neutrals
+$color-white: #ffffff;
+$color-black: #000000;
+$color-muted: #777777;
+
+// ==============================
+// 🔠 TYPOGRAPHY
+// ==============================
+
+$font-family-base: 'Inter', 'Arial', sans-serif;              // Base text
+$font-family-heading: 'Montserrat', 'Helvetica', sans-serif;  // Headings
+
+$font-size-sm: 0.875rem;   // 14px
+$font-size-md: 1rem;       // 16px
+$font-size-lg: 1.25rem;    // 20px
+$font-size-xl: 1.5rem;     // 24px
+
+// ==============================
+// 📏 SPACING SCALE (Legacy + Modern)
+// ==============================
+
+$spacing-xsmall: 0.25rem;  // 4px
+$spacing-small:  0.5rem;   // 8px
+$spacing-medium: 1rem;     // 16px
+$spacing-large:  2rem;     // 32px
+$spacing-xlarge: 4rem;     // 64px
+
+// Aliases for modern layout scale
+$spacing-xxs: $spacing-xsmall;
+$spacing-xs:  $spacing-small;
+$spacing-sm:  0.75rem;
+$spacing-md:  $spacing-medium;
+$spacing-lg:  1.5rem;
+$spacing-xl:  $spacing-large;
+$spacing-xxl: $spacing-xlarge;
+
+// ==============================
+// 🔲 BORDERS / RADIUS
+// ==============================
+
+$border-radius-small: 0.3125rem; // 5px - Buttons, inputs
+$border-radius-medium: 0.5rem;   // 8px - Cards, panels
+$border-radius-large: 1rem;      // 16px - Modals
+
+// Aliases for consistency
+$border-radius-sm: $border-radius-small;
+$border-radius-md: $border-radius-medium;
+$border-radius-lg: $border-radius-large;
+
+// ==============================
+// 🌫️ SHADOWS
+// ==============================
+
 $box-shadow-light: 
-    0rem 0.125rem 1.25rem 1.25rem rgba(0, 0, 0, 0.1), 
-    -0.0625rem 0rem 1.25rem 1.25rem rgba(0, 0, 0, 0.15), 
-    0.0625rem 0rem 2.5rem 1.25rem rgba(0, 0, 0, 0.2);
+  0rem 0.125rem 1.25rem 1.25rem rgba(0, 0, 0, 0.1), 
+  -0.0625rem 0rem 1.25rem 1.25rem rgba(0, 0, 0, 0.15), 
+  0.0625rem 0rem 2.5rem 1.25rem rgba(0, 0, 0, 0.2);
 
-$box-shadow-dark: 0 0.25rem 0.625rem rgba(0, 0, 0, 0.4); // Stronger shadow for dark mode
+$box-shadow-dark: 0 0.25rem 0.625rem rgba(0, 0, 0, 0.4);
 
-// Transitions
-$transition-duration: 0.3s; // Standard transition duration
-$transition-ease: ease-in-out; // Standard easing function
+$box-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+$box-shadow-md: 0 4px 8px rgba(0, 0, 0, 0.1);
+$box-shadow-lg: 0 8px 16px rgba(0, 0, 0, 0.15);
 
-// Opacity Levels
-$opacity-low: 0.1; // Very subtle
-$opacity-medium: 0.5; // Partially visible
-$opacity-high: 0.9; // Almost fully visible
+// ==============================
+// 🌀 TRANSITIONS
+// ==============================
 
-// Breakpoints
+$transition-duration: 0.3s;
+$transition-ease: ease-in-out;
+
+// ==============================
+// 💧 OPACITY LEVELS
+// ==============================
+
+$opacity-low: 0.1;
+$opacity-medium: 0.5;
+$opacity-high: 0.9;
+
+// ==============================
+// 🔁 BREAKPOINTS
+// ==============================
+
 $breakpoints: (
-  phone-sm: 320px,   // Small phones
-  phone-md: 480px,   // Medium phones
-  phone-lg: 568px,   // Large phones
-  tablet-sm: 569px,  // Small tablets
-  tablet-md: 768px,  // Medium tablets
-  tablet-lg: 800px,  // Large tablets
-  desktop-sm: 801px, // Small desktops
-  desktop-md: 959px, // Medium desktops
-  desktop-lg: 1024px,// Large desktops
-  large: 1200px      // Extra-large screens
+  phone-sm: 320px,
+  phone-md: 480px,
+  phone-lg: 568px,
+  tablet-sm: 569px,
+  tablet-md: 768px,
+  tablet-lg: 800px,
+  desktop-sm: 801px,
+  desktop-md: 959px,
+  desktop-lg: 1024px,
+  large: 1200px
 );
 
+// ==============================
+// 🧩 Z-INDEX LAYERS
+// ==============================
 
-// Z-Index Layers
-$z-index-base: 1; // Default layer
-$z-index-header: 500; // Floating elements
-$z-index-dropdown: 1000; // Dropdowns
-$z-index-fixed: 10000; // Fixed elements
-$z-index-modal: 10500; // Modals
-$z-index-tooltip: 1100; // Tooltips and popups
+$z-index-base: 1;
+$z-index-header: 500;
+$z-index-dropdown: 1000;
+$z-index-fixed: 10000;
+$z-index-modal: 10500;
+$z-index-tooltip: 1100;
 
-// Containers and Grids
-$container-max-width: 1200px; // Maximum width for container layouts
-$gutter-width: 1.5rem; // Spacing between columns in grids
+// ==============================
+// 📦 CONTAINERS & GRIDS
+// ==============================
 
-// CSS Variable Output (optional, for runtime theming support)
+$container-max-width: 1200px;
+$gutter-width: 1.5rem;
+
+// ==============================
+// 🌗 CSS VARIABLE EXPORTS
+// ==============================
+
 :root {
   --color-primary: #{$color-primary};
   --color-secondary: #{$color-secondary};
@@ -80,3 +146,8 @@ $gutter-width: 1.5rem; // Spacing between columns in grids
   --font-family-base: #{$font-family-base};
   --font-family-heading: #{$font-family-heading};
 }
+
+// ==============================
+// 📏 FIXED COMPONENT HEIGHTS
+// ==============================
+$top-bar-height: 64px;

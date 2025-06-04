@@ -1,0 +1,55 @@
+// php\static\scss\elements\_top-bar.scss
+
+@import '../base/variables';
+
+.top-bar {
+  width: 100%;
+  height: $top-bar-height;
+  position: sticky;
+  top: 0;
+  z-index: $z-index-header;
+  display: flex;
+  justify-content: center;
+  background: transparent;
+  backdrop-filter: none;
+  box-shadow: none;
+
+  .top-bar-wrapper {
+    width: 100%;
+    max-width: $container-max-width;
+    height: $top-bar-height;
+    margin: 0 auto;
+    border-radius: 0 0 $border-radius-md $border-radius-md;
+    backdrop-filter: blur(6px);
+    box-shadow: $box-shadow-dark;
+    display: flex;
+    align-items: center;
+  }
+
+  .top-bar-inner {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: $spacing-sm $spacing-md;
+    height: $top-bar-height;
+
+    .title {
+      font-size: $font-size-lg;
+      font-weight: 600;
+      margin: 0;
+      flex: 1;
+      text-align: center;
+      font-family: $font-family-heading;
+    }
+
+    .menu-icon,
+    .theme-toggle {
+      background: none;
+      border: none;
+      font-size: $font-size-lg;
+      cursor: pointer;
+      z-index: $z-index-header;
+    }
+  }
+}

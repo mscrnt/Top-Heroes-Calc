@@ -51,90 +51,133 @@ if ($currentLevel && $desiredLevel && $currentLevel < $desiredLevel) {
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="/static/js/hero_leveling.js" defer></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script src="/static/js/hero_leveling.js" defer></script>
 </head>
 <body>
-    <!-- Calculation Result -->
-    <div id="result">
-        <?php if ($currentLevel && $desiredLevel): ?>
-            <?php if (isset($errorMessage)): ?>
-                <p class="error"><?= htmlspecialchars($errorMessage) ?></p>
-            <?php else: ?>
-                <h2>
-                    <?= number_format($totalMeatRequired) ?>
-                    <?php if (isset($iconPath)): ?>
-                        <img src="<?= htmlspecialchars($iconPath) ?>" alt="Meat Icon" class="meat-icon">
-                    <?php endif; ?>
-                </h2>
+  <!-- Calculation Result -->
+  <div id="meat-result">
+    <?php if ($currentLevel && $desiredLevel): ?>
+      <?php if (isset($errorMessage)): ?>
+        <p class="error"><?= htmlspecialchars($errorMessage) ?></p>
+      <?php else: ?>
+        <div class="result-content">
+          <!-- Wrap icon + "Required:" on same row -->
+          <div class="required-header">
+            <?php if (isset($iconPath)): ?>
+              <img src="<?= htmlspecialchars($iconPath) ?>" alt="Meat Icon" class="meat-icon">
             <?php endif; ?>
-        <?php endif; ?>
+            <div class="required-label">Required:</div>
+          </div>
+          <!-- Number on its own line -->
+          <div class="required-number"><?= number_format($totalMeatRequired) ?></div>
+        </div>
+      <?php endif; ?>
+    <?php endif; ?>
+  </div>
+
+  <!-- Form Section -->
+  <form id="hl_form" method="POST" action="">
+    <!-- Current Level Section -->
+    <label for="current_level">Current Level:</label>
+    <div class="input-pair">
+      <button type="button" id="current_level_decrease" class="level-button">
+        <i class="fa-solid fa-minus"></i>
+      </button>
+      <input
+        type="number"
+        id="current_level_num"
+        name="current_level_num"
+        value="<?= htmlspecialchars($currentLevel) ?>"
+        min="1"
+        max="<?= $maxLevel - 1 ?>"
+        step="1"
+        required
+      >
+      <button type="button" id="current_level_increase" class="level-button">
+        <i class="fa-solid fa-plus"></i>
+      </button>
+    </div>
+    <div class="slider-container">
+      <span id="current_level_min" class="slider-min">1</span>
+      <input
+        type="range"
+        id="current_level"
+        name="current_level"
+        value="<?= htmlspecialchars($currentLevel) ?>"
+        min="1"
+        max="<?= $maxLevel - 1 ?>"
+        step="1"
+        required
+      >
+      <span id="current_level_max" class="slider-max"><?= $maxLevel - 1 ?></span>
+      <i id="current_level_lock" class="fa-solid fa-lock-open lock-icon"></i>
+    </div>
+    <p class="notice" id="current_level_notice">Unlock Target Level to increase Current Level greater.</p>
+
+    <!-- Desired Level Section -->
+    <label for="desired_level">Target Level:</label>
+    <div class="input-pair">
+      <button type="button" id="desired_level_decrease" class="level-button">
+        <i class="fa-solid fa-minus"></i>
+      </button>
+      <input
+        type="number"
+        id="desired_level_num"
+        name="desired_level_num"
+        value="<?= htmlspecialchars($desiredLevel) ?>"
+        min="2"
+        max="<?= $maxLevel ?>"
+        step="1"
+        required
+      >
+      <button type="button" id="desired_level_increase" class="level-button">
+        <i class="fa-solid fa-plus"></i>
+      </button>
+    </div>
+    <div class="slider-container">
+      <span id="desired_level_min" class="slider-min">2</span>
+      <input
+        type="range"
+        id="desired_level"
+        name="desired_level"
+        value="<?= htmlspecialchars($desiredLevel) ?>"
+        min="2"
+        max="<?= $maxLevel ?>"
+        step="1"
+        required
+      >
+      <span id="desired_level_max" class="slider-max"><?= $maxLevel ?></span>
+      <i id="desired_level_lock" class="fa-solid fa-lock-open lock-icon"></i>
+    </div>
+    <p class="notice" id="desired_level_notice">Unlock Current Level to decrease Target Level lesser.</p>
+
+    <!-- Explanation Section -->
+    <div class="explanation">
+      <h3><u>How This Page Works</u></h3>
+      <p>
+        Adjust your <strong>Current Level</strong> and <strong>Target Level</strong> using either the number inputs or the sliders.
+      </p>
+      <ul>
+        <li>
+          <strong>Current Level</strong>: choose your starting hero level (between 1 and <code><?= $maxLevel - 1 ?></code>).
+        </li>
+        <li>
+          <strong>Target Level</strong>: choose the level you want to reach (between 2 and <code><?= $maxLevel ?></code>).
+        </li>
+        <li>
+          Click the numbers at the ends of a slider to jump directly to level 1 (for Current) or level <?= $maxLevel ?> (for Target).
+        </li>
+        <li>
+          The other slider will not be able to change the locked slider’s value. For example, if Target is set to 100 and locked, you won’t be able to slide Current beyond 99. If Current is locked at 100, Target cannot be moved below 101.
+        </li>
+        <li>
+          The total Meat required to level up from your Current Level to the Target Level will be displayed above.
+        </li>
+      </ul>
     </div>
 
-    <!-- Form Section -->
-    <form id="hl_form" method="POST" action="">
-        <!-- Current Level Section -->
-        <label for="current_level">Current Level:</label>
-        <div class="input-pair">
-            <button type="button" id="current_level_decrease" class="level-button">
-                <i class="fa-solid fa-minus"></i>
-            </button>
-            <input type="number" id="current_level_num" name="current_level_num" 
-                value="<?= htmlspecialchars($currentLevel) ?>" 
-                min="1" 
-                max="<?= $maxLevel - 1 ?>" 
-                step="1" 
-                required>
-            <button type="button" id="current_level_increase" class="level-button">
-                <i class="fa-solid fa-plus"></i>
-            </button>
-        </div>
-        <div class="slider-container">
-            <span id="current_level_min" class="slider-min">1</span>
-            <input type="range" id="current_level" name="current_level" 
-                value="<?= htmlspecialchars($currentLevel) ?>" 
-                min="1" 
-                max="<?= $maxLevel - 1 ?>" 
-                step="1" 
-                required>
-            <span id="current_level_max" class="slider-max"><?= $maxLevel - 1 ?></span>
-            <i id="current_level_lock" class="fa-solid fa-lock-open lock-icon"></i>
-        </div>
-        <p class="notice" id="current_level_notice">Unlock Target Level to increase Current Level greater.</p>
-
-
-        <!-- Desired Level Section -->
-        <label for="desired_level">Target Level:</label>
-        <div class="input-pair">
-            <button type="button" id="desired_level_decrease" class="level-button">
-                <i class="fa-solid fa-minus"></i>
-            </button>
-            <input type="number" id="desired_level_num" name="desired_level_num" 
-                value="<?= htmlspecialchars($desiredLevel) ?>" 
-                min="2" 
-                max="<?= $maxLevel ?>" 
-                step="1" 
-                required>
-            <button type="button" id="desired_level_increase" class="level-button">
-                <i class="fa-solid fa-plus"></i>
-            </button>
-        </div>
-        <div class="slider-container">
-            <span id="desired_level_min" class="slider-min">2</span>
-            <input type="range" id="desired_level" name="desired_level" 
-                value="<?= htmlspecialchars($desiredLevel) ?>" 
-                min="2" 
-                max="<?= $maxLevel ?>" 
-                step="1" 
-                required>
-            <span id="desired_level_max" class="slider-max"><?= $maxLevel ?></span>
-            <i id="desired_level_lock" class="fa-solid fa-lock-open lock-icon"></i>
-        </div>
-        <p class="notice" id="desired_level_notice">Unlock Current Level to decrease Target Level lesser.</p>
-
-
-        <button type="submit">Calculate</button>
-    </form>
+  </form>
 </body>
 </html>
