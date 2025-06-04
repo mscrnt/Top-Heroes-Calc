@@ -1,4 +1,4 @@
-// php\static\scss\layout\_page-layout.scss
+// php/static/scss/layout/_page-layout.scss
 
 .page-layout {
   display: flex;
@@ -17,18 +17,16 @@
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-  padding-top: 0rem !important; 
+  padding-top: 0 !important;
   padding: $spacing-xl;
 
   @include respond(tablet-md, down) {
     padding: $spacing-md;
   }
-
   @include respond(phone-md, down) {
     padding: $spacing-sm;
   }
 }
-
 
 .ad-wrapper {
   position: relative;
@@ -40,45 +38,93 @@
   display: none;
 }
 
-/* Desktop side ads */
-@media (min-width: 1024px) {
+/*=========================================
+  Desktop Side Ads (≥1025px)
+=========================================*/
+@media (min-width: 1025px) {
   .ad-left,
   .ad-right {
     display: block;
     position: fixed;
     top: 100px;
-    width: 160px; // Adjust ad size as needed
-    height: 600px;
+    width: 160px;   // Sidebar ad width
+    height: 600px;  // Sidebar ad height
     z-index: 999;
+
+    /* Center the <ins> placeholder within each fixed container */
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
   .ad-left {
     left: 0;
   }
-
   .ad-right {
     right: 0;
   }
+
+  /* Force a visible placeholder on desktop side ads */
+  .ad-left ins.adsbygoogle,
+  .ad-right ins.adsbygoogle {
+    width: 160px !important;
+    height: 600px !important;
+    display: block !important;
+    background-color: #f8f8f8;
+    border: 1px solid #ccc;
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.1);
+  }
 }
 
-/* Mobile bottom ad */
+/*=========================================
+  Tablet Bottom Ad (769px–1024px)
+=========================================*/
+@media (min-width: 769px) and (max-width: 1024px) {
+  .ad-bottom {
+    display: block;
+    position: fixed;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 320px;        // Match the ad unit width exactly
+    height: 60px;        // Container height (ad + padding)
+    background-color: #f8f8f8;
+    z-index: 999;
+    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    padding-top: 5px;    // Vertically center the 50px-tall <ins>
+    box-sizing: border-box;
+  }
+
+  .ad-bottom ins.adsbygoogle {
+    width: 320px !important;
+    height: 50px !important;
+    display: inline-block;
+  }
+}
+
+/*=========================================
+  Mobile Bottom Ad (≤768px)
+=========================================*/
 @media (max-width: 768px) {
   .ad-bottom {
     display: block;
     position: fixed;
     bottom: 0;
     left: 0;
-    width: 100%;
-    height: 60px;   
+    width: 100%;       // Full‐width container
+    height: 60px;      // Container height (ad + padding)
     background-color: #f8f8f8;
     z-index: 999;
     box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
-    text-align: center;     
-    padding-top: 5px;          
+    text-align: center;
+    padding-top: 5px;  // Vertically center the 50px-tall <ins>
     box-sizing: border-box;
   }
+
   .ad-bottom ins.adsbygoogle {
-    width: 320px !important;
+    width: 100% !important;  // Stretch to fill container width
+    max-width: 320px !important;
     height: 50px !important;
     display: inline-block;
   }

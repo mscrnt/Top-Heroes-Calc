@@ -40,7 +40,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-  padding-top: 0rem !important;
+  padding-top: 0 !important;
   padding: 2rem;
 }
 @media (max-width: 768px) {
@@ -64,8 +64,10 @@
   display: none;
 }
 
-/* Desktop side ads */
-@media (min-width: 1024px) {
+/*=========================================
+  Desktop Side Ads (≥1025px)
+=========================================*/
+@media (min-width: 1025px) {
   .ad-left,
   .ad-right {
     display: block;
@@ -74,6 +76,10 @@
     width: 160px;
     height: 600px;
     z-index: 999;
+    /* Center the <ins> placeholder within each fixed container */
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
   .ad-left {
     left: 0;
@@ -81,8 +87,45 @@
   .ad-right {
     right: 0;
   }
+  /* Force a visible placeholder on desktop side ads */
+  .ad-left ins.adsbygoogle,
+  .ad-right ins.adsbygoogle {
+    width: 160px !important;
+    height: 600px !important;
+    display: block !important;
+    background-color: #f8f8f8;
+    border: 1px solid #ccc;
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.1);
+  }
 }
-/* Mobile bottom ad */
+/*=========================================
+  Tablet Bottom Ad (769px–1024px)
+=========================================*/
+@media (min-width: 769px) and (max-width: 1024px) {
+  .ad-bottom {
+    display: block;
+    position: fixed;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 320px;
+    height: 60px;
+    background-color: #f8f8f8;
+    z-index: 999;
+    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    padding-top: 5px;
+    box-sizing: border-box;
+  }
+  .ad-bottom ins.adsbygoogle {
+    width: 320px !important;
+    height: 50px !important;
+    display: inline-block;
+  }
+}
+/*=========================================
+  Mobile Bottom Ad (≤768px)
+=========================================*/
 @media (max-width: 768px) {
   .ad-bottom {
     display: block;
@@ -99,7 +142,8 @@
     box-sizing: border-box;
   }
   .ad-bottom ins.adsbygoogle {
-    width: 320px !important;
+    width: 100% !important;
+    max-width: 320px !important;
     height: 50px !important;
     display: inline-block;
   }
